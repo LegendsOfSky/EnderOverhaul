@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release;Release 1.12+;Debug 1.12+</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 1.12+|AnyCPU'">
+		<DefineConstants>$(DefineConstants);VERSION_1_12_ABOVE</DefineConstants>
+		<OutputPath>bin\Release\1_12_ABOVE\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 1.12+|AnyCPU'">
+		<DefineConstants>$(DefineConstants);VERSION_1_12_ABOVE</DefineConstants>
+		<OutputPath>bin\DEBUG\1_12_ABOVE\</OutputPath>
+	</PropertyGroup>
+
+</Project>
