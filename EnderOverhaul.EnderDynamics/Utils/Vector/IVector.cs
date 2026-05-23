@@ -10,8 +10,10 @@ namespace EnderOverhaul.EnderDynamics.Utils.Vector;
 internal interface IVector<TVector , out TValue>
     where TVector : IAdditionOperators<TVector , TVector , TVector> ,
                     ISubtractionOperators<TVector , TVector , TVector> ,
-                    IUnaryNegationOperators<TVector , TVector>
-// @formatter:on
+                    IUnaryNegationOperators<TVector , TVector> ,
+                    IEquatable<TVector> , IEqualityOperators<TVector , TVector , bool>
+
+    // @formatter:on
 {
     public double Length();
 
