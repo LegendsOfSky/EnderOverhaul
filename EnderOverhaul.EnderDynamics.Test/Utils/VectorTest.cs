@@ -13,6 +13,14 @@ namespace EnderOverhaul.EnderDynamics.Test.Utils;
 ///     The vector test is introduced because Mojang may change how vector operations work by introducing floating point casting and floating point errors.
 ///     Therefore, it is essential to test all those vector behaviours such that it strictly follows how Minecraft calculates them.
 /// </summary>
+/// <remarks> Notes:
+///     <list type="bullet">
+///         <item>
+///             It should be noted that some of the test is just a dummy test at this moment. In future moment, if there is any modification related to vectors,
+///             additional test case will be added to ensure this library produces the same result as the actual game mechanism.
+///         </item>
+///     </list>
+/// </remarks>
 public class VectorTest
 {
     [Fact]
