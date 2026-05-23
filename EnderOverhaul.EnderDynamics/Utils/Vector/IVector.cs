@@ -29,4 +29,6 @@ internal interface IVector<TVector , out TValue>
     public TVector CrossProduct();
 
     public CompassDirection ToCompassDirection();
+    public double ToHorizontalWorldAngle();
+    public double ToVerticalWorldAngle();
 }

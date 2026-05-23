@@ -68,6 +68,9 @@ public struct Vector3I : IVector<Vector3I , int> ,
     {
         throw new NotImplementedException();
     }
+
+    public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
+    public double ToVerticalWorldAngle()   => +Math.Atan2(Y , Math.Sqrt(X * X + Z * Z)) / Math.PI * 180;
     #endregion
 
     #region Implements IAdditionOperators<Vector3I , Vector3I , Vector3I>

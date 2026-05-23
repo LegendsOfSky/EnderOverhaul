@@ -66,6 +66,9 @@ public struct Vector2I : IVector<Vector2I , int> ,
     {
         throw new NotImplementedException();
     }
+
+    public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
+    public double ToVerticalWorldAngle() => 0;
     #endregion
 
     #region Implements IAdditionOperators<Vector2I , Vector2I , Vector2I>

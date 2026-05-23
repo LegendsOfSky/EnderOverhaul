@@ -1070,6 +1070,7 @@ public class VectorTest
         throw new NotImplementedException();
     }
 
+
     [Fact]
     public void TestVectorCrossProduct()
     {
@@ -1078,10 +1079,48 @@ public class VectorTest
 
 
 
-    [Fact]
-    public void TestVectorGetWorldAngle()
+    [Theory]
+    [InlineData(+1 ,  0 , -90 )]
+    [InlineData(-1 ,  0 , +90 )]
+    [InlineData( 0 , +1 ,  0  )]
+    [InlineData( 0 , -1 , -180)]
+    [InlineData(+1 , +1 , -45 )]
+    [InlineData(+1 , -1 , -135)]
+    [InlineData(-1 , +1 , +45 )]
+    [InlineData(-1 , -1 , +135)]
+    public void TestVectorGetHorizontalWorldAngle(int x , int z , double angle)
     {
-        throw new NotImplementedException();
+        Assert.Equal(angle , new Vector2D(x , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector2I(x , z).ToHorizontalWorldAngle());
+
+        Assert.Equal(angle , new Vector3D(x , 0 , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector3I(x , 0 , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector3D(x , 128 , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector3I(x , 128 , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector3D(x , 256 , z).ToHorizontalWorldAngle());
+        Assert.Equal(angle , new Vector3I(x , 256 , z).ToHorizontalWorldAngle());
+    }
+
+    [Theory]
+    [InlineData(+1 , +1 ,  0 , +45)]
+    [InlineData(-1 , +1 ,  0 , +45)]
+    [InlineData( 0 , +1 , +1 , +45)]
+    [InlineData( 0 , +1 , -1 , +45)]
+    [InlineData(+1 , -1 ,  0 , -45)]
+    [InlineData(-1 , -1 ,  0 , -45)]
+    [InlineData( 0 , -1 , +1 , -45)]
+    [InlineData( 0 , -1 , -1 , -45)]
+    [InlineData(+1 ,  0 , +1 ,  0 )]
+    [InlineData(+1 ,  0 , -1 ,  0 )]
+    [InlineData(-1 ,  0 , +1 ,  0 )]
+    [InlineData(-1 ,  0 , -1 ,  0 )]
+    public void TestVectorGetVerticalWorldAngle(int x , int y , int z , double angle)
+    {
+        Assert.Equal(0 , new Vector2D(x , z).ToVerticalWorldAngle());
+        Assert.Equal(0 , new Vector2I(x , z).ToVerticalWorldAngle());
+
+        Assert.Equal(angle , new Vector3D(x , y , z).ToVerticalWorldAngle());
+        Assert.Equal(angle , new Vector3I(x , y , z).ToVerticalWorldAngle());
     }
 
 
