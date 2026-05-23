@@ -66,7 +66,7 @@ public struct Vector2I : IVector<Vector2I , int> ,
         throw new NotImplementedException();
     }
 
-    public CompassDirection ToCompassDirection()
+    public CompassDirection ToCardinalCompassDirection()
     {
         throw new NotImplementedException();
     }
