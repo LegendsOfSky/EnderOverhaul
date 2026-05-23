@@ -9,6 +9,10 @@ using EnderOverhaul.EnderDynamics.Utils.Vector;
 
 namespace EnderOverhaul.EnderDynamics.Test.Utils;
 
+/// <summary>
+///     The vector test is introduced because Mojang may change how vector operations work by introducing floating point casting and floating point errors.
+///     Therefore, it is essential to test all those vector behaviours such that it strictly follows how Minecraft calculates them.
+/// </summary>
 public class VectorTest
 {
     [Fact]
