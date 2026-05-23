@@ -57,12 +57,12 @@ public struct Vector2D : IVector<Vector2D , double> ,
     public double MaxEntry() => new[] { X , Z }.Max();
     public double MinEntry() => new[] { X , Z }.Min();
 
-    public double DotProduct()
+    public double DotProduct(Vector2D other)
     {
         throw new NotImplementedException();
     }
 
-    public Vector2D CrossProduct()
+    public Vector2D CrossProduct(Vector2D other)
     {
         throw new NotImplementedException();
     }

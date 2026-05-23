@@ -58,12 +58,12 @@ public struct Vector3I : IVector<Vector3I , int> ,
     public int MaxEntry() => new[] { X , Y , Z }.Max();
     public int MinEntry() => new[] { X , Y , Z }.Min();
 
-    public int DotProduct()
+    public int DotProduct(Vector3I other)
     {
         throw new NotImplementedException();
     }
 
-    public Vector3I CrossProduct()
+    public Vector3I CrossProduct(Vector3I other)
     {
         throw new NotImplementedException();
     }
