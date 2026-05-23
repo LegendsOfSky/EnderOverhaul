@@ -23,6 +23,7 @@ internal interface IVector<TVector , out TValue>
     public bool IsEast();
 
     public TValue MaxEntry();
+    public TValue MinEntry();
 
     public TValue DotProduct();
     public TVector CrossProduct();

@@ -900,6 +900,170 @@ public class VectorTest
     }
     #endregion
 
+    #region Test vector get max entry
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2DGetMaxEntry(double x , double z)
+    {
+        double expected = new[] { x , z }.Max();
+        Assert.Equal(expected , new Vector2D(x , z).MaxEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2IGetMaxEntry(int x , int z)
+    {
+        int expected = new[] { x , z }.Max();
+        Assert.Equal(expected , new Vector2I(x , z).MaxEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3DGetMaxEntry(double x , double y , double z)
+    {
+        double expected = new[] { x , y , z }.Max();
+        Assert.Equal(expected , new Vector3D(x , y , z).MaxEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3IGetMaxEntry(int x , int y , int z)
+    {
+        double expected = new[] { x , y , z }.Max();
+        Assert.Equal(expected , new Vector3I(x , y , z).MaxEntry());
+    }
+    #endregion
+
+    #region Test vector get min entry
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2DGetMinEntry(double x , double z)
+    {
+        double expected = new[] { x , z }.Min();
+        Assert.Equal(expected , new Vector2D(x , z).MinEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2IGetMinEntry(int x , int z)
+    {
+        int expected = new[] { x , z }.Min();
+        Assert.Equal(expected , new Vector2I(x , z).MinEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3DGetMinEntry(double x , double y , double z)
+    {
+        double expected = new[] { x , y , z }.Min();
+        Assert.Equal(expected , new Vector3D(x , y , z).MinEntry());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3IGetMinEntry(int x , int y , int z)
+    {
+        double expected = new[] { x , y , z }.Min();
+        Assert.Equal(expected , new Vector3I(x , y , z).MinEntry());
+    }
+    #endregion
+
     [Fact]
     public void TestVectorDotProduct()
     {
@@ -916,13 +1080,6 @@ public class VectorTest
 
     [Fact]
     public void TestVectorGetWorldAngle()
-    {
-        throw new NotImplementedException();
-    }
-
-
-    [Fact]
-    public void TestVectorGetMaxEntry()
     {
         throw new NotImplementedException();
     }

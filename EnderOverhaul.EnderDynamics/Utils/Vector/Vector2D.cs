@@ -50,10 +50,8 @@ public struct Vector2D : IVector<Vector2D , double> ,
         throw new NotImplementedException();
     }
 
-    public double MaxEntry()
-    {
-        throw new NotImplementedException();
-    }
+    public double MaxEntry() => new[] { X , Z }.Max();
+    public double MinEntry() => new[] { X , Z }.Min();
 
     public double DotProduct()
     {

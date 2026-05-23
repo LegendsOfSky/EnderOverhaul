@@ -51,10 +51,8 @@ public struct Vector3I : IVector<Vector3I , int> ,
         throw new NotImplementedException();
     }
 
-    public int MaxEntry()
-    {
-        throw new NotImplementedException();
-    }
+    public int MaxEntry() => new[] { X , Y , Z }.Max();
+    public int MinEntry() => new[] { X , Y , Z }.Min();
 
     public int DotProduct()
     {
