@@ -29,10 +29,7 @@ public struct Vector3D : IVector<Vector3D , double> ,
     
 
     #region Implements IVector<Vector3D , double>
-    public double Length()
-    {
-        throw new NotImplementedException();
-    }
+    public double Length() => Math.Sqrt(X * X + Y * Y + Z * Z);
 
     public bool IsNorth()
     {

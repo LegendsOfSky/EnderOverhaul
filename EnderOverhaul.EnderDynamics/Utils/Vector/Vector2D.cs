@@ -28,10 +28,7 @@ public struct Vector2D : IVector<Vector2D , double> ,
 
 
     #region Implements IVector<Vector2D , double>
-    public double Length()
-    {
-        throw new NotImplementedException();
-    }
+    public double Length() => Math.Sqrt(X * X + Z * Z);
 
     public bool IsNorth()
     {

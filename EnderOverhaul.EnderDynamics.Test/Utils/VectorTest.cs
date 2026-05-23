@@ -818,6 +818,88 @@ public class VectorTest
     #endregion
 
 
+    #region Test vector length
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2DLength(double x , double z)
+    {
+        double expected = Math.Sqrt(x * x + z * z);
+        Assert.Equal(expected , new Vector2D(x , z).Length());
+    }
+
+    [Theory]
+    [InlineData(0 , 0)]
+    [InlineData(+1 , +1)]
+    [InlineData(+1 , -1)]
+    [InlineData(-1 , +1)]
+    [InlineData(-1 , -1)]
+    [InlineData(+1024 , +1024)]
+    [InlineData(+1024 , -1024)]
+    [InlineData(-1024 , +1024)]
+    [InlineData(-1024 , -1024)]
+    public void TestVector2ILength(int x , int z)
+    {
+        double expected = Math.Sqrt(x * x + z * z);
+        Assert.Equal(expected , new Vector2I(x , z).Length());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3DLength(double x , double y , double z)
+    {
+        double expected = Math.Sqrt(x * x + y * y + z * z);
+        Assert.Equal(expected , new Vector3D(x , y , z).Length());
+    }
+
+    [Theory]
+    [InlineData(0 , 0 , 0)]
+    [InlineData(+1 , +1 , +1)]
+    [InlineData(+1 , +1 , -1)]
+    [InlineData(+1 , -1 , +1)]
+    [InlineData(+1 , -1 , -1)]
+    [InlineData(-1 , +1 , +1)]
+    [InlineData(-1 , +1 , -1)]
+    [InlineData(-1 , -1 , +1)]
+    [InlineData(-1 , -1 , -1)]
+    [InlineData(+1024 , +1024 , +1024)]
+    [InlineData(+1024 , +1024 , -1024)]
+    [InlineData(+1024 , -1024 , +1024)]
+    [InlineData(+1024 , -1024 , -1024)]
+    [InlineData(-1024 , +1024 , +1024)]
+    [InlineData(-1024 , +1024 , -1024)]
+    [InlineData(-1024 , -1024 , +1024)]
+    [InlineData(-1024 , -1024 , -1024)]
+    public void TestVector3ILength(int x , int y , int z)
+    {
+        double expected = Math.Sqrt(x * x + y * y + z * z);
+        Assert.Equal(expected , new Vector3I(x , y , z).Length());
+    }
+    #endregion
+
     [Fact]
     public void TestVectorDotProduct()
     {
