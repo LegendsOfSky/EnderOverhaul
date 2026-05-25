@@ -62,10 +62,6 @@ public struct Vector2D : IVector<Vector2D , double> ,
         throw new NotImplementedException();
     }
 
-    public Vector2D CrossProduct(Vector2D other)
-    {
-        throw new NotImplementedException();
-    }
 
     public CompassDirection ToCardinalCompassDirection()
     {

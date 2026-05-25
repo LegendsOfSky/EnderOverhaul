@@ -63,10 +63,11 @@ public struct Vector3I : IVector<Vector3I , int> ,
         throw new NotImplementedException();
     }
 
-    public Vector3I CrossProduct(Vector3I other)
-    {
-        throw new NotImplementedException();
-    }
+    public Vector3I CrossProduct(Vector3I other) => new Vector3I(
+            this.Y * other.Z - this.Z * other.Y ,
+            this.Z * other.X - this.X * other.Z ,
+            this.X * other.Y - this.Y * other.X
+        );
 
     public CompassDirection ToCardinalCompassDirection()
     {
