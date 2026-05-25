@@ -1072,19 +1072,6 @@ public class VectorTest
     }
     #endregion
 
-    [Fact]
-    public void TestVectorDotProduct()
-    {
-        throw new NotImplementedException();
-    }
-
-
-    [Fact]
-    public void TestVectorCrossProduct()
-    {
-        throw new NotImplementedException();
-    }
-
 
 
     [Theory]
