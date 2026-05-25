@@ -56,11 +56,9 @@ public struct Vector2I : IVector<Vector2I , int> ,
     public int MaxEntry() => new[] { X , Z }.Max();
     public int MinEntry() => new[] { X , Z }.Min();
 
-    public int DotProduct(Vector2I other)
-    {
-        throw new NotImplementedException();
-    }
+    public int DotProduct(Vector2I other) => this.X * other.X + this.Z * other.Z;
 
+    public int Determinant(Vector2I other) => this.X * other.Z - this.Z * other.X;
 
     public CompassDirection ToCardinalCompassDirection()
     {
