@@ -28,6 +28,7 @@ internal interface IVector<TVector , out TValue>
     public TValue DotProduct(TVector other);
 
     public CompassDirection ToCardinalCompassDirection();
+
     public double ToHorizontalWorldAngle();
     public double ToVerticalWorldAngle();
 }

@@ -10,5 +10,6 @@ public abstract class Entity
     public Vector3D Position;
     public Vector3D Motion;
 
+
     public abstract void Tick();
 }

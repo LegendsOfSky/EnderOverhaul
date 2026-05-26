@@ -63,7 +63,6 @@ public class VectorTest
         Assert.False(vec3IZeroB != vec3IZeroA);
 
 
-
         Vector2D vec2DPosOneA = new Vector2D(1 , 1);
         Vector2D vec2DPosOneB = new Vector2D(1 , 1);
         Assert.True(vec2DPosOneA.Equals(vec2DPosOneB));
@@ -97,7 +96,6 @@ public class VectorTest
         Assert.True(vec3IPosOneB == vec3IPosOneA);
         Assert.False(vec3IPosOneA != vec3IPosOneB);
         Assert.False(vec3IPosOneB != vec3IPosOneA);
-
 
 
         Vector2D vec2DNegOneA = new Vector2D(-1 , -1);
@@ -135,7 +133,6 @@ public class VectorTest
         Assert.True(vec3INegOneB == vec3INegOneA);
         Assert.False(vec3INegOneA != vec3INegOneB);
         Assert.False(vec3INegOneB != vec3INegOneA);
-
 
 
         Assert.False(vec2DZeroA   == vec2DPosOneA);
@@ -1067,14 +1064,14 @@ public class VectorTest
 
 
     [Theory]
-    [InlineData(+1 ,  0 , -90 )]
-    [InlineData(-1 ,  0 , +90 )]
-    [InlineData( 0 , +1 ,  0  )]
-    [InlineData( 0 , -1 , -180)]
-    [InlineData(+1 , +1 , -45 )]
-    [InlineData(+1 , -1 , -135)]
-    [InlineData(-1 , +1 , +45 )]
-    [InlineData(-1 , -1 , +135)]
+    [InlineData(+1 ,  0 , -90 )]  // +- Cardinal direction
+    [InlineData(-1 ,  0 , +90 )]  // |
+    [InlineData( 0 , +1 ,  0  )]  // |
+    [InlineData( 0 , -1 , -180)]  // \_
+    [InlineData(+1 , +1 , -45 )]  // +- Ordinal direction
+    [InlineData(+1 , -1 , -135)]  // |
+    [InlineData(-1 , +1 , +45 )]  // |
+    [InlineData(-1 , -1 , +135)]  // \_
     public void TestVectorGetHorizontalWorldAngle(int x , int z , double angle)
     {
         Assert.Equal(angle , new Vector2D(x , z).ToHorizontalWorldAngle());
@@ -1114,7 +1111,7 @@ public class VectorTest
 
     [Theory]
     [InlineData( 0 ,  0 , false)]
-    [InlineData( 0 ,            -1 , true )]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            -1 , true )]  // +- Cardinal direction
     [InlineData( 0 ,            +1 , false)]  // |
     [InlineData(-1 ,             0 , false)]  // |
     [InlineData(+1 ,             0 , false)]  // |
@@ -1122,7 +1119,7 @@ public class VectorTest
     [InlineData( 0 , +int.MaxValue , false)]  // |
     [InlineData(-int.MaxValue ,  0 , false)]  // |
     [InlineData(+int.MaxValue ,  0 , false)]  // \_
-    [InlineData(-1 , -1 , true )]  // +- Perfect ordinal direction
+    [InlineData(-1 , -1 , true )]  // +- Ordinal direction
     [InlineData(+1 , -1 , true )]  // |
     [InlineData(-1 , +1 , false)]  // |
     [InlineData(+1 , +1 , false)]  // \_
@@ -1163,7 +1160,7 @@ public class VectorTest
 
     [Theory]
     [InlineData( 0 ,  0 , false)]
-    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            -1 , false)]  // +- Cardinal direction
     [InlineData( 0 ,            +1 , true )]  // |
     [InlineData(-1 ,             0 , false)]  // |
     [InlineData(+1 ,             0 , false)]  // |
@@ -1171,7 +1168,7 @@ public class VectorTest
     [InlineData( 0 , +int.MaxValue , true )]  // |
     [InlineData(-int.MaxValue ,  0 , false)]  // |
     [InlineData(+int.MaxValue ,  0 , false)]  // \_
-    [InlineData(-1 , -1 , false)]  // +- Perfect ordinal direction
+    [InlineData(-1 , -1 , false)]  // +- Ordinal direction
     [InlineData(+1 , -1 , false)]  // |
     [InlineData(-1 , +1 , true )]  // |
     [InlineData(+1 , +1 , true )]  // \_
@@ -1212,7 +1209,7 @@ public class VectorTest
 
     [Theory]
     [InlineData( 0 ,  0 , false)]
-    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            -1 , false)]  // +- Cardinal direction
     [InlineData( 0 ,            +1 , false)]  // |
     [InlineData(-1 ,             0 , true )]  // |
     [InlineData(+1 ,             0 , false)]  // |
@@ -1220,7 +1217,7 @@ public class VectorTest
     [InlineData( 0 , +int.MaxValue , false)]  // |
     [InlineData(-int.MaxValue ,  0 , true )]  // |
     [InlineData(+int.MaxValue ,  0 , false)]  // \_
-    [InlineData(-1 , -1 , true )]  // +- Perfect ordinal direction
+    [InlineData(-1 , -1 , true )]  // +- Ordinal direction
     [InlineData(+1 , -1 , false)]  // |
     [InlineData(-1 , +1 , true )]  // |
     [InlineData(+1 , +1 , false)]  // \_
@@ -1261,7 +1258,7 @@ public class VectorTest
 
     [Theory]
     [InlineData( 0 ,  0 , false)]
-    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            -1 , false)]  // +- Cardinal direction
     [InlineData( 0 ,            +1 , false)]  // |
     [InlineData(-1 ,             0 , false)]  // |
     [InlineData(+1 ,             0 , true )]  // |
@@ -1269,7 +1266,7 @@ public class VectorTest
     [InlineData( 0 , +int.MaxValue , false)]  // |
     [InlineData(-int.MaxValue ,  0 , false)]  // |
     [InlineData(+int.MaxValue ,  0 , true )]  // \_
-    [InlineData(-1 , -1 , false)]  // +- Perfect ordinal direction
+    [InlineData(-1 , -1 , false)]  // +- Ordinal direction
     [InlineData(+1 , -1 , true )]  // |
     [InlineData(-1 , +1 , false)]  // |
     [InlineData(+1 , +1 , true )]  // \_

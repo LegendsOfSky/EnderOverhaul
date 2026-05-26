@@ -51,38 +51,47 @@ public static class DirectionUtils
             case "North":
                 result = CompassDirection.North;
                 return true;
+
             case "S":
             case "South":
                 result = CompassDirection.South;
                 return true;
+
             case "E":
             case "East":
                 result = CompassDirection.East;
                 return true;
+
             case "W":
             case "West":
                 result = CompassDirection.West;
                 return true;
+
             case "NW":
             case "NorthWest":
             case "North West":
                 result = CompassDirection.NorthWest;
                 return true;
+
             case "NE":
             case "NorthEast":
             case "North East":
                 result = CompassDirection.NorthEast;
                 return true;
+
             case "SW":
             case "SouthWest":
             case "South West":
                 result = CompassDirection.SouthWest;
                 return true;
+
             case "SE":
             case "SouthEast":
             case "South East":
                 result = CompassDirection.SouthEast;
                 return true;
+
+
             default:
                 result = CompassDirection.None;
                 return false;
@@ -93,14 +102,25 @@ public static class DirectionUtils
     {
         CompassDirection compassDirection = CompassDirection.None;
 
-        if (angle > -135 && angle <= -45)
-            compassDirection = CompassDirection.East;
-        else if (angle > -45 && angle <= 45)
-            compassDirection = CompassDirection.South;
-        else if (angle > 45 && angle <= 135)
-            compassDirection = CompassDirection.West;
-        else if ((angle > 135 && angle <= 180) || (angle > -180 && angle <= -135))
-            compassDirection = CompassDirection.North;
+        switch (angle)
+        {
+            case > -135 and <= -45:
+                compassDirection = CompassDirection.East;
+                break;
+
+            case > -45 and <= 45:
+                compassDirection = CompassDirection.South;
+                break;
+
+            case > 45 and <= 135:
+                compassDirection = CompassDirection.West;
+                break;
+
+            case > +135 and <= +180:
+            case > -180 and <= -135:
+                compassDirection = CompassDirection.North;
+                break;
+        }
         return compassDirection;
     }
 }
