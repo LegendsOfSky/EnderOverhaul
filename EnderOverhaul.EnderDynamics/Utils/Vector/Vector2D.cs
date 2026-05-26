@@ -11,6 +11,7 @@ namespace EnderOverhaul.EnderDynamics.Utils.Vector;
 public struct Vector2D : IVector<Vector2D , double> ,
                          IAdditionOperators<Vector2D , Vector2D , Vector2D> ,
                          ISubtractionOperators<Vector2D , Vector2D , Vector2D> ,
+                         IMultiplyOperators<Vector2D , double , Vector2D> ,
                          IUnaryNegationOperators<Vector2D , Vector2D> ,
                          IEquatable<Vector2D> , IEqualityOperators<Vector2D , Vector2D , bool>
 {
@@ -115,6 +116,10 @@ public struct Vector2D : IVector<Vector2D , double> ,
     {
         return new Vector2D(left.X - right.X , left.Z - right.Z);
     }
+    #endregion
+
+    #region Implements IMultiplyOperators<Vector2D , double , Vector2D>
+    public static Vector2D operator *(Vector2D left , double right) => new(left.X * right , left.Z * right);
     #endregion
 
     #region Implements IUnaryNegationOperators<Vector2D , Vector2D>

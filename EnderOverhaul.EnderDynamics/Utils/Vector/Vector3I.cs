@@ -10,6 +10,7 @@ namespace EnderOverhaul.EnderDynamics.Utils.Vector;
 public struct Vector3I : IVector<Vector3I , int> ,
                          IAdditionOperators<Vector3I , Vector3I , Vector3I> ,
                          ISubtractionOperators<Vector3I , Vector3I , Vector3I> ,
+                         IMultiplyOperators<Vector3I , int , Vector3I> ,
                          IUnaryNegationOperators<Vector3I , Vector3I> ,
                          IEquatable<Vector3I> , IEqualityOperators<Vector3I , Vector3I , bool>
 {
@@ -115,6 +116,10 @@ public struct Vector3I : IVector<Vector3I , int> ,
     {
         return new Vector3I(left.X - right.X , left.Y - right.Y , left.Z - right.Z);
     }
+    #endregion
+
+    #region Implements IMultiplyOperators<Vector3I , double , Vector3I>
+    public static Vector3I operator *(Vector3I left , int right) => new Vector3I(left.X * right , left.Y * right , left.Z * right);
     #endregion
 
     #region Implements IUnaryNegationOperators<Vector3I , Vector3I>

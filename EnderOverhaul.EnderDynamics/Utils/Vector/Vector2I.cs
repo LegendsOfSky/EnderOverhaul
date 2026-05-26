@@ -10,6 +10,7 @@ namespace EnderOverhaul.EnderDynamics.Utils.Vector;
 public struct Vector2I : IVector<Vector2I , int> ,
                          IAdditionOperators<Vector2I , Vector2I , Vector2I> ,
                          ISubtractionOperators<Vector2I , Vector2I , Vector2I> ,
+                         IMultiplyOperators<Vector2I , int , Vector2I> ,
                          IUnaryNegationOperators<Vector2I , Vector2I> ,
                          IEquatable<Vector2I> , IEqualityOperators<Vector2I , Vector2I , bool>
 {
@@ -112,6 +113,10 @@ public struct Vector2I : IVector<Vector2I , int> ,
     }
     #endregion
 
+    #region Implements IMultiplyOperators<Vector2I , double , Vector2I>
+    public static Vector2I operator *(Vector2I left , int right) => new(left.X * right , left.Z * right);
+    #endregion
+
     #region IUnaryNegationOperators<Vector2I , Vector2I>
     /// <remarks> Never use when .X or .Z equal to Int.MinValue. </remarks>
     public static Vector2I operator -(Vector2I value)
@@ -148,4 +153,5 @@ public struct Vector2I : IVector<Vector2I , int> ,
         return !left.Equals(right);
     }
     #endregion
+
 }
