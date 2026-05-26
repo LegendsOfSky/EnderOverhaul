@@ -24,14 +24,6 @@ namespace EnderOverhaul.EnderDynamics.Test.Utils;
 public class VectorTest
 {
     [Fact]
-    public void TestVectorConversion()
-    {
-        throw new NotImplementedException();
-    }
-
-
-
-    [Fact]
     public void TestVectorEquality()
     {
         Vector2D vec2DZeroA = new Vector2D(0 , 0);
