@@ -32,25 +32,49 @@ public struct Vector2I : IVector<Vector2I , int> ,
     /// <summary> Check if the vector is facing at North or negative Z axis. </summary>
     public bool IsNorth()
     {
-        throw new NotImplementedException();
+        int xMagnitude = Math.Abs(X);
+        int zMagnitude = Math.Abs(Z);
+
+        if (xMagnitude > zMagnitude)
+            return false;
+
+        return Z < 0;
     }
 
     /// <summary> Check if the vector is facing at South or positive Z axis. </summary>
     public bool IsSouth()
     {
-        throw new NotImplementedException();
+        int xMagnitude = Math.Abs(X);
+        int zMagnitude = Math.Abs(Z);
+
+        if (xMagnitude > zMagnitude)
+            return false;
+
+        return Z > 0;
     }
 
     /// <summary> Check if the vector is facing at West or negative X axis. </summary>
     public bool IsWest()
     {
-        throw new NotImplementedException();
+        int xMagnitude = Math.Abs(X);
+        int zMagnitude = Math.Abs(Z);
+
+        if (zMagnitude > xMagnitude)
+            return false;
+
+        return X < 0;
     }
 
     /// <summary> Check if the vector is facing at East or positive X axis. </summary>
     public bool IsEast()
     {
-        throw new NotImplementedException();
+        int xMagnitude = Math.Abs(X);
+        int zMagnitude = Math.Abs(Z);
+
+        if (zMagnitude > xMagnitude)
+            return false;
+
+        return X > 0;
     }
 
     public int MaxEntry() => new[] { X , Z }.Max();

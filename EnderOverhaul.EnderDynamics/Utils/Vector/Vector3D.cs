@@ -34,25 +34,49 @@ public struct Vector3D : IVector<Vector3D , double> ,
     /// <summary> Check if the vector is facing at North or negative Z axis. </summary>
     public bool IsNorth()
     {
-        throw new NotImplementedException();
+        double xMagnitude = Math.Abs(X);
+        double zMagnitude = Math.Abs(Z);
+
+        if (xMagnitude > zMagnitude)
+            return false;
+
+        return Z < 0;
     }
 
     /// <summary> Check if the vector is facing at South or positive Z axis. </summary>
     public bool IsSouth()
     {
-        throw new NotImplementedException();
+        double xMagnitude = Math.Abs(X);
+        double zMagnitude = Math.Abs(Z);
+
+        if (xMagnitude > zMagnitude)
+            return false;
+
+        return Z > 0;
     }
 
     /// <summary> Check if the vector is facing at West or negative X axis. </summary>
     public bool IsWest()
     {
-        throw new NotImplementedException();
+        double xMagnitude = Math.Abs(X);
+        double zMagnitude = Math.Abs(Z);
+
+        if (zMagnitude > xMagnitude)
+            return false;
+
+        return X < 0;
     }
 
     /// <summary> Check if the vector is facing at East or positive X axis. </summary>
     public bool IsEast()
     {
-        throw new NotImplementedException();
+        double xMagnitude = Math.Abs(X);
+        double zMagnitude = Math.Abs(Z);
+
+        if (zMagnitude > xMagnitude)
+            return false;
+
+        return X > 0;
     }
 
     public double MaxEntry() => new[] { X , Y , Z }.Max();

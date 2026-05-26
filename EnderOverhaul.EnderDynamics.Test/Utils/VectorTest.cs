@@ -1120,27 +1120,199 @@ public class VectorTest
 
 
 
-    [Fact]
-    public void TestVectorIsNorth()
+    [Theory]
+    [InlineData( 0 ,  0 , false)]
+    [InlineData( 0 ,            -1 , true )]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            +1 , false)]  // |
+    [InlineData(-1 ,             0 , false)]  // |
+    [InlineData(+1 ,             0 , false)]  // |
+    [InlineData( 0 , -int.MaxValue , true )]  // |
+    [InlineData( 0 , +int.MaxValue , false)]  // |
+    [InlineData(-int.MaxValue ,  0 , false)]  // |
+    [InlineData(+int.MaxValue ,  0 , false)]  // \_
+    [InlineData(-1 , -1 , true )]  // +- Perfect ordinal direction
+    [InlineData(+1 , -1 , true )]  // |
+    [InlineData(-1 , +1 , false)]  // |
+    [InlineData(+1 , +1 , false)]  // \_
+    [InlineData(-1 , -2 , true )]
+    [InlineData(+1 , -2 , true )]
+    [InlineData(-1 , +2 , false)]
+    [InlineData(+1 , +2 , false)]
+    [InlineData(-2 , -1 , false)]
+    [InlineData(-2 , +1 , false)]
+    [InlineData(+2 , -1 , false)]
+    [InlineData(+2 , +1 , false)]
+    public void TestVectorIsNorth(int x , int z , bool expectedResult)
     {
-        throw new NotImplementedException();
+        Vector2D vec2D = new Vector2D(x , z);
+        Assert.Equal(expectedResult , vec2D.IsNorth());
+
+        Vector2I vec2I = new Vector2I(x , z);
+        Assert.Equal(expectedResult , vec2I.IsNorth());
+
+        Vector3D vec3D0 = new Vector3D(x , 0 , z);
+        Assert.Equal(expectedResult , vec3D0.IsNorth());
+
+        Vector3D vec3D128 = new Vector3D(x , 128 , z);
+        Assert.Equal(expectedResult , vec3D128.IsNorth());
+
+        Vector3D vec3D255 = new Vector3D(x , 255 , z);
+        Assert.Equal(expectedResult , vec3D255.IsNorth());
+
+        Vector3I vec3I0 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I0.IsNorth());
+
+        Vector3I vec3I128 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I128.IsNorth());
+
+        Vector3I vec3I255 = new Vector3I(x , 255 , z);
+        Assert.Equal(expectedResult , vec3I255.IsNorth());
     }
 
-    [Fact]
-    public void TestVectorIsSouth()
+    [Theory]
+    [InlineData( 0 ,  0 , false)]
+    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            +1 , true )]  // |
+    [InlineData(-1 ,             0 , false)]  // |
+    [InlineData(+1 ,             0 , false)]  // |
+    [InlineData( 0 , -int.MaxValue , false)]  // |
+    [InlineData( 0 , +int.MaxValue , true )]  // |
+    [InlineData(-int.MaxValue ,  0 , false)]  // |
+    [InlineData(+int.MaxValue ,  0 , false)]  // \_
+    [InlineData(-1 , -1 , false)]  // +- Perfect ordinal direction
+    [InlineData(+1 , -1 , false)]  // |
+    [InlineData(-1 , +1 , true )]  // |
+    [InlineData(+1 , +1 , true )]  // \_
+    [InlineData(-1 , -2 , false)]
+    [InlineData(+1 , -2 , false)]
+    [InlineData(-1 , +2 , true )]
+    [InlineData(+1 , +2 , true )]
+    [InlineData(-2 , -1 , false)]
+    [InlineData(-2 , +1 , false)]
+    [InlineData(+2 , -1 , false)]
+    [InlineData(+2 , +1 , false)]
+    public void TestVectorIsSouth(int x , int z , bool expectedResult)
     {
-        throw new NotImplementedException();
+        Vector2D vec2D = new Vector2D(x , z);
+        Assert.Equal(expectedResult , vec2D.IsSouth());
+
+        Vector2I vec2I = new Vector2I(x , z);
+        Assert.Equal(expectedResult , vec2I.IsSouth());
+
+        Vector3D vec3D0 = new Vector3D(x , 0 , z);
+        Assert.Equal(expectedResult , vec3D0.IsSouth());
+
+        Vector3D vec3D128 = new Vector3D(x , 128 , z);
+        Assert.Equal(expectedResult , vec3D128.IsSouth());
+
+        Vector3D vec3D255 = new Vector3D(x , 255 , z);
+        Assert.Equal(expectedResult , vec3D255.IsSouth());
+
+        Vector3I vec3I0 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I0.IsSouth());
+
+        Vector3I vec3I128 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I128.IsSouth());
+
+        Vector3I vec3I255 = new Vector3I(x , 255 , z);
+        Assert.Equal(expectedResult , vec3I255.IsSouth());
     }
 
-    [Fact]
-    public void TestVectorIsWest()
+    [Theory]
+    [InlineData( 0 ,  0 , false)]
+    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            +1 , false)]  // |
+    [InlineData(-1 ,             0 , true )]  // |
+    [InlineData(+1 ,             0 , false)]  // |
+    [InlineData( 0 , -int.MaxValue , false)]  // |
+    [InlineData( 0 , +int.MaxValue , false)]  // |
+    [InlineData(-int.MaxValue ,  0 , true )]  // |
+    [InlineData(+int.MaxValue ,  0 , false)]  // \_
+    [InlineData(-1 , -1 , true )]  // +- Perfect ordinal direction
+    [InlineData(+1 , -1 , false)]  // |
+    [InlineData(-1 , +1 , true )]  // |
+    [InlineData(+1 , +1 , false)]  // \_
+    [InlineData(-1 , -2 , false)]
+    [InlineData(+1 , -2 , false)]
+    [InlineData(-1 , +2 , false)]
+    [InlineData(+1 , +2 , false)]
+    [InlineData(-2 , -1 , true )]
+    [InlineData(-2 , +1 , true )]
+    [InlineData(+2 , -1 , false)]
+    [InlineData(+2 , +1 , false)]
+    public void TestVectorIsWest(int x , int z , bool expectedResult)
     {
-        throw new NotImplementedException();
+        Vector2D vec2D = new Vector2D(x , z);
+        Assert.Equal(expectedResult , vec2D.IsWest());
+
+        Vector2I vec2I = new Vector2I(x , z);
+        Assert.Equal(expectedResult , vec2I.IsWest());
+
+        Vector3D vec3D0 = new Vector3D(x , 0 , z);
+        Assert.Equal(expectedResult , vec3D0.IsWest());
+
+        Vector3D vec3D128 = new Vector3D(x , 128 , z);
+        Assert.Equal(expectedResult , vec3D128.IsWest());
+
+        Vector3D vec3D255 = new Vector3D(x , 255 , z);
+        Assert.Equal(expectedResult , vec3D255.IsWest());
+
+        Vector3I vec3I0 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I0.IsWest());
+
+        Vector3I vec3I128 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I128.IsWest());
+
+        Vector3I vec3I255 = new Vector3I(x , 255 , z);
+        Assert.Equal(expectedResult , vec3I255.IsWest());
     }
 
-    [Fact]
-    public void TestVectorIsEast()
+    [Theory]
+    [InlineData( 0 ,  0 , false)]
+    [InlineData( 0 ,            -1 , false)]  // +- Perfect cardinal direction
+    [InlineData( 0 ,            +1 , false)]  // |
+    [InlineData(-1 ,             0 , false)]  // |
+    [InlineData(+1 ,             0 , true )]  // |
+    [InlineData( 0 , -int.MaxValue , false)]  // |
+    [InlineData( 0 , +int.MaxValue , false)]  // |
+    [InlineData(-int.MaxValue ,  0 , false)]  // |
+    [InlineData(+int.MaxValue ,  0 , true )]  // \_
+    [InlineData(-1 , -1 , false)]  // +- Perfect ordinal direction
+    [InlineData(+1 , -1 , true )]  // |
+    [InlineData(-1 , +1 , false)]  // |
+    [InlineData(+1 , +1 , true )]  // \_
+    [InlineData(-1 , -2 , false)]
+    [InlineData(+1 , -2 , false)]
+    [InlineData(-1 , +2 , false)]
+    [InlineData(+1 , +2 , false)]
+    [InlineData(-2 , -1 , false)]
+    [InlineData(-2 , +1 , false)]
+    [InlineData(+2 , -1 , true )]
+    [InlineData(+2 , +1 , true )]
+    public void TestVectorIsEast(int x , int z , bool expectedResult)
     {
-        throw new NotImplementedException();
+        Vector2D vec2D = new Vector2D(x , z);
+        Assert.Equal(expectedResult , vec2D.IsEast());
+
+        Vector2I vec2I = new Vector2I(x , z);
+        Assert.Equal(expectedResult , vec2I.IsEast());
+
+        Vector3D vec3D0 = new Vector3D(x , 0 , z);
+        Assert.Equal(expectedResult , vec3D0.IsEast());
+
+        Vector3D vec3D128 = new Vector3D(x , 128 , z);
+        Assert.Equal(expectedResult , vec3D128.IsEast());
+
+        Vector3D vec3D255 = new Vector3D(x , 255 , z);
+        Assert.Equal(expectedResult , vec3D255.IsEast());
+
+        Vector3I vec3I0 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I0.IsEast());
+
+        Vector3I vec3I128 = new Vector3I(x , 0 , z);
+        Assert.Equal(expectedResult , vec3I128.IsEast());
+
+        Vector3I vec3I255 = new Vector3I(x , 255 , z);
+        Assert.Equal(expectedResult , vec3I255.IsEast());
     }
 }
