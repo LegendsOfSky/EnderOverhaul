@@ -19,7 +19,8 @@ public class EnderPearlEntity : Entity
 
 
     #region Implements Entity
-    public override void Tick()
+    /// <remarks> No argument is needed. </remarks>
+    public override void Tick(object[]? args = null)
     {
 #if VERSION_1_12_ABOVE
         Position += Motion;

@@ -30,5 +30,5 @@ public abstract class Entity
 
 
 
-    public abstract void Tick();
+    public abstract void Tick(object[]? args = null);
 }
