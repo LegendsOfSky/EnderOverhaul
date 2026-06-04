@@ -35,6 +35,7 @@ public static class DirectionExtension
 
 }
 
+
 public static class DirectionUtils
 {
     public static CompassDirection FormName(string name) => Enum.TryParse<CompassDirection>(name , out var value) ? value : CompassDirection.None;
