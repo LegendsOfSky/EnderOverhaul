@@ -1,9 +1,6 @@
-﻿using EnderOverhaul.EnderDynamics.Minecraft.Entities;
+﻿using Xunit.Abstractions;
+using EnderOverhaul.EnderDynamics.Minecraft.Entities;
 using EnderOverhaul.EnderDynamics.Utils.Vector;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit.Abstractions;
 
 
 namespace EnderOverhaul.EnderDynamics.Test.Minecraft;

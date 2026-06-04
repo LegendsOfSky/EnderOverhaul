@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EnderOverhaul.EnderDynamics.Utils;
+﻿namespace EnderOverhaul.EnderDynamics.Utils;
 
 [Flags]
 public enum CompassDirection

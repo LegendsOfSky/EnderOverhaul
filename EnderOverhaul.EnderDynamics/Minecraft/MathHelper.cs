@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EnderOverhaul.EnderDynamics.Minecraft;
+﻿namespace EnderOverhaul.EnderDynamics.Minecraft;
 
 /// <summary>
 /// The same math function that is used in Minecraft java edition with some additional helper function.
