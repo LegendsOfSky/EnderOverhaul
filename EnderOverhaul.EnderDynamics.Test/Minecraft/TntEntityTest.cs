@@ -10,7 +10,7 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
     public void TestTntTick(TntEntity tnt , TntEntity expected , int tickCount)
     {
         for (int i = 0; i < tickCount; i++)
-            tnt.Tick([false]);
+            tnt.Tick(false);
 
         testOutputHelper.WriteLine($"Tick {tickCount}");
         testOutputHelper.WriteLine(

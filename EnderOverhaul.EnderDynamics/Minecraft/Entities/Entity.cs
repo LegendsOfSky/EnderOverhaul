@@ -27,5 +27,5 @@ public abstract class Entity
 
 
 
-    public abstract void Tick(object[]? args = null);
+    public abstract void Tick(params object[]? args);
 }

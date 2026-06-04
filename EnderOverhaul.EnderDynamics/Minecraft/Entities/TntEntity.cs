@@ -56,7 +56,7 @@ public class TntEntity : Entity
     ///         </item>
     ///     </list>
     /// </param>
-    public override void Tick(object[]? args)
+    public override void Tick(params object[]? args)
     {
         const int argCount = 1;
 
