@@ -24,7 +24,9 @@ public class EnderPearlEntity : Entity
         Motion   *= 0.99F;
         Motion.Y -= 0.03F;
 #else
-        throw new NotImplementedException();
+        Motion.Y -= 0.03D; // TEST: it should be double, but maybe it is float.
+        Motion   *= 0.99F;
+        Position += Motion;
 #endif
     }
     #endregion
