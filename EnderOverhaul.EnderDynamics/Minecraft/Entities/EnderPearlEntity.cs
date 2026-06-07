@@ -24,7 +24,7 @@ public class EnderPearlEntity : Entity
         Motion   *= 0.99F;
         Motion.Y -= 0.03F;
 #elif VERSION_1_20_2_ABOVE
-        Motion.Y -= 0.03D; // TEST: it should be double, but maybe it is float.
+        Motion.Y -= 0.03D;
         Motion   *= 0.99F;
         Position += Motion;
 #else
