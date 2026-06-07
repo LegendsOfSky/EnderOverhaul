@@ -71,7 +71,7 @@ public class TntEntity : Entity
         #endregion
 
 
-#if VERSION_1_12_ABOVE
+#if VERSION_1_12_ABOVE || TRUE
         if (!isNoGravity)
             Motion.Y -= 0.04D;
 
@@ -85,7 +85,7 @@ public class TntEntity : Entity
             Motion.Z *=  0.7D;
         }
 #else
-        throw new NotImplementedException();
+        throw new NotSupportedException();
 #endif
     }
     #endregion
