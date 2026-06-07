@@ -23,10 +23,12 @@ public class EnderPearlEntity : Entity
         Position += Motion;
         Motion   *= 0.99F;
         Motion.Y -= 0.03F;
-#else
+#elif VERSION_1_20_2_ABOVE
         Motion.Y -= 0.03D; // TEST: it should be double, but maybe it is float.
         Motion   *= 0.99F;
         Position += Motion;
+#else
+        throw new NotSupportedException()
 #endif
     }
     #endregion

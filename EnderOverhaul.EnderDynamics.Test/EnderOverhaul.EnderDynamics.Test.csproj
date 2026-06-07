@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <Configurations>Debug;Release;Debug 1.12+;Release 1.12+</Configurations>
+    <Configurations>Debug;Release;Debug 1.12+;Release 1.12+;Debug 1.20.2+;Release 1.20.2+</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 1.12+|AnyCPU'">
@@ -14,6 +14,14 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 1.12+|AnyCPU'">
     <DefineConstants>$(DefineConstants);VERSION_1_12_ABOVE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 1.20.2+|AnyCPU'">
+    <DefineConstants>$(DefineConstants);VERSION_1_20_2_ABOVE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 1.20.2+|AnyCPU'">
+    <DefineConstants>$(DefineConstants);VERSION_1_20_2_ABOVE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

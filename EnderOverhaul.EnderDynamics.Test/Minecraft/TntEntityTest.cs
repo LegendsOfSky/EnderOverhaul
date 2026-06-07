@@ -29,7 +29,7 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
     }
     public static TheoryData<TntEntity , TntEntity , int> TestData_TestTntEntityTicking()
     {
-#if VERSION_1_12_ABOVE || TRUE
+#if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
         return new TheoryData<TntEntity , TntEntity , int>
         {
             { new TntEntity(new Vector3D(255.5 , 9.0 , 255.5) , new Vector3D(-0.001350661834939441 , 0.20000000298023224 , 0.019954340695889656)) , new TntEntity(new Vector3D(255.49864933816505 , 9.160000002980233   , 255.5199543406959 ) , new Vector3D(-0.001323648598240652  , 0.1568000029206276   , 0.01955525388197186 )) , 1  } ,

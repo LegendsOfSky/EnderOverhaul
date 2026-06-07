@@ -71,7 +71,7 @@ public class TntEntity : Entity
         #endregion
 
 
-#if VERSION_1_12_ABOVE || TRUE
+#if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
         if (!isNoGravity)
             Motion.Y -= 0.04D;
 

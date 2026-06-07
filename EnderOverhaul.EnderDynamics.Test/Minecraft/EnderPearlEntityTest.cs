@@ -1166,7 +1166,7 @@ public class EnderPearlEntityTest(ITestOutputHelper testOutputHelper)
             #endregion
             #endregion
         };
-#else
+#elif VERSION_1_20_2_ABOVE
         return new TheoryData<EnderPearlEntity , EnderPearlEntity , int>
         {
             #region Free falling tests
@@ -2302,6 +2302,8 @@ public class EnderPearlEntityTest(ITestOutputHelper testOutputHelper)
             #endregion
             #endregion
         };
+#else
+        throw new NotSupportedException();
 #endif
     }
 

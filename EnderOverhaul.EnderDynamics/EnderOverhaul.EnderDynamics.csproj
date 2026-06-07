@@ -4,7 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>Debug;Release;Release 1.12+;Debug 1.12+</Configurations>
+		<Configurations>Debug;Release;Release 1.12+;Debug 1.12+;Debug 1.20.2+;Release 1.20.2+</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 1.12+|AnyCPU'">
@@ -16,5 +16,28 @@
 		<DefineConstants>$(DefineConstants);VERSION_1_12_ABOVE</DefineConstants>
 		<OutputPath>bin\DEBUG\1_12_ABOVE\</OutputPath>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 1.20.2+|AnyCPU'">
+	  <DefineConstants>$(DefineConstants);VERSION_1_20_2_ABOVE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 1.20.2+|AnyCPU'">
+	  <DefineConstants>$(DefineConstants);VERSION_1_20_2_ABOVE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
 
 </Project>
