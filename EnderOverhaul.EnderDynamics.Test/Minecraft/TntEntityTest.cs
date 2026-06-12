@@ -19,7 +19,7 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
               + $"\texpect: ({expected.Position.X}, {expected.Position.Y}, {expected.Position.Z})"
             );
         testOutputHelper.WriteLine(
-                $"Position:\n"
+                $"Motion:\n"
               + $"\tactual: ({tnt.Motion.X}, {tnt.Motion.Y}, {tnt.Motion.Z})\n"
               + $"\texpect: ({expected.Motion.X}, {expected.Motion.Y}, {expected.Motion.Z})"
             );
