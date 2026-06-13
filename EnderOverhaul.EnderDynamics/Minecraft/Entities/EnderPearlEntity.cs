@@ -31,5 +31,10 @@ public class EnderPearlEntity : Entity
         throw new NotSupportedException()
 #endif
     }
+
+    public override Vector3D GetEyePos()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 }

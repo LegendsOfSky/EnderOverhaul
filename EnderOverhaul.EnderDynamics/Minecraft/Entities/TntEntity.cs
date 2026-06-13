@@ -15,21 +15,60 @@ public class TntEntity : Entity
     public TntEntity(Vector3D position , Vector3D motion) : base(position , motion) { }
 
 
-
-    public void AccelerateEntity(Entity entity)
+    public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
     {
-        switch (entity)
-        {
-            case EnderPearlEntity enderPearl:
-                throw new NotImplementedException();
+#if VERSION_1_20_2_ABOVE
+        Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);
 
-            case TntEntity tnt:
-                throw new NotImplementedException();
+        double ratioOfDistanceToDiameter = (entity.Position - centerOfExplosion).Length() / (explosionPower * 2.0F);
+        if (ratioOfDistanceToDiameter > 1.0D)
+            return;
+
+        Vector3D distance          = (entity is TntEntity ? entity.Position : entity.GetEyePos()) - centerOfExplosion;
+        double   euclideanDistance = distance.Length();
+        if (euclideanDistance == 0.0D)
+            return;
+
+        distance.X /= euclideanDistance;
+        distance.Y /= euclideanDistance;
+        distance.Z /= euclideanDistance;
+
+        /* Compute seenPercent */
+        float seenPercent = GetSeenPercent(entity);
+
+        /* Damage entity */
+        //    maybe a future feature.
+
+        /* Compute knockback multiplier */
+        float  knockbackBaseMultiplier         = 1.0F;
+        double knockbackIntermediateMultiplier = (1.0D - ratioOfDistanceToDiameter) * (double)seenPercent * (double)knockbackBaseMultiplier;
+        double knockbackEffectiveMultiplier = entity is ILivingEntity livingEntity
+            ? throw new NotImplementedException()
+            : knockbackIntermediateMultiplier;
+
+        Vector3D motion = distance * knockbackEffectiveMultiplier;
+        entity.Motion += motion;
+
+        /* Process player */
+        if (entity is Player player)
+            throw new NotImplementedException();  // maybe a future feature
+
+        /* Process onExplosionHit */
+        //     maybe a future feature.
+#else
+        throw new NotSupportedException();
+#endif
+    }
 
 
-            default:
-                throw new UnreachableException();
-        }
+    private float GetSeenPercent(Entity other)
+    {
+        return 1.0F;
+    }
+
+    private float GetKnockbackMultiplier()
+    {
+        return 1.0F;
     }
 
 
@@ -87,6 +126,11 @@ public class TntEntity : Entity
 #else
         throw new NotSupportedException();
 #endif
+    }
+
+    public override Vector3D GetEyePos()
+    {
+        throw new NotSupportedException();
     }
     #endregion
 }
