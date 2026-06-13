@@ -86,4 +86,1174 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
      *   -  +X+Z / +X-Z / -X+Z / -X-Z / +X / -X / +Z / -Z
      *   -  0 TNT / only 1 TNT / 2 TNT / 256 TNT / 1024 TNT / 4096 TNT
      */
+
+
+    [Theory, MemberData(nameof(TestData_TestTntAccelerateEntity))]
+    public void TestTntAccelerateEntity(TntEntity tnt , Entity entity , Entity expected)
+    {
+        tnt.AccelerateEntity(entity);
+        testOutputHelper.WriteLine(
+                $"TNT Position:\n"
+              + $"\tactual: ({tnt.Position.X}, {tnt.Position.Y}, {tnt.Position.Z})\n"
+            );
+        testOutputHelper.WriteLine(
+                $"Entity Position:\n"
+              + $"\tactual: ({entity.Position.X}, {entity.Position.Y}, {entity.Position.Z})\n"
+              + $"\texpect: ({expected.Position.X}, {expected.Position.Y}, {expected.Position.Z})"
+            );
+        testOutputHelper.WriteLine(
+                $"Motion:\n"
+              + $"\tactual: ({entity.Motion.X}, {entity.Motion.Y}, {entity.Motion.Z})\n"
+              + $"\texpect: ({expected.Motion.X}, {expected.Motion.Y}, {expected.Motion.Z})"
+            );
+
+        Assert.Equal(expected.Position , entity.Position);
+        Assert.Equal(expected.Motion   , entity.Motion  );
+    }
+    public static TheoryData<TntEntity , Entity , Entity> TestData_TestTntAccelerateEntity()
+    {
+#if VERSION_1_20_2_ABOVE
+        return new TheoryData<TntEntity , Entity , Entity>
+        {
+            #region TNT accelerate TNT
+            #region Explosion near origin
+            #region (+, +) quadrant near origin
+            #region Test compuate accuracy when acclerate towards east
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5087943506677117)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.49000000953674316) , new Vector3D(0.0               , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.49000000953674316) , new Vector3D(0.749487295829994 , -0.022953048881522803 , -0.007043059955578028))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , 0.49000000953674316) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , 0.49000000953674316) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.5099999904632568) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                , 0.0                   , 0.0                 )) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , 0.5099999904632568) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , 0.007395950147942588))
+            } ,
+            #endregion
+
+            #region Test compuate accuracy when accelerate towards south
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.509999990463257) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.509999990463257) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(0.0                  , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(0.007395950147942588 , -0.022650119369744263 , 0.7469916702756442))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.5094340547869702) , new Vector3D(0.0                    ,  0.0                  , 2.7732020880979567E-13)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.5094340547869702) , new Vector3D(-0.0073987206148278545 , -0.022658603932837036 , 0.7470621274981442    ))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.490000009536743) , new Vector3D(0 , 0                    , 0                 )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.490000009536743) , new Vector3D(0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when acclerate towards west
+            {
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compuate accuracy when acclerate towards north
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.50841051099345)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                  , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.007502748770603866 , -0.02297719046992943 , -0.7496793187533988))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , -0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, +) quadrant near origin
+            #region Test compute accuracy when accelerate towards east
+            {
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.5099999904632568) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , 0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.49000000953674316) , new Vector3D(0.0                , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.49000000953674316) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , 0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(0.0               , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.49000000953674316) , new Vector3D(0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards south
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.490000009536743) , new Vector3D(0.0                   , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.490000009536743) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 2.490000009536743) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 2.490000009536743) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.509999990463257) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards west
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.49000000953674316) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.49000000953674316) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.5099999904632568) , new Vector3D(-0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , 0.5099999904632568) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , 0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.49000000953674316) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , 0.49000000953674316) , new Vector3D(-0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards north
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.509999990463257)) ,
+                new TntEntity(new Vector3D(-0.4925038021446304 , -37.0 , 0.49000000953674316) , new Vector3D(1.0369848147211355E-13 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.4925038021446304 , -37.0 , 0.49000000953674316) , new Vector3D(0.006470152491941777   , -0.02265046766878977 , -0.7470031570356701))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 ,  -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , -0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , 2.490000009536743)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , 0.5099999904632568) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , -0.751970935856197))
+            } ,
+            #endregion
+            #endregion
+
+            #region (+, -) quadrant near origin
+            #region Test compute accuracy when accelerate towards east
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , 0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , -0.5099999904632568) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.0               , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.5099999904632568) , new Vector3D(0.0               , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.5099999904632568) , new Vector3D(0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards south
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.490000009536743)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , -0.023263303146856814 , 0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.509999990463257)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , -0.022651603426827455 , 0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.490000009536743)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.509999990463257)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards west
+            {
+                new TntEntity(new Vector3D(2.509999990463257 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5075517662484836) , new Vector3D(0.0                 , 0.0                   , -7.166448929862033E-14)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5075517662484836) , new Vector3D(-0.7470398804211061 , -0.022651581187315997 , 9.054065058280807E-4  ))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                 , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.490000009536743 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.49043053384987395 , -37.0 , -0.49000000953674316) , new Vector3D(-6.229702363838245E-14 , 0.0                   , 0.0                 )) ,
+                new TntEntity(new Vector3D(0.49043053384987395 , -37.0 , -0.49000000953674316) , new Vector3D(-0.7495350507678448    , -0.022959453678033342 , 0.007496957170722802))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards north
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.509999990463257) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.509999990463257) , new Vector3D(0.0 , -0.022651603426827455 , -0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.4969699204373668)) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , -0.023061348069705993 , -0.7503993420991371))
+            } ,
+            {
+                new TntEntity(new Vector3D(0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, -) quadrant near origin
+            #region Test compute accuracy when accelerate towards east
+            {
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.49604033173159656 , -37.0 , -0.49000000953674316) , new Vector3D(3.7125035701427584E-11 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-0.49604033173159656 , -37.0 , -0.49000000953674316) , new Vector3D(0.7477928963421641     , -0.022742419686284755 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0               , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards south
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -2.490000009536743)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                  , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.5012737763615767)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                   , 0.0                   , 0.0            )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(-0.007538561231844622 , -0.023086866239208796 , 0.7505676840152))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.490000009536743)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.49000000953674316) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -2.509999990463257)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards west
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , -0.49000000953674316) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.509999990463257 , -37.0 , -0.49000000953674316) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.49000000953674316) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.5099999904632568) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.490000009536743 , -37.0 , -0.5099999904632568) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            #endregion
+
+            #region Test compute accuracy when accelerate towards north
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -2.490000009536743) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.509999990463257) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.509999990463257) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.49000000953674316)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(0.0                  , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.490000009536743) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-0.5099999904632568 , -37.0 , -0.5099999904632568)) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.509999990463257) , new Vector3D(0.0                  , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-0.49000000953674316 , -37.0 , -2.509999990463257) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            #endregion
+            #endregion
+            #endregion
+
+            #region Explosion around 2048
+            #region (+, +) quadrant around 2048
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0               , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(0.0                , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2050.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5098799769366 , -17.0 , 2050.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(4.5582220247244974E-5 , -0.02326330309011309 , -0.7520218720923475))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2050.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0                 , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , 0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(0.0                 , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.4900000095367) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.4900000095367 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.4900000095367) , new Vector3D(0.0                 , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.4900000095367) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5099999904633 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2048.5099999904633) , new Vector3D(-0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.4900000095367) , new Vector3D(0.0                   , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.4900000095367) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5094000870004 , -17.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.4900000095367) , new Vector3D(0.0                    , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.4900000095367) , new Vector3D(-0.0073678548761800244 , -0.023261820515694923 , 0.7519739456055048))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2050.5099999904633) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2050.5099999904633) , new Vector3D(0.0 , -0.022651603426827455 , 0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -17.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.5099999904633) , new Vector3D(0.0                   , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -17.0 , 2050.5099999904633) , new Vector3D(-0.007395950147942588 , -0.022650119369744263 , 0.7469916702756442))
+            } ,
+            #endregion
+            #endregion
+
+            #region (+, -) quadrant around 2048
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0               , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2050.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.4959239863165) , new Vector3D(0.0               , 0.0                   , 4.3259131169990364E-14)) ,
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.4959239863165) , new Vector3D(0.749527003781537 , -0.022954264937562478 , -0.0022200902830519895))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(0.0 , -0.022651603426827455 , 0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2045.4900000095367) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2045.4900000095367) , new Vector3D(0.0 , -0.022651603426827455 , 0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.509725949973 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(0.0                   , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(1.0408304969478038E-4 , -0.023263302850996377 , 0.7520218643625337))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.506909403479 , -12.0 , -2045.4900000095367) , new Vector3D(1.4560145806777192E-13 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2048.506909403479 , -12.0 , -2045.4900000095367) , new Vector3D(-0.0011582441277438198 , -0.02295436257645224 , 0.7495301919901203))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                 , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(-0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.4900000095367 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.506312826875 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(-0.7499905482942234 , -0.023010883434308183 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5099999904633 , -12.0 , -2047.5077528464317)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                 , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(-0.7470399959542674 , -0.022651584690487447 , -8.310428139131224E-4))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2045.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.491662388179 , -12.0 , -2047.4900000095367) , new Vector3D(-1.6813143193131072E-13 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.491662388179 , -12.0 , -2047.4900000095367) , new Vector3D(6.230021955968205E-4    , -0.022954388526051847 , -0.7495310393239684))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.5099999904633 , -12.0 , -2045.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2045.5099999904633)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2045.4900000095367)) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2048.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0 , -0.022651603426827455 , -0.7470406138710955))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, +) quadrant around 2048
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2045.4940151276019 , -12.0 , 2048.4900000095367) , new Vector3D(5.935103494968917E-14 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.4940151276019 , -12.0 , 2048.4900000095367) , new Vector3D(0.7475406732001194    , -0.022711910177566526 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , 2048.4900000095367) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , 2048.4900000095367) , new Vector3D(0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.0                  , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.0                  , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.4900000095367) , new Vector3D(0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2050.5099999904633) , new Vector3D(0.0                   , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2050.5099999904633) , new Vector3D(-0.007395950147942588 , -0.022650119369744263 , 0.7469916702756442))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , 2048.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.4900000095367) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.4900000095367) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , 2048.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4930349468948 , -12.0 , 2048.5099999904633) , new Vector3D(3.1188994253955786E-13 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.4930349468948 , -12.0 , 2048.5099999904633) , new Vector3D(-0.7491534351005368    , -0.02290806212971471 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2050.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4924097020503) , new Vector3D(0.0 , 0.0                   , -1.0500021296051667E-13)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4924097020503) , new Vector3D(0.0 , -0.022991290043745838 , -0.749831465373622     ))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4900000095367) , new Vector3D(0.0                   , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.4900000095367) , new Vector3D(-0.007395950147942588 , -0.022650119369744263 , -0.7469916702756442))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2050.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                  , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2048.5099999904633) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , 2050.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , 2048.5099999904633) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, -) quadrant around 2048
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.0               , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.5099999904633) , new Vector3D(0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2045.4900000095367 , -12.0 , -2047.5099999904633) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.5099999904633) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(0.0                   , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(-0.007395950147942588 , -0.022650119369744263 , 0.7469916702756442))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2045.4900000095367) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5099999904633 , -12.0 , -2047.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2045.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2045.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2045.5099999904633)) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2047.4900000095367) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2047.4900000095367 , -12.0 , -2045.4900000095367)) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2047.5099999904633 , -12.0 , -2047.4900000095367) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            #endregion
+            #endregion
+            #endregion
+
+            #region Explosion around world border (+/-29999968, +/-29999968)
+            #region (+, +) quadrant around world border (+29999968, +29999968)
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.9999968502361342E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.7470219162215107 , -0.02265103648075311 , -0.004571379496632982))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.9999968504289474E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0                   )) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.7495058975160105 , -0.02295361855816815 , -0.0053550190705545534))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997049000001E7) , new Vector3D(0.0                   , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997049000001E7) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850986763E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                  , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996850986763E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.007445213458696276 , -0.022952890278447644 , -0.7494821169541711))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999997049000001E7) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999997049000001E7) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997050999999E7) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997050999999E7) , new Vector3D(0.0 , -0.022651603426827455 , 0.7470406138710955))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 8.0 , 2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , -0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996849000001E7) , new Vector3D(0.0 , -0.022651603426827455 , -0.7470406138710955))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 ,  8.0 , 2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.9999968506363004E7 , 8.0 , 2.999996850999999E7) , new Vector3D(1.9546234703465E-13  , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2.9999968506363004E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.006214531334730427 , -0.023262248369492578 , -0.7519877766342563))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 8.0 , 2.999996850999999E7) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            #endregion
+            #endregion
+
+            #region (+, -) quadrant around world border (+29999968, -29999968)
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999997050999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0 , -0.023263303146856814 , 0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0 , -0.02295439909021501 , 0.7495313842762282))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7) , new Vector3D(-0.751970935856197 , -0.02326172741107527 , -0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999997050999999E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999997049000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999997050999999E7) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999997050999999E7) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996849000001E7 , 11.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.0                  , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(2.999996850999999E7 , 11.0 , -2.999997049000001E7) , new Vector3D(0.0 , -0.023263303146856814 , -0.7520218739266752))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, +) quadrant around world border (-29999968, +29999968)
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(-2.999997049000001E7 , 12.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0               , 0.0                  , 0.0                 )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.751970935856197 , -0.02326172741107527 , 0.007595658701788324))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.7470406138710955 , -0.022651603426827455 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999997049000001E7 , 12.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999997050999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999997050999999E7) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.0 , -0.023263303146856814 , 0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.0 , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.0 , -0.023263303146856814 , 0.7520218739266752))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.0                  , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7) , new Vector3D(0.007494807436105638 , -0.02295287010936156 , 0.7494814583717813))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                 , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999997049000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                 , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999997049000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(-0.7520218739266752 , -0.023263303146856814 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0                 , 0.0                   , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996849000001E7) , new Vector3D(-0.7469916702756442 , -0.022650119369744263 , -0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(-0.007494807436105638 , -0.02295287010936156 , -0.7494814583717813))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , -0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , 2.999996850999999E7) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , 2.999996849000001E7) , new Vector3D(0.0 , -0.022651603426827455 , -0.7470406138710955))
+            } ,
+            #endregion
+            #endregion
+
+            #region (-, -) quadrant around world border (-29999968, -29999968)
+            #region Test compute accuracy towards east
+            {
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.0                , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.0                , 0.0                   , 0.0                 )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.7469916702756442 , -0.022650119369744263 , 0.007395950147942588))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.9999970505991884E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 ,  12.0 , -2.999996850999999E7) , new Vector3D(0.0                , 0.0                   , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 ,  12.0 , -2.999996850999999E7) , new Vector3D(0.7500305150432709 , -0.023015809883308702 , 0.0))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards south
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999997050999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.0                  , 0.0                   , 0.0               )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.007395950147942588 , -0.022650119369744263 , 0.7469916702756442))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.9999968494448464E7) , new Vector3D(0.0                    , 0.0                   , 5.5053721979650886E-14)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.9999968494448464E7) , new Vector3D(-0.0075170645341651795 , -0.023021032538500293 , 0.7500352026052619    ))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999997049000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.0                   , 0.0                  , 0.0              )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(-0.007595658701788324 , -0.02326172741107527 , 0.751970935856197))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards west
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996849000001E7) , new Vector3D(0.0                 , 0.0                  , 0.0)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996849000001E7) , new Vector3D(-0.7495313842762282 , -0.02295439909021501 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(0.0                 , 0.0                  , 0.0                  )) ,
+                new TntEntity(new Vector3D(-2.999997050999999E7 , 12.0 , -2.999996850999999E7) , new Vector3D(-0.7494814583717813 , -0.02295287010936156 , -0.007494807436105638))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.9999968507425006E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999997049000001E7 ,  12.0 , -2.999996849000001E7) , new Vector3D(0.0                 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999997049000001E7 ,  12.0 , -2.999996849000001E7) , new Vector3D(-0.7516504351779226 , -0.023221613295678477 , 0.00758256022787477))
+            } ,
+            #endregion
+
+            #region Test compute accuracy towards north
+            {
+                new TntEntity(new Vector3D(-2.999996850396163E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999997049000001E7) , new Vector3D(0.0                   , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999997049000001E7) , new Vector3D(-0.002293409567294291 , -0.023263159501215158 , -0.7520172303614885))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996850999999E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999997050999999E7) , new Vector3D(0.0 , 0.0                  , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999997050999999E7) , new Vector3D(0.0 , -0.02295439909021501 , -0.7495313842762282))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.9999970505076475E7) , new Vector3D(0.0 , 0.0                  , -2.369103498231045E-14)) ,
+                new TntEntity(new Vector3D(-2.999996849000001E7 , 12.0 , -2.9999970505076475E7) , new Vector3D(0.0 , -0.02272558751779458 , -0.7476538071786842   ))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999996849000001E7)) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999997050999999E7) , new Vector3D(0.0 , 0.0                   , 0.0                )) ,
+                new TntEntity(new Vector3D(-2.999996850999999E7 , 12.0 , -2.999997050999999E7) , new Vector3D(0.0 , -0.022651603426827455 , -0.7470406138710955))
+            } ,
+            #endregion
+            #endregion
+            #endregion
+            #endregion
+        };
+#else
+        throw new NotSupportedException();
+#endif
+    }
 }
