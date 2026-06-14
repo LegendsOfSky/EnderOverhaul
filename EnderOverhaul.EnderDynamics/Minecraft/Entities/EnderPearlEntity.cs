@@ -34,7 +34,7 @@ public class EnderPearlEntity : Entity
 
     public override Vector3D GetEyePos()
     {
-        throw new NotImplementedException();
+        return new Vector3D(Position.X , Position.Y + (0.25D * 0.85F) , Position.Z);
     }
     #endregion
 }
