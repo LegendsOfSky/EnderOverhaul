@@ -17,8 +17,8 @@ public class TntEntity : Entity
 
     public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
     {
-#if VERSION_1_20_2_ABOVE
-        Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);
+#if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
+        Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);  // assume center of explosion is correct
 
         double ratioOfDistanceToDiameter = (entity.Position - centerOfExplosion).Length() / (explosionPower * 2.0F);
         if (ratioOfDistanceToDiameter > 1.0D)
