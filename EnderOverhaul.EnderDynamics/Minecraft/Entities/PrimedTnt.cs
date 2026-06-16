@@ -4,17 +4,17 @@ using EnderOverhaul.EnderDynamics.Utils.Vector;
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
-public class TntEntity : Entity , IEntityBuilder<TntEntity>
+public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 {
     private Random rng = new Random();
 
-    public TntEntity()
+    public PrimedTnt()
     {
 
     }
 
-    public TntEntity(Vector3D position) : base(position) { }
-    public TntEntity(Vector3D position , Vector3D motion) : base(position , motion) { }
+    public PrimedTnt(Vector3D position) : base(position) { }
+    public PrimedTnt(Vector3D position , Vector3D motion) : base(position , motion) { }
 
 
     public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
@@ -26,7 +26,7 @@ public class TntEntity : Entity , IEntityBuilder<TntEntity>
         if (ratioOfDistanceToDiameter > 1.0D)
             return;
 
-        Vector3D distance          = (entity is TntEntity ? entity.Position : entity.GetEyePos()) - centerOfExplosion;
+        Vector3D distance          = (entity is PrimedTnt ? entity.Position : entity.GetEyePos()) - centerOfExplosion;
         double   euclideanDistance = distance.Length();
         if (euclideanDistance == 0.0D)
             return;

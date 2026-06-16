@@ -3,15 +3,15 @@
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
-public class EnderPearlEntity : Entity , IEntityBuilder<EnderPearlEntity>
+public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 {
-    public EnderPearlEntity()
+    public ThrownEnderpearl()
     {
 
     }
 
-    public EnderPearlEntity(Vector3D position) : base(position) { }
-    public EnderPearlEntity(Vector3D position , Vector3D motion) : base(position , motion) { }
+    public ThrownEnderpearl(Vector3D position) : base(position) { }
+    public ThrownEnderpearl(Vector3D position , Vector3D motion) : base(position , motion) { }
 
 
 
