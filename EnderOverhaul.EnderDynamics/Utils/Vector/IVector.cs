@@ -19,9 +19,9 @@ internal interface IVector<TVector , out TValue>
     public bool IsWest();
     public bool IsEast();
 
-    public TValue MaxEntry();
-    public TValue MinEntry();
-    public TValue DominantEntry();
+    public TValue GetMaxEntry();
+    public TValue GetMinEntry();
+    public TValue GetDominantEntry();
 
     public TValue DotProduct(TVector other);
 

@@ -905,7 +905,7 @@ public class VectorTest
     public void TestVector2DGetMaxEntry(double x , double z)
     {
         double expected = new[] { x , z }.Max();
-        Assert.Equal(expected , new Vector2D(x , z).MaxEntry());
+        Assert.Equal(expected , new Vector2D(x , z).GetMaxEntry());
     }
 
     [Theory]
@@ -921,7 +921,7 @@ public class VectorTest
     public void TestVector2IGetMaxEntry(int x , int z)
     {
         int expected = new[] { x , z }.Max();
-        Assert.Equal(expected , new Vector2I(x , z).MaxEntry());
+        Assert.Equal(expected , new Vector2I(x , z).GetMaxEntry());
     }
 
     [Theory]
@@ -945,7 +945,7 @@ public class VectorTest
     public void TestVector3DGetMaxEntry(double x , double y , double z)
     {
         double expected = new[] { x , y , z }.Max();
-        Assert.Equal(expected , new Vector3D(x , y , z).MaxEntry());
+        Assert.Equal(expected , new Vector3D(x , y , z).GetMaxEntry());
     }
 
     [Theory]
@@ -969,7 +969,7 @@ public class VectorTest
     public void TestVector3IGetMaxEntry(int x , int y , int z)
     {
         double expected = new[] { x , y , z }.Max();
-        Assert.Equal(expected , new Vector3I(x , y , z).MaxEntry());
+        Assert.Equal(expected , new Vector3I(x , y , z).GetMaxEntry());
     }
     #endregion
 
@@ -987,7 +987,7 @@ public class VectorTest
     public void TestVector2DGetMinEntry(double x , double z)
     {
         double expected = new[] { x , z }.Min();
-        Assert.Equal(expected , new Vector2D(x , z).MinEntry());
+        Assert.Equal(expected , new Vector2D(x , z).GetMinEntry());
     }
 
     [Theory]
@@ -1003,7 +1003,7 @@ public class VectorTest
     public void TestVector2IGetMinEntry(int x , int z)
     {
         int expected = new[] { x , z }.Min();
-        Assert.Equal(expected , new Vector2I(x , z).MinEntry());
+        Assert.Equal(expected , new Vector2I(x , z).GetMinEntry());
     }
 
     [Theory]
@@ -1027,7 +1027,7 @@ public class VectorTest
     public void TestVector3DGetMinEntry(double x , double y , double z)
     {
         double expected = new[] { x , y , z }.Min();
-        Assert.Equal(expected , new Vector3D(x , y , z).MinEntry());
+        Assert.Equal(expected , new Vector3D(x , y , z).GetMinEntry());
     }
 
     [Theory]
@@ -1051,7 +1051,7 @@ public class VectorTest
     public void TestVector3IGetMinEntry(int x , int y , int z)
     {
         double expected = new[] { x , y , z }.Min();
-        Assert.Equal(expected , new Vector3I(x , y , z).MinEntry());
+        Assert.Equal(expected , new Vector3I(x , y , z).GetMinEntry());
     }
     #endregion
 
