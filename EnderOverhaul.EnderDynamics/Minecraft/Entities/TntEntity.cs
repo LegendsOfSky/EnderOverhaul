@@ -43,20 +43,14 @@ public class TntEntity : Entity
 
         /* Compute knockback multiplier */
         float  knockbackBaseMultiplier         = 1.0F;
+        double dampingCoefficient              = 1.0D;
         double knockbackIntermediateMultiplier = (1.0D - ratioOfDistanceToDiameter) * (double)seenPercent * (double)knockbackBaseMultiplier;
         double knockbackEffectiveMultiplier = entity is ILivingEntity livingEntity
-            ? throw new NotImplementedException()
+            ? knockbackIntermediateMultiplier * dampingCoefficient
             : knockbackIntermediateMultiplier;
 
         Vector3D motion = distance * knockbackEffectiveMultiplier;
         entity.Motion += motion;
-
-        /* Process player */
-        if (entity is Player player)
-            throw new NotImplementedException();  // maybe a future feature
-
-        /* Process onExplosionHit */
-        //     maybe a future feature.
 #else
         throw new NotSupportedException();
 #endif
