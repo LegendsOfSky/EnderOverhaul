@@ -4,7 +4,7 @@ using EnderOverhaul.EnderDynamics.Utils.Vector;
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
-public class TntEntity : Entity
+public class TntEntity : Entity , IEntityBuilder<TntEntity>
 {
     private Random rng = new Random();
 
@@ -128,6 +128,24 @@ public class TntEntity : Entity
     public override Vector3D GetEyePos()
     {
         throw new NotSupportedException();
+    }
+    #endregion
+
+
+    #region implements IEntityBuilder<PrimedTnt>
+    public new PrimedTnt WithPosition(double x , double y , double z) => WithPosition(new Vector3D(x , y , z));
+    public new PrimedTnt WithPosition(Vector3D position)
+    {
+        Position = position;
+        return this;
+    }
+
+
+    public new PrimedTnt WithMotion(double x , double y , double z) => WithMotion(new Vector3D(x , y , z));
+    public new PrimedTnt WithMotion(Vector3D motion)
+    {
+        Motion = motion;
+        return this;
     }
     #endregion
 }

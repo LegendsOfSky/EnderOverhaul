@@ -3,7 +3,7 @@
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
-public class EnderPearlEntity : Entity
+public class EnderPearlEntity : Entity , IEntityBuilder<EnderPearlEntity>
 {
     public EnderPearlEntity()
     {
@@ -37,4 +37,18 @@ public class EnderPearlEntity : Entity
         return new Vector3D(Position.X , Position.Y + (0.25D * 0.85F) , Position.Z);
     }
     #endregion
+
+    public new ThrownEnderpearl WithPosition(double x , double y , double z) => WithPosition(new Vector3D(x , y , z));
+    public new ThrownEnderpearl WithPosition(Vector3D position)
+    {
+        Position = position;
+        return this;
+    }
+
+    public new ThrownEnderpearl WithMotion(double x , double y , double z) => WithMotion(new Vector3D(x , y , z));
+    public new ThrownEnderpearl WithMotion(Vector3D motion)
+    {
+        Motion = motion;
+        return this;
+    }
 }
