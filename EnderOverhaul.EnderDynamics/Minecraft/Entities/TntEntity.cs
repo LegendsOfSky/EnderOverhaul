@@ -6,6 +6,8 @@ namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
 public class TntEntity : Entity
 {
+    private Random rng = new Random();
+
     public TntEntity()
     {
 
@@ -72,9 +74,10 @@ public class TntEntity : Entity
     }
 
 
-    public void GenerateRandomPrimeMovement()
+    public void ApplyRandomPrimeMovement()
     {
-        throw new NotImplementedException();
+        double angle = rng.NextDouble() * ((float)Math.PI * 2F);
+        Motion = new Vector3D(-Math.Sin(angle) * 0.02D , 0.2F , -Math.Cos(angle) * 0.02D);
     }
 
 
