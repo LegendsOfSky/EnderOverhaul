@@ -21,6 +21,7 @@ internal interface IVector<TVector , out TValue>
 
     public TValue MaxEntry();
     public TValue MinEntry();
+    public TValue DominantEntry();
 
     public TValue DotProduct(TVector other);
 

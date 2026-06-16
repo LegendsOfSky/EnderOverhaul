@@ -86,6 +86,12 @@ public struct Vector3I : IVector<Vector3I , int> ,
 
     public int MaxEntry() => new[] { X , Y , Z }.Max();
     public int MinEntry() => new[] { X , Y , Z }.Min();
+    public int DominantEntry()
+    {
+        int absX = Math.Abs(X) , absY = Math.Abs(Y) , absZ = Math.Abs(Z);
+        if (absX > absY && absX > absZ) { return X; }
+        return absY > absZ ? Y : Z;
+    }
 
     public int DotProduct(Vector3I other) => this.X * other.X + this.Y * other.Y + this.Z * other.Z;
     public Vector3I CrossProduct(Vector3I other) => new Vector3I(
@@ -94,10 +100,10 @@ public struct Vector3I : IVector<Vector3I , int> ,
             this.X * other.Y - this.Y * other.X
         );
 
-    public CompassDirection ToCardinalCompassDirection()
-    {
-        throw new NotImplementedException();
-    }
+    public CompassDirection ToCardinalCompassDirection() =>
+        Math.Abs(X) > Math.Abs(Z) 
+            ? X > 0 ? CompassDirection.East  : CompassDirection.West
+            : Z > 0 ? CompassDirection.South : CompassDirection.North;
 
     public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
     public double ToVerticalWorldAngle()   => +Math.Atan2(Y , Math.Sqrt(X * X + Z * Z)) / Math.PI * 180;

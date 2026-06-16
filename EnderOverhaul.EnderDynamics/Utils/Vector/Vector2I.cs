@@ -85,14 +85,19 @@ public struct Vector2I : IVector<Vector2I , int> ,
     public int MaxEntry() => new[] { X , Z }.Max();
     public int MinEntry() => new[] { X , Z }.Min();
 
+    public int DominantEntry()
+    {
+        return Math.Abs(X) > Math.Abs(Z) ? X : Z;
+    }
+
     public int DotProduct(Vector2I other) => this.X * other.X + this.Z * other.Z;
 
     public int Determinant(Vector2I other) => this.X * other.Z - this.Z * other.X;
 
-    public CompassDirection ToCardinalCompassDirection()
-    {
-        throw new NotImplementedException();
-    }
+    public CompassDirection ToCardinalCompassDirection() =>
+        Math.Abs(X) > Math.Abs(Z)
+            ? X > 0 ? CompassDirection.East  : CompassDirection.West
+            : Z > 0 ? CompassDirection.South : CompassDirection.North;
 
     public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
     public double ToVerticalWorldAngle() => 0;
