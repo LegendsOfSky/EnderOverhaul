@@ -1251,6 +1251,554 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
             #endregion
             #endregion
             #endregion
+
+            #region Tnt accelerate Ender Pearl
+            #region Explosion near orgin
+            #region (+, +) quadrant near origin
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , 11.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 11.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 13.5) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 11.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 13.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , 15.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , 15.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , 15.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            #endregion
+
+            #region (+, -) quadrant near origin
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , -15.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(13.5 , 0.0 , -11.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -13.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -11.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(15.5 , 0.0 , -15.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -15.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -13.5) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(11.5 , 0.0 , -11.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            #endregion
+
+            #region (-, +) quadrant near origin
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , 11.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 11.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 13.5) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 11.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 11.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 13.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , 15.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , 15.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , 13.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , 15.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , 15.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            #endregion
+
+            #region (-, -) quadrant near origin
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , -15.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(-13.5 , 0.0 , -11.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -13.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -11.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(-11.5 , 0.0 , -15.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -15.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -15.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -13.5) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-13.5 , -0.04 , -13.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -11.5)) ,
+                new EnderPearlEntity(new Vector3D(-15.5 , 0.0 , -11.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            #endregion
+            #endregion
+
+            #region Explosion around 2048
+            #region (+, +) quadrant around 2048
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , 2048.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2050.5, 0.0, 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5, 0.0, 2052.5) , new Vector3D(0.0, 0.07139173716009803, 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2050.5) , new Vector3D(-0.7465802392691454, 0.07139173716009803, 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2052.5) , new Vector3D(-0.45605834910419196, 0.04361058072041619, 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2050.5) , new Vector3D(0.7465802392691454, 0.07139173716009803, 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2052.5) , new Vector3D(0.45605834910419196, 0.04361058072041619, 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5, 0.0, 2048.5) , new Vector3D(0.45605834910419196, 0.04361058072041619, -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5, -0.04, 2050.5)) ,
+
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5, 0.0, 2048.5) , new Vector3D(-0.45605834910419196, 0.04361058072041619, -0.45605834910419196))
+            } ,
+            #endregion
+
+            #region (+, -) quadrant around 2048
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , -2047.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , -2047.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2045.5) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2043.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2043.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2047.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2047.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2045.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2043.5)) ,
+                new EnderPearlEntity(new Vector3D(2052.5 , 0.0 , -2043.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2047.5)) ,
+                new EnderPearlEntity(new Vector3D(2048.5 , 0.0 , -2047.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2050.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , -2043.5)) ,
+                new EnderPearlEntity(new Vector3D(2050.5 , 0.0 , -2043.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            #endregion
+
+            #region (-, +) quadrant around 2048
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2050.5) , new Vector3D(0.0                 , -0.029999999329447746 , 0.0)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2050.5) , new Vector3D(-0.7465802392691454 , 0.04139173783065028   , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2050.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2050.5 , 0.0 , 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(-2050.5 , 0.0 , 2048.5) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2048.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2050.5 , 0.0 , 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(-2050.5 , 0.0 , 2052.5) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(-2048.5 , 0.0 , 2052.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2052.5)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2052.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2050.5 , -0.04 , 2050.5)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2048.5)) ,
+                new EnderPearlEntity(new Vector3D(-2052.5 , 0.0 , 2048.5) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            #endregion
+
+            #region (-, -) quadrant around 2048
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2043.5) , new Vector3D(0.0                  , -0.029999999329447746 , 0.0                )) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2043.5) , new Vector3D(-0.45605834910419196 , 0.013610581390968442  , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2045.5 , 0.0 , -2043.5) , new Vector3D(0.0 , -0.029999999329447746 , 0.0               )) ,
+                new EnderPearlEntity(new Vector3D(-2045.5 , 0.0 , -2043.5) , new Vector3D(0.0 , 0.04139173783065028   , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2047.5) , new Vector3D(0.0                  , -0.029999999329447746 , 0.0                 )) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2047.5) , new Vector3D(-0.45605834910419196 , 0.013610581390968442  , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2045.5 , 0.0 , -2047.5) , new Vector3D(0.0 , -0.029999999329447746 , 0.0                )) ,
+                new EnderPearlEntity(new Vector3D(-2045.5 , 0.0 , -2047.5) , new Vector3D(0.0 , 0.04139173783065028   , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2045.5) , new Vector3D(0.0                 , -0.029999999329447746 , 0.0)) ,
+                new EnderPearlEntity(new Vector3D(-2047.5 , 0.0 , -2045.5) , new Vector3D(-0.7465802392691454 , 0.04139173783065028   , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2043.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2043.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2047.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2047.5) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2045.5 , -0.04 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2045.5)) ,
+                new EnderPearlEntity(new Vector3D(-2043.5 , 0.0 , -2045.5) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            #endregion
+            #endregion
+
+            #region Explosion around world border (+/-29999968, +/-29999968)
+            #region (+, +) quadrant around world border (+29999968, +29999968)
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999705E7) , new Vector3D(0.0                 , -0.029999999329447746 , 0.0)) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999705E7) , new Vector3D(-0.7465802392691454 , 0.04139173783065028   , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999685E7) , new Vector3D(0.0                  , -0.029999999329447746 , 0.0                 )) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999685E7) , new Vector3D(-0.45605834910419196 , 0.013610581390968442  , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , 2.99999685E7) , new Vector3D(0.0 , -0.029999999329447746 , 0.0                )) ,
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , 2.99999685E7) , new Vector3D(0.0 , 0.04139173783065028   , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999725E7) , new Vector3D(0.0                  , -0.029999999329447746 , 0.0                )) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , 2.99999725E7) , new Vector3D(-0.45605834910419196 , 0.013610581390968442  , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , 2.99999725E7) , new Vector3D(0.0 , -0.029999999329447746 , 0.0               )) ,
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , 2.99999725E7) , new Vector3D(0.0 , 0.04139173783065028   , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999685E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999725E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , 2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , 2.99999705E7) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            #endregion
+
+            #region (+, -) quadrant around world border (+29999968, -29999968)
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , -2.99999725E7) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999705E7 , 0.0 , -2.99999685E7) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999705E7) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999685E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999725E7 , 0.0 , -2.99999725E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999725E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999705E7) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(2.99999705E7 , -0.04 , -2.99999705E7)) ,
+
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(2.99999685E7 , 0.0 , -2.99999685E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            #endregion
+
+            #region (-, +) quadrant around world border (-29999968, +29999968)
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , 2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , 2.99999685E7) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999685E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999705E7) , new Vector3D(-0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999685E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999705E7) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , 2.99999725E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , 2.99999725E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , 2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , 2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , 2.99999725E7) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            #endregion
+
+            #region (-, -) quadrant around world border (-29999968, -29999968)
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 ,        -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 ,   -2.99999705E7) , new Vector3D(0.0                 , -0.029999999329447746 , 0.0)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 ,   -2.99999705E7) , new Vector3D(-0.7465802392691454 , 0.04139173783065028   , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999705E7) , new Vector3D(0.7465802392691454 , 0.07139173716009803 , 0.0))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , -2.99999725E7) , new Vector3D(0.0 , 0.07139173716009803 , -0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999725E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , -2.99999685E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999705E7 , 0.0 , -2.99999685E7) , new Vector3D(0.0 , 0.07139173716009803 , 0.7465802392691454))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999685E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999685E7 , 0.0 , -2.99999685E7) , new Vector3D(0.45605834910419196 , 0.04361058072041619 , 0.45605834910419196))
+            } ,
+            {
+                new TntEntity(new Vector3D(-2.99999705E7 , -0.04 , -2.99999705E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , -2.99999725E7)) ,
+                new EnderPearlEntity(new Vector3D(-2.99999725E7 , 0.0 , -2.99999725E7) , new Vector3D(-0.45605834910419196 , 0.04361058072041619 , -0.45605834910419196))
+            } ,
+            #endregion
+            #endregion
+            #endregion
         };
 #elif VERSION_1_20_2_ABOVE
         return new TheoryData<TntEntity , Entity , Entity>
