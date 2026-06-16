@@ -30,6 +30,8 @@ public struct Vector3I : IVector<Vector3I , int> ,
     public static explicit operator Vector2I(Vector3I vec) => new Vector2I(vec.X , vec.Z);
     public static implicit operator Vector3D(Vector3I vec) => new Vector3D(vec.X , vec.Y , vec.Z);
 
+    public override string ToString() => $"({X}, {Y}, {Z})";
+
 
     #region Implements IVector<Vector3I , int>
     public double Length() => Math.Sqrt(X * X + Y * Y + Z * Z);

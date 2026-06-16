@@ -16,13 +16,13 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
         testOutputHelper.WriteLine($"Tick {tickCount}");
         testOutputHelper.WriteLine(
                 $"Position:\n"
-              + $"\tactual: ({tnt.Position.X}, {tnt.Position.Y}, {tnt.Position.Z})\n"
-              + $"\texpect: ({expected.Position.X}, {expected.Position.Y}, {expected.Position.Z})"
+              + $"\tactual: {tnt.Position}\n"
+              + $"\texpect: {expected.Position}"
             );
         testOutputHelper.WriteLine(
                 $"Motion:\n"
-              + $"\tactual: ({tnt.Motion.X}, {tnt.Motion.Y}, {tnt.Motion.Z})\n"
-              + $"\texpect: ({expected.Motion.X}, {expected.Motion.Y}, {expected.Motion.Z})"
+              + $"\tactual: {tnt.Motion}\n"
+              + $"\texpect: {expected.Motion}"
             );
 
         Assert.Equal(expected.Position , tnt.Position);
@@ -95,17 +95,17 @@ public class TntEntityTest(ITestOutputHelper testOutputHelper)
         tnt.AccelerateEntity(entity);
         testOutputHelper.WriteLine(
                 $"TNT Position:\n"
-              + $"\tactual: ({tnt.Position.X}, {tnt.Position.Y}, {tnt.Position.Z})\n"
+              + $"\tactual: {tnt.Position}\n"
             );
         testOutputHelper.WriteLine(
                 $"Entity Position:\n"
-              + $"\tactual: ({entity.Position.X}, {entity.Position.Y}, {entity.Position.Z})\n"
-              + $"\texpect: ({expected.Position.X}, {expected.Position.Y}, {expected.Position.Z})"
+              + $"\tactual: {entity.Position}\n"
+              + $"\texpect: {expected.Position}"
             );
         testOutputHelper.WriteLine(
                 $"Motion:\n"
-              + $"\tactual: ({entity.Motion.X}, {entity.Motion.Y}, {entity.Motion.Z})\n"
-              + $"\texpect: ({expected.Motion.X}, {expected.Motion.Y}, {expected.Motion.Z})"
+              + $"\tactual: {entity.Motion}\n"
+              + $"\texpect: {expected.Motion}"
             );
 
         Assert.Equal(expected.Position , entity.Position);

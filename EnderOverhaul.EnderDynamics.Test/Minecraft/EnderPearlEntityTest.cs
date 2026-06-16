@@ -16,13 +16,13 @@ public class EnderPearlEntityTest(ITestOutputHelper testOutputHelper)
         testOutputHelper.WriteLine($"Tick {tickCount}");
         testOutputHelper.WriteLine(
                 $"Position:\n"
-              + $"\tactual: ({enderPearl.Position.X}, {enderPearl.Position.Y}, {enderPearl.Position.Z})\n"
-              + $"\texpect: ({expected.Position.X}, {expected.Position.Y}, {expected.Position.Z})"
+              + $"\tactual: {enderPearl.Position}\n"
+              + $"\texpect: {expected.Position}"
             );
         testOutputHelper.WriteLine(
                 $"Position:\n"
-              + $"\tactual: ({enderPearl.Motion.X}, {enderPearl.Motion.Y}, {enderPearl.Motion.Z})\n"
-              + $"\texpect: ({expected.Motion.X}, {expected.Motion.Y}, {expected.Motion.Z})"
+              + $"\tactual: {enderPearl.Motion}\n"
+              + $"\texpect: {expected.Motion}"
             );
 
         Assert.Equal(expected.Position , enderPearl.Position);
