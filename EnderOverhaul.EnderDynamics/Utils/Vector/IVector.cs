@@ -10,20 +10,21 @@ internal interface IVector<TVector , out TValue>
                     IMultiplyOperators<TVector , TValue , TVector> ,
                     IUnaryNegationOperators<TVector , TVector> ,
                     IEquatable<TVector> , IEqualityOperators<TVector , TVector , bool>
-    // @formatter:on
+// @formatter:on
 {
-    public double Length();
+    public double Length   { get; }
+    public TValue MaxEntry { get; }
+    public TValue MinEntry { get; }
+
+
+    public TValue GetDominantEntry();
+
+    public TValue ComputeDotProductWith(TVector other);
 
     public bool IsNorth();
     public bool IsSouth();
     public bool IsWest();
     public bool IsEast();
-
-    public TValue GetMaxEntry();
-    public TValue GetMinEntry();
-    public TValue GetDominantEntry();
-
-    public TValue DotProduct(TVector other);
 
     public CompassDirection ToCardinalCompassDirection();
 

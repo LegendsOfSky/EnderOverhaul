@@ -2,11 +2,11 @@
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
+
 public abstract class Entity : IEntityBuilder<Entity>
 {
     public Vector3D Position;
     public Vector3D Motion;
-
 
 
     protected Entity()
@@ -24,7 +24,6 @@ public abstract class Entity : IEntityBuilder<Entity>
         Position = position;
         Motion = motion;
     }
-
 
 
     public abstract void Tick(params object[]? args);

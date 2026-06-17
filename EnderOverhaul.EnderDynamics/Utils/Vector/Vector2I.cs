@@ -15,7 +15,6 @@ public struct Vector2I : IVector<Vector2I , int> ,
     public int Z;
 
 
-
     public Vector2I(int x , int z)
     {
         X = x;
@@ -23,27 +22,37 @@ public struct Vector2I : IVector<Vector2I , int> ,
     }
 
 
-
     public static implicit operator Vector2D(Vector2I vec) => new Vector2D(vec.X , vec.Z);
     public static implicit operator Vector3D(Vector2I vec) => new Vector3D(vec.X , 0 , vec.Z);
     public static implicit operator Vector3I(Vector2I vec) => new Vector3I(vec.X , 0 , vec.Z);
+
+    public int Determinant(Vector2I other) => this.X * other.Z - this.Z * other.X;
 
     public override string ToString() => $"({X}, {Z})";
 
 
     #region Implements IVector<Vector2I , int>
-    public double Length() => Math.Sqrt(X * X + Z * Z);
+    public double Length   => Math.Sqrt(X * X + Z * Z);
+    public int    MaxEntry => new[] { X , Z }.Max();
+    public int    MinEntry => new[] { X , Z }.Min();
+
+
+    public int GetDominantEntry()
+    {
+        return Math.Abs(X) > Math.Abs(Z) ? X : Z;
+    }
+
+    public CompassDirection ToCardinalCompassDirection() =>
+        Math.Abs(X) > Math.Abs(Z)
+            ? X > 0 ? CompassDirection.East : CompassDirection.West
+            : Z > 0 ? CompassDirection.South : CompassDirection.North;
 
     /// <summary> Check if the vector is facing at North or negative Z axis. </summary>
     public bool IsNorth()
     {
         int xMagnitude = Math.Abs(X);
         int zMagnitude = Math.Abs(Z);
-
-        if (xMagnitude > zMagnitude)
-            return false;
-
-        return Z < 0;
+        return zMagnitude >= xMagnitude && Z < 0;
     }
 
     /// <summary> Check if the vector is facing at South or positive Z axis. </summary>
@@ -51,11 +60,7 @@ public struct Vector2I : IVector<Vector2I , int> ,
     {
         int xMagnitude = Math.Abs(X);
         int zMagnitude = Math.Abs(Z);
-
-        if (xMagnitude > zMagnitude)
-            return false;
-
-        return Z > 0;
+        return zMagnitude >= xMagnitude && Z > 0;
     }
 
     /// <summary> Check if the vector is facing at West or negative X axis. </summary>
@@ -63,11 +68,7 @@ public struct Vector2I : IVector<Vector2I , int> ,
     {
         int xMagnitude = Math.Abs(X);
         int zMagnitude = Math.Abs(Z);
-
-        if (zMagnitude > xMagnitude)
-            return false;
-
-        return X < 0;
+        return xMagnitude >= zMagnitude && X < 0;
     }
 
     /// <summary> Check if the vector is facing at East or positive X axis. </summary>
@@ -75,87 +76,35 @@ public struct Vector2I : IVector<Vector2I , int> ,
     {
         int xMagnitude = Math.Abs(X);
         int zMagnitude = Math.Abs(Z);
-
-        if (zMagnitude > xMagnitude)
-            return false;
-
-        return X > 0;
+        return xMagnitude >= zMagnitude && X > 0;
     }
 
-    public int MaxEntry() => new[] { X , Z }.Max();
-    public int MinEntry() => new[] { X , Z }.Min();
-
-    public int DominantEntry()
-    {
-        return Math.Abs(X) > Math.Abs(Z) ? X : Z;
-    }
-
-    public int DotProduct(Vector2I other) => this.X * other.X + this.Z * other.Z;
-
-    public int Determinant(Vector2I other) => this.X * other.Z - this.Z * other.X;
-
-    public CompassDirection ToCardinalCompassDirection() =>
-        Math.Abs(X) > Math.Abs(Z)
-            ? X > 0 ? CompassDirection.East  : CompassDirection.West
-            : Z > 0 ? CompassDirection.South : CompassDirection.North;
+    public int ComputeDotProductWith(Vector2I other) => this.X * other.X + this.Z * other.Z;
 
     public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
+
     public double ToVerticalWorldAngle() => 0;
     #endregion
 
-    #region Implements IAdditionOperators<Vector2I , Vector2I , Vector2I>
-    public static Vector2I operator +(Vector2I left , Vector2I right)
-    {
-        return new Vector2I(left.X + right.X , left.Z + right.Z);
-    }
-    #endregion
+    #region Implements for other inheritances
+    public static Vector2I operator +(Vector2I left , Vector2I right) => new(left.X + right.X , left.Z + right.Z);
 
-    #region Implements ISubtractionOperators<Vector2I , Vector2I , Vector2I>
-    public static Vector2I operator -(Vector2I left , Vector2I right)
-    {
-        return new Vector2I(left.X - right.X , left.Z - right.Z);
-    }
-    #endregion
+    public static Vector2I operator -(Vector2I left , Vector2I right) => new(left.X - right.X , left.Z - right.Z);
 
-    #region Implements IMultiplyOperators<Vector2I , double , Vector2I>
     public static Vector2I operator *(Vector2I left , int right) => new(left.X * right , left.Z * right);
-    #endregion
 
-    #region IUnaryNegationOperators<Vector2I , Vector2I>
     /// <remarks> Never use when .X or .Z equal to Int.MinValue. </remarks>
-    public static Vector2I operator -(Vector2I value)
-    {
-        return new Vector2I(-value.X , -value.Z);
-    }
-    #endregion
+    public static Vector2I operator -(Vector2I value) => new(-value.X , -value.Z);
 
-    #region IEquatable<Vector2I>
-    public bool Equals(Vector2I other)
-    {
-        return X == other.X && Z == other.Z;
-    }
+    public bool Equals(Vector2I other) => X == other.X && Z == other.Z;
 
-    public override bool Equals(object? obj)
-    {
-        return obj is Vector2I other && Equals(other);
-    }
+    public override bool Equals(object? obj) => obj is Vector2I other && Equals(other);
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X , Z);
-    }
-    #endregion
+    public override int GetHashCode() => HashCode.Combine(X , Z);
 
-    #region IEqualityOperators<Vector2I , Vector2I , bool>
-    public static bool operator ==(Vector2I left , Vector2I right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Vector2I left , Vector2I right) => left.Equals(right);
 
-    public static bool operator !=(Vector2I left , Vector2I right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(Vector2I left , Vector2I right) => !left.Equals(right);
     #endregion
 
 }

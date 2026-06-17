@@ -14,7 +14,6 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
     public ThrownEnderpearl(Vector3D position , Vector3D motion) : base(position , motion) { }
 
 
-
     #region Implements Entity
     /// <remarks> No argument is needed. </remarks>
     public override void Tick(params object[]? args)
@@ -34,10 +33,11 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 
     public override Vector3D GetEyePos()
     {
-        return new Vector3D(Position.X , Position.Y + (0.25D * 0.85F) , Position.Z);
+        return new Vector3D(Position.X , Position.Y + 0.25D * 0.85F , Position.Z);
     }
     #endregion
 
+    #region Implements IEntityBuilder<ThrownEnderpearl>
     public new ThrownEnderpearl WithPosition(double x , double y , double z) => WithPosition(new Vector3D(x , y , z));
     public new ThrownEnderpearl WithPosition(Vector3D position)
     {
@@ -51,4 +51,5 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
         Motion = motion;
         return this;
     }
+    #endregion
 }

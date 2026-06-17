@@ -1,5 +1,6 @@
 ﻿namespace EnderOverhaul.EnderDynamics.Utils;
 
+
 [Flags]
 public enum CompassDirection
 {
@@ -13,6 +14,7 @@ public enum CompassDirection
     SouthWest = South | West ,
     SouthEast = South | East ,
 }
+
 
 public static class DirectionExtension
 {
@@ -32,7 +34,6 @@ public static class DirectionExtension
 
         return (CompassDirection)result;
     }
-
 }
 
 

@@ -6,7 +6,8 @@ namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
 public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 {
-    private Random rng = new Random();
+    private readonly Random rng = new Random();
+
 
     public PrimedTnt()
     {
@@ -20,14 +21,15 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
     public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
     {
 #if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
-        Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);  // assume center of explosion is correct
+        Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);
 
-        double ratioOfDistanceToDiameter = (entity.Position - centerOfExplosion).Length() / (explosionPower * 2.0F);
+        double ratioOfDistanceToDiameter = (entity.Position - centerOfExplosion).Length / (explosionPower * 2.0F);
         if (ratioOfDistanceToDiameter > 1.0D)
             return;
 
-        Vector3D distance          = (entity is PrimedTnt ? entity.Position : entity.GetEyePos()) - centerOfExplosion;
-        double   euclideanDistance = distance.Length();
+        Vector3D centerOfTarget = entity is PrimedTnt ? entity.Position : entity.GetEyePos();
+        Vector3D distance = centerOfTarget - centerOfExplosion;
+        double euclideanDistance = distance.Length;
         if (euclideanDistance == 0.0D)
             return;
 
@@ -42,8 +44,8 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
         //    maybe a future feature.
 
         /* Compute knockback multiplier */
-        float  knockbackBaseMultiplier         = 1.0F;
-        double dampingCoefficient              = 1.0D;
+        float knockbackBaseMultiplier = 1.0F;
+        double dampingCoefficient = 1.0D;
         double knockbackIntermediateMultiplier = (1.0D - ratioOfDistanceToDiameter) * (double)seenPercent * (double)knockbackBaseMultiplier;
         double knockbackEffectiveMultiplier = entity is ILivingEntity livingEntity
             ? knockbackIntermediateMultiplier * dampingCoefficient
@@ -68,10 +70,11 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
     }
 
 
-    public void ApplyRandomPrimeMovement()
+    public PrimedTnt ApplyRandomPrimeMovement()
     {
         double angle = rng.NextDouble() * ((float)Math.PI * 2F);
         Motion = new Vector3D(-Math.Sin(angle) * 0.02D , 0.2F , -Math.Cos(angle) * 0.02D);
+        return this;
     }
 
 
@@ -108,8 +111,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 
 
 #if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
-        if (!isNoGravity)
-            Motion.Y -= 0.04D;
+        if (!isNoGravity) { Motion.Y -= 0.04D; }
 
         Position += Motion;
         Motion   *= 0.98D;
@@ -130,7 +132,6 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
         throw new NotSupportedException();
     }
     #endregion
-
 
     #region implements IEntityBuilder<PrimedTnt>
     public new PrimedTnt WithPosition(double x , double y , double z) => WithPosition(new Vector3D(x , y , z));
