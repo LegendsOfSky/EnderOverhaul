@@ -8,6 +8,8 @@ public static class EnderDynamicsInfo
         {
 #if VERSION_1_12_ABOVE
             return "VERSION_1_12_ABOVE";
+#elif VERSION_1_20_2_ABOVE
+            return "VERSION_1_20_2_ABOVE";
 #else
             return "Latest";
 #endif
