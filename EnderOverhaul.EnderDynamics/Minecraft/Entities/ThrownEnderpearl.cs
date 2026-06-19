@@ -27,7 +27,7 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
         Motion   *= 0.99F;
         Position += Motion;
 #else
-        throw new NotSupportedException()
+        throw new NotSupportedException();
 #endif
     }
 
