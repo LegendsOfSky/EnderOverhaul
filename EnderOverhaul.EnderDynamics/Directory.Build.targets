@@ -1,0 +1,70 @@
+<Project>
+		<!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+
+		<!-- Location (under this project's obj/) to stage the versioned EnderDynamics builds.
+       We anchor with MSBuildProjectDirectory so the path passed to sub-MSBuild is absolute
+       and the builds land under EnderMechanics' intermediates (not the child project's). -->
+		<PropertyGroup>
+				<_VersionedDynamicsDir>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\$(IntermediateOutputPath)versioned-dynamics\'))</_VersionedDynamicsDir>
+		</PropertyGroup>
+
+		<Target Name="BuildVersionedDynamics" BeforeTargets="Build">
+				<Message Text="Build all EnderOverhaul.EnderDynamics versions" Importance="high" />
+
+				<!-- Determine base configuration (Debug or Release) stripping any version suffix -->
+				<PropertyGroup>
+						<_BaseConfig>$(Configuration)</_BaseConfig>
+						<_BaseConfig Condition="$(_BaseConfig.EndsWith(' 1.12+')) or ($(_BaseConfig.EndsWith(' 1.20.2+')))">$(_BaseConfig.Substring(0, $(_BaseConfig.LastIndexOf(' '))))</_BaseConfig>
+						<_BaseConfig Condition="'$(_BaseConfig)' == ''">Debug</_BaseConfig>
+				</PropertyGroup>
+
+				<!-- Build versioned variants into a staging dir under intermediates.
+         They will be copied to final output lib/ via Include target below. -->
+				<Message Text="Handle EnderDynamics for Minecraft 1.12+" Importance="normal" />
+				<MSBuild Projects="..\EnderOverhaul.EnderDynamics.Impl\EnderOverhaul.EnderDynamics.Impl.csproj"
+								 Targets="Build"
+								 Properties="Configuration=$(_BaseConfig) 1.12+;
+                         Platform=$(Platform);
+                         DefineConstants=VERSION_1_12_ABOVE;
+                         OutputPath=$(_VersionedDynamicsDir)VERSION_1_12_ABOVE\" />
+
+				<Message Text="Handle EnderDynamics for Minecraft 1.20.2+" Importance="normal" />
+				<MSBuild Projects="..\EnderOverhaul.EnderDynamics.Impl\EnderOverhaul.EnderDynamics.Impl.csproj"
+								 Targets="Build"
+								 Properties="Configuration=$(_BaseConfig) 1.20.2+;
+                         Platform=$(Platform);
+                         DefineConstants=VERSION_1_20_2_ABOVE;
+                         OutputPath=$(_VersionedDynamicsDir)VERSION_1_20_2_ABOVE\" />
+
+				<Message Text="All EnderOverhaul.EnderDynamics versions have been built" Importance="high" />
+		</Target>
+
+		<!-- Declare the staged versioned assemblies using explicit paths + temp items.
+       Copy metadata will place them under lib/ for this project and (ideally) consumers. -->
+		<Target Name="IncludeVersionedDynamicsLibs"
+						AfterTargets="BuildVersionedDynamics"
+						BeforeTargets="GetCopyToOutputDirectoryItems;AssignTargetPaths"
+						DependsOnTargets="BuildVersionedDynamics">
+				<ItemGroup>
+						<_V12 Include="$(_VersionedDynamicsDir)VERSION_1_12_ABOVE\*.*" Exclude="$(_VersionedDynamicsDir)VERSION_1_12_ABOVE\*.pdb;$(_VersionedDynamicsDir)VERSION_1_12_ABOVE\*.xml" />
+						<_V20 Include="$(_VersionedDynamicsDir)VERSION_1_20_2_ABOVE\*.*" Exclude="$(_VersionedDynamicsDir)VERSION_1_20_2_ABOVE\*.pdb;$(_VersionedDynamicsDir)VERSION_1_20_2_ABOVE\*.xml" />
+				</ItemGroup>
+
+				<ItemGroup>
+						<None Include="@(_V12)"
+									CopyToOutputDirectory="PreserveNewest"
+									CopyToPublishDirectory="PreserveNewest">
+								<TargetPath>lib\VERSION_1_12_ABOVE\%(Filename)%(Extension)</TargetPath>
+								<Visible>false</Visible>
+						</None>
+						<None Include="@(_V20)"
+									CopyToOutputDirectory="PreserveNewest"
+									CopyToPublishDirectory="PreserveNewest">
+								<TargetPath>lib\VERSION_1_20_2_ABOVE\%(Filename)%(Extension)</TargetPath>
+								<Visible>false</Visible>
+						</None>
+				</ItemGroup>
+
+				<Message Text="Prepared versioned EnderDynamics libs for copy under lib\" Importance="high" />
+		</Target>
+</Project>
