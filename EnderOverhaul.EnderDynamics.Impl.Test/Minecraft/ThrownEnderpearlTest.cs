@@ -1,9 +1,9 @@
-﻿using Xunit.Abstractions;
-using EnderOverhaul.EnderDynamics.Minecraft.Entities;
-using EnderOverhaul.EnderDynamics.Utils.Vector;
+﻿using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
+using EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities;
+using Xunit.Abstractions;
 
 
-namespace EnderOverhaul.EnderDynamics.Test.Minecraft;
+namespace EnderOverhaul.EnderDynamics.Impl.Test.Minecraft;
 
 public class ThrownEnderpearlTest(ITestOutputHelper testOutputHelper)
 {

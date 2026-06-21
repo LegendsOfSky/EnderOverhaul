@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using EnderOverhaul.EnderDynamics.Utils.Vector;
+﻿using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
 
-namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
+namespace EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities;
 
 public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 {

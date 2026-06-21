@@ -1,4 +1,4 @@
-﻿namespace EnderOverhaul.EnderDynamics;
+﻿namespace EnderOverhaul.EnderDynamics.Impl;
 
 public static class EnderDynamicsInfo
 {
@@ -11,7 +11,7 @@ public static class EnderDynamicsInfo
 #elif VERSION_1_20_2_ABOVE
             return "VERSION_1_20_2_ABOVE";
 #else
-            return "Latest";
+            return "DUMMY_REF_ONLY";
 #endif
         }
     }

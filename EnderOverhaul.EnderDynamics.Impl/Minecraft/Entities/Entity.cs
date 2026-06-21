@@ -1,6 +1,7 @@
-﻿using EnderOverhaul.EnderDynamics.Utils.Vector;
+﻿using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
-namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
+
+namespace EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities;
 
 
 public abstract class Entity : IEntityBuilder<Entity>

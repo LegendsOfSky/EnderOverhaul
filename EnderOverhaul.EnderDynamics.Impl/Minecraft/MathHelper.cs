@@ -1,4 +1,4 @@
-﻿namespace EnderOverhaul.EnderDynamics.Minecraft;
+﻿namespace EnderOverhaul.EnderDynamics.Impl.Minecraft;
 
 /// <summary>
 /// The same math function that is used in Minecraft java edition with some additional helper function.

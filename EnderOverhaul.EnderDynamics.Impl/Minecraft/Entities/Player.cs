@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using EnderOverhaul.EnderDynamics.Utils.Vector;
+﻿using System.Diagnostics;
+using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
-namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
+
+namespace EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities;
 
 
 public class Player : Entity , ILivingEntity

@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 
 
-namespace EnderOverhaul.EnderDynamics.Utils.Vector;
+namespace EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
 
 public struct Vector2D : IVector<Vector2D , double> ,

@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EnderOverhaul.EnderDynamics\EnderOverhaul.EnderDynamics.csproj" />
+    <ProjectReference Include="..\EnderOverhaul.EnderDynamics.Impl\EnderOverhaul.EnderDynamics.Impl.csproj" />
   </ItemGroup>
 
   <ItemGroup>

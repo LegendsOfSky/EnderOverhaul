@@ -1,9 +1,9 @@
-﻿using EnderOverhaul.EnderDynamics.Minecraft.Entities;
-using EnderOverhaul.EnderDynamics.Utils.Vector;
-using System.Numerics;
+﻿using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
+using EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities;
 using Xunit.Abstractions;
 
-namespace EnderOverhaul.EnderDynamics.Test.Minecraft;
+
+namespace EnderOverhaul.EnderDynamics.Impl.Test.Minecraft;
 
 public class PrimedTntTest(ITestOutputHelper testOutputHelper)
 {

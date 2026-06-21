@@ -1,4 +1,4 @@
-﻿namespace EnderOverhaul.EnderDynamics.Utils;
+﻿namespace EnderOverhaul.EnderDynamics.Impl.Utils;
 
 
 [Flags]

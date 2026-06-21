@@ -1,7 +1,7 @@
-﻿using EnderOverhaul.EnderDynamics.Utils.Vector;
+﻿using EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
 
-namespace EnderOverhaul.EnderDynamics.Test.Utils;
+namespace EnderOverhaul.EnderDynamics.Impl.Test.Utils;
 
 /// <summary>
 ///     The vector test is introduced because Mojang may change how vector operations work by introducing floating point casting and floating point errors.
