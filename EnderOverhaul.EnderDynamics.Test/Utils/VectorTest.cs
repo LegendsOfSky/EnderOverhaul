@@ -202,14 +202,14 @@ public class VectorTest
 
     #region Cardinal Directions
     [Theory]
-    [InlineData(1, 0, CompassDirection.East)]
-    [InlineData(0, 1, CompassDirection.South)]
-    [InlineData(-5, 0, CompassDirection.West)]
-    [InlineData(0, -3, CompassDirection.North)]
-    [InlineData(10, 1, CompassDirection.East)]   // |X| > |Z|
-    [InlineData(1, 10, CompassDirection.South)]  // |X| < |Z|
-    [InlineData(5, 5, CompassDirection.South)]   // equal -> vertical
-    public void TestVector2DToCardinalCompassDirection(double x, double z, CompassDirection expected)
+    [InlineData(1, 0, CompassDirections.East)]
+    [InlineData(0, 1, CompassDirections.South)]
+    [InlineData(-5, 0, CompassDirections.West)]
+    [InlineData(0, -3, CompassDirections.North)]
+    [InlineData(10, 1, CompassDirections.East)]   // |X| > |Z|
+    [InlineData(1, 10, CompassDirections.South)]  // |X| < |Z|
+    [InlineData(5, 5, CompassDirections.South)]   // equal -> vertical
+    public void TestVector2DToCardinalCompassDirection(double x, double z, CompassDirections expected)
     {
         var vec = new Vector2D(x, z);
         Assert.Equal(expected, vec.ToCardinalCompassDirection());
@@ -217,26 +217,26 @@ public class VectorTest
     }
 
     [Theory]
-    [InlineData(-2, 0, CompassDirection.West)]
-    [InlineData(0, 7, CompassDirection.South)]
-    public void TestVector2IToCardinalCompassDirection(int x, int z, CompassDirection expected)
+    [InlineData(-2, 0, CompassDirections.West)]
+    [InlineData(0, 7, CompassDirections.South)]
+    public void TestVector2IToCardinalCompassDirection(int x, int z, CompassDirections expected)
     {
         IVector<Vector2I, int> vec = new Vector2I(x, z);
         Assert.Equal(expected, vec.ToCardinalCompassDirection());
     }
 
     [Theory]
-    [InlineData(0, 100, 1, CompassDirection.South)]
-    [InlineData(0, 0, -1, CompassDirection.North)]
-    public void TestVector3DToCardinalCompassDirection(double x, double y, double z, CompassDirection expected)
+    [InlineData(0, 100, 1, CompassDirections.South)]
+    [InlineData(0, 0, -1, CompassDirections.North)]
+    public void TestVector3DToCardinalCompassDirection(double x, double y, double z, CompassDirections expected)
     {
         var vec = new Vector3D(x, y, z);
         Assert.Equal(expected, vec.ToCardinalCompassDirection());
     }
 
     [Theory]
-    [InlineData(99, 0, -1, CompassDirection.East)]
-    public void TestVector3IToCardinalCompassDirection(int x, int y, int z, CompassDirection expected)
+    [InlineData(99, 0, -1, CompassDirections.East)]
+    public void TestVector3IToCardinalCompassDirection(int x, int y, int z, CompassDirections expected)
     {
         IVector<Vector3I, int> vec = new Vector3I(x, y, z);
         Assert.Equal(expected, vec.ToCardinalCompassDirection());

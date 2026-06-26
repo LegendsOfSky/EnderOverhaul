@@ -84,10 +84,10 @@ public struct Vector3I : IVector<Vector3I , int> ,
         return xMagnitude >= zMagnitude && X > 0;
     }
 
-    public CompassDirection ToCardinalCompassDirection() =>
+    public CompassDirections ToCardinalCompassDirection() =>
         Math.Abs(X) > Math.Abs(Z) 
-            ? X > 0 ? CompassDirection.East  : CompassDirection.West
-            : Z > 0 ? CompassDirection.South : CompassDirection.North;
+            ? X > 0 ? CompassDirections.East  : CompassDirections.West
+            : Z > 0 ? CompassDirections.South : CompassDirections.North;
 
     public double ToHorizontalWorldAngle() => -Math.Atan2(X , Z) / Math.PI * 180;
 

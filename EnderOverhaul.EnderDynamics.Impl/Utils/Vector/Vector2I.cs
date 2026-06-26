@@ -42,10 +42,10 @@ public struct Vector2I : IVector<Vector2I , int> ,
         return Math.Abs(X) > Math.Abs(Z) ? X : Z;
     }
 
-    public CompassDirection ToCardinalCompassDirection() =>
+    public CompassDirections ToCardinalCompassDirection() =>
         Math.Abs(X) > Math.Abs(Z)
-            ? X > 0 ? CompassDirection.East : CompassDirection.West
-            : Z > 0 ? CompassDirection.South : CompassDirection.North;
+            ? X > 0 ? CompassDirections.East : CompassDirections.West
+            : Z > 0 ? CompassDirections.South : CompassDirections.North;
 
     /// <summary> Check if the vector is facing at North or negative Z axis. </summary>
     public bool IsNorth()

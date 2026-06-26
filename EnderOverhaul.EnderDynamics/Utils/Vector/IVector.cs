@@ -3,9 +3,8 @@
 
 namespace EnderOverhaul.EnderDynamics.Utils.Vector;
 
-
 // @formatter:off
-public interface IVector<TVector , out TValue>
+public interface IVector<in TVector , out TValue>
     where TVector : IAdditionOperators<TVector , TVector , TVector>,
                     ISubtractionOperators<TVector , TVector , TVector>,
                     IMultiplyOperators<TVector , TValue , TVector>,
@@ -27,7 +26,7 @@ public interface IVector<TVector , out TValue>
     public bool IsWest();
     public bool IsEast();
 
-    public CompassDirection ToCardinalCompassDirection();
+    public CompassDirections ToCardinalCompassDirection();
 
     public double ToHorizontalWorldAngle();
     public double ToVerticalWorldAngle();
