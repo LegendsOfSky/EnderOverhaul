@@ -3,7 +3,7 @@
 /// <summary>
 /// The same math function that is used in Minecraft java edition with some additional helper function.
 /// </summary>
-internal static class MathHelper
+public static class MathHelper
 {
     /// <remarks> Obtained from minecraft. </remarks>
     public static float Sqrt(double value) => (float)Math.Sqrt(value);
