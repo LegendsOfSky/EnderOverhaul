@@ -6,7 +6,6 @@ using Vector3DImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector3D;
 
 namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
-
 public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 {
     private static Type s_ImplType;

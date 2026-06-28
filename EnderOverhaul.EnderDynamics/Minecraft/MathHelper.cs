@@ -31,19 +31,21 @@ public static class MathHelper
         Type t = assembly.GetType(typeof(MathHelperImpl).ToString())
             ?? throw new TypeLoadException("Cannot load MathHelper implementation type.");
 
-        s_SqrtMethod = t.GetMethod(nameof(Sqrt), BindingFlags.Public | BindingFlags.Static)
+        s_SqrtMethod = t.GetMethod(nameof(Sqrt) , BindingFlags.Public | BindingFlags.Static)
             ?? throw new TypeLoadException();
-        s_DegreeToRadiantMethod = t.GetMethod(nameof(DegreeToRadiant), BindingFlags.Public | BindingFlags.Static)
+        s_DegreeToRadiantMethod = t.GetMethod(nameof(DegreeToRadiant) , BindingFlags.Public | BindingFlags.Static)
             ?? throw new TypeLoadException();
-        s_RadiantToDegreeMethod = t.GetMethod(nameof(RadiantToDegree), BindingFlags.Public | BindingFlags.Static)
+        s_RadiantToDegreeMethod = t.GetMethod(nameof(RadiantToDegree) , BindingFlags.Public | BindingFlags.Static)
             ?? throw new TypeLoadException();
-        s_IsInsideMethod = t.GetMethod(nameof(IsInside), BindingFlags.Public | BindingFlags.Static)
+        s_IsInsideMethod = t.GetMethod(nameof(IsInside) , BindingFlags.Public | BindingFlags.Static)
             ?? throw new TypeLoadException();
     }
 
+    /* the following methods mirrors the original methods instead of reflection to save overheads */
+
     /// <remarks> Obtained from minecraft. </remarks>
     public static float Sqrt(double value)
-        => (float)(s_SqrtMethod.Invoke(null, [value]) ?? throw new InvalidOperationException());
+        => (float)(s_SqrtMethod.Invoke(null , [value]) ?? throw new InvalidOperationException());
 
     /// <remarks> Custom helper function that does not exist in minecraft. </remarks>
     public static double DegreeToRadiant(double degree) => degree * Math.PI / 180;

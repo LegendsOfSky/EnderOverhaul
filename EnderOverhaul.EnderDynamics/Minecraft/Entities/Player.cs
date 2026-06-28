@@ -9,15 +9,6 @@ namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 
 public class Player : Entity , ILivingEntity
 {
-    public enum Pose
-    {
-        DEFAULT     ,
-        SWIMMING    ,
-        FALL_FLYING ,
-        SPIN_ATTACK ,
-        CROUCHING   ,
-    }
-
     public Pose Posture
     {
         get => (Pose)(s_PostureField.GetValue(ImplObj) ?? Pose.DEFAULT);
@@ -106,5 +97,15 @@ public class Player : Entity , ILivingEntity
     ~Player()
     {
         EnderDynamicsConfig.OnImplementationChangedEvent -= ObjectImplementationVersionChangedEventHandler;
+    }
+
+
+    public enum Pose
+    {
+        DEFAULT,
+        SWIMMING,
+        FALL_FLYING,
+        SPIN_ATTACK,
+        CROUCHING,
     }
 }
