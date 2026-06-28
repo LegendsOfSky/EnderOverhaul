@@ -64,6 +64,12 @@ public class Vector3D : IVector<Vector3D , double> ,
         UpdateImplementationDetailsForType(EnderDynamicsConfig.S_ImplementationLibrary);
     }
 
+    public Vector3D()
+    {
+        ImplObj = Activator.CreateInstance(s_ImplType) ?? throw new InvalidOperationException();
+        EnderDynamicsConfig.OnImplementationChangedEvent += ObjectImplementationVersionChangedEventHandler;
+    }
+
     public Vector3D(double x , double y , double z)
     {
         ImplObj = Activator.CreateInstance(s_ImplType , x , y , z) ?? throw new InvalidOperationException();

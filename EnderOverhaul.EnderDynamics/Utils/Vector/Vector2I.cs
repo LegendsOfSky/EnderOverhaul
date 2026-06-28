@@ -58,6 +58,12 @@ public class Vector2I : IVector<Vector2I , int> ,
         UpdateImplementationDetailsForType(EnderDynamicsConfig.S_ImplementationLibrary);
     }
 
+    public Vector2I()
+    {
+        ImplObj = Activator.CreateInstance(s_ImplType) ?? throw new InvalidOperationException();
+        EnderDynamicsConfig.OnImplementationChangedEvent += ObjectImplementationVersionChangedEventHandler;
+    }
+
     public Vector2I(int x , int z)
     {
         ImplObj = Activator.CreateInstance(s_ImplType , x , z) ?? throw new InvalidOperationException();
