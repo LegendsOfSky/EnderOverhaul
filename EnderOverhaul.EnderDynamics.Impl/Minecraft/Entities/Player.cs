@@ -11,7 +11,9 @@ public class Player : Entity , ILivingEntity
 
 
     #region Implements Entity
-    public override void Tick(params object[]? args) => throw new NotSupportedException();
+    public override PrimedTnt DeepCopy() => new(Position.DeepCopy() , Motion.DeepCopy());
+
+    public override void      Tick(params object[]? args) => throw new NotSupportedException();
 
     public override Vector3D GetEyePos()
     {

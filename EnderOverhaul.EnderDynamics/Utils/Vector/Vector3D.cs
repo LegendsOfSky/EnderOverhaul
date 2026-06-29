@@ -1,6 +1,9 @@
 ﻿using System.Numerics;
 using System.Reflection;
+using Vector2DImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector2D;
+using Vector2IImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector2I;
 using Vector3DImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector3D;
+using Vector3IImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector3I;
 
 
 namespace EnderOverhaul.EnderDynamics.Utils.Vector;
@@ -41,6 +44,9 @@ public class Vector3D : IVector<Vector3D , double> ,
     private static MethodInfo s_OperatorUnaryNegationMethod;
     private static MethodInfo s_OperatorEqualityMethod;
     private static MethodInfo s_OperatorInequalityMethod;
+    private static MethodInfo s_ExplicitCastToVector2D;
+    private static MethodInfo s_ExplicitCastToVector2I;
+    private static MethodInfo s_ExplicitCastToVector3I;
 
     /* IVector members (delegated to Impl) */
     private static PropertyInfo s_LengthProperty;
@@ -83,6 +89,12 @@ public class Vector3D : IVector<Vector3D , double> ,
     }
 
 
+    public static explicit operator Vector2D(Vector3D vec) => new Vector2D(s_ExplicitCastToVector2D.Invoke(null , [vec.ImplObj]) ?? throw new InvalidCastException());
+    public static explicit operator Vector2I(Vector3D vec) => new Vector2I(s_ExplicitCastToVector2I.Invoke(null , [vec.ImplObj]) ?? throw new InvalidCastException());
+    public static explicit operator Vector3I(Vector3D vec) => new Vector3I(s_ExplicitCastToVector3I.Invoke(null , [vec.ImplObj]) ?? throw new InvalidCastException());
+
+    public override string ToString() => $"({X}, {Y}, {Z})";
+
     private static void TypeImplementationVersionChangedEventHandler(object? sender , ImplementationChangedEventArgs args)
         => UpdateImplementationDetailsForType(args.NewImplementation);
 
@@ -90,18 +102,34 @@ public class Vector3D : IVector<Vector3D , double> ,
     {
         s_ImplType = newAssembly.GetType(typeof(Vector3DImpl).ToString())
             ?? throw new TypeLoadException();
+
+        s_LengthProperty = s_ImplType.GetProperty("Length") ?? throw new TypeLoadException();
+        s_MaxEntryProperty = s_ImplType.GetProperty("MaxEntry") ?? throw new TypeLoadException();
+        s_MinEntryProperty = s_ImplType.GetProperty("MinEntry") ?? throw new TypeLoadException();
+
         s_FieldInfoX = s_ImplType.GetField("X") ?? throw new TypeLoadException();
         s_FieldInfoY = s_ImplType.GetField("Y") ?? throw new TypeLoadException();
         s_FieldInfoZ = s_ImplType.GetField("Z") ?? throw new TypeLoadException();
+
         s_OperatorAdditionMethod       = s_ImplType.GetMethod("op_Addition"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
         s_OperatorSubtractionMethod    = s_ImplType.GetMethod("op_Subtraction"   , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
         s_OperatorMultiplicationMethod = s_ImplType.GetMethod("op_Multiply"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
         s_OperatorUnaryNegationMethod  = s_ImplType.GetMethod("op_UnaryNegation" , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
         s_OperatorEqualityMethod       = s_ImplType.GetMethod("op_Equality"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
         s_OperatorInequalityMethod     = s_ImplType.GetMethod("op_Inequality"    , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_LengthProperty   = s_ImplType.GetProperty("Length"  ) ?? throw new TypeLoadException();
-        s_MaxEntryProperty = s_ImplType.GetProperty("MaxEntry") ?? throw new TypeLoadException();
-        s_MinEntryProperty = s_ImplType.GetProperty("MinEntry") ?? throw new TypeLoadException();
+        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
+                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
+                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
+            ) ?? throw new TypeLoadException();
+        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
+                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
+                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
+            ) ?? throw new TypeLoadException();
+        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
+                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
+                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
+            ) ?? throw new TypeLoadException();
+        
         s_GetDominantEntryMethod = s_ImplType.GetMethod("GetDominantEntry" , BindingFlags.Public | BindingFlags.Instance) ?? throw new TypeLoadException();
         s_ComputeDotProductWithMethod = s_ImplType.GetMethod("ComputeDotProductWith" , BindingFlags.Public | BindingFlags.Instance , null , [s_ImplType] , null)
             ?? throw new TypeLoadException();

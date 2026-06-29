@@ -17,6 +17,7 @@ public class Player : Entity , ILivingEntity
 
     private static Type s_ImplType;
     private static FieldInfo s_PostureField;
+    private static MethodInfo s_DeepCopyMethod;
 
 
     static Player()
@@ -46,6 +47,7 @@ public class Player : Entity , ILivingEntity
         s_ImplType = newAssembly.GetType(typeof(PlayerImpl).ToString())
             ?? throw new TypeLoadException("Cannot load Player implementation type.");
         s_PostureField = s_ImplType.GetField("Posture") ?? throw new TypeLoadException();
+        s_DeepCopyMethod = s_ImplType.GetMethod("DeepCopy" , BindingFlags.Public | BindingFlags.Instance) ?? throw new TypeLoadException();
     }
 
     private void ObjectImplementationVersionChangedEventHandler(object? sender , ImplementationChangedEventArgs args)
@@ -81,6 +83,11 @@ public class Player : Entity , ILivingEntity
 
 
     #region Implements Entity
+    public override Player DeepCopy()
+    {
+        return new Player(s_DeepCopyMethod.Invoke(ImplObj , null)!);
+    }
+
     public override void Tick(params object[]? args)
     {
         s_TickMethod.Invoke(ImplObj , [args]);
