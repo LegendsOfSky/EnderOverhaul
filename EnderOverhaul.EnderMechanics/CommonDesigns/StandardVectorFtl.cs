@@ -120,25 +120,18 @@ public static class StandardVectorFtl
             _ => throw new ArgumentException() ,
         };
 
-        /* compute theoretical result for single tick traverse */
-        Vector2D targetMotion = distance - (Vector2D)args.EnderPearl.Motion;
+        results = new List<StandardVectorFtlTntConfigResult>(maxTravellingTickCount * 4);
         Vector3D motionA = EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(aSideTnt , args.EnderPearl.Position);
         Vector3D motionB = EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(bSideTnt , args.EnderPearl.Position);
-        double theoreticalSingleTickATntCount = (targetMotion.Z * motionB.X - targetMotion.X * motionB.Z) / (motionB.X * motionA.Z - motionA.X * motionB.Z);
-        double theoreticalSingleTickBTntCount = (targetMotion.X - theoreticalSingleTickATntCount * motionA.X) / motionB.X;
-
-        /*  Purpose of the following code:
-         *  1. generate multi-tick traverse by using single tick version;
-         *  2. convert theoretical result into practical result;
-         */
-        results = new List<StandardVectorFtlTntConfigResult>(maxTravellingTickCount * 4);
-        ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl(new Vector3D() , new Vector3D(1D , 0D , 1D));
+        ThrownEnderpearl motionDivisorSampler = new ThrownEnderpearl(new Vector3D() , new Vector3D(1D , 0D , 1D));
         for (int i = 1; i <= maxTravellingTickCount; i++)
         {
-            tntCountDivisorSampler.Tick();
-            double tntCountDivisor = tntCountDivisorSampler.Position.X;
-            double theoreticalATntCount = theoreticalSingleTickATntCount / tntCountDivisor;
-            double theoreticalBTntCount = theoreticalSingleTickBTntCount / tntCountDivisor;
+            motionDivisorSampler.Tick();
+            double motionDivisor = motionDivisorSampler.Position.X;
+            Vector2D targetMotion = distance * (1 / motionDivisor) - (Vector2D)args.EnderPearl.Motion;
+            double theoreticalATntCount = (targetMotion.Z * motionB.X - targetMotion.X * motionB.Z) / (motionB.X * motionA.Z - motionA.X * motionB.Z);
+            double theoreticalBTntCount = (targetMotion.X - theoreticalATntCount * motionA.X) / motionB.X;
+
             int aCeiling = (int)Math.Ceiling(theoreticalATntCount) , bCeiling = (int)Math.Ceiling(theoreticalBTntCount);
             int aFloor = (int)Math.Floor(theoreticalATntCount) , bFloor = (int)Math.Floor(theoreticalBTntCount);
             StandardVectorFtlTntConfigResult template = new StandardVectorFtlTntConfigResult()

@@ -41,9 +41,7 @@ public static class SingleTntReturnFtl
     public static List<SingleTntReturnFtlTntConfigResult>? CalculateTntAmountWithFixTntLocation(
         ThrownEnderpearl enderPearl , PrimedTnt tnt , Vector2D destination , int maxTnt , int maxErrorPerAxis = 256 , int maxTravellingTickCount = 128)
     {
-        ThrownEnderpearl motionSampler = enderPearl.DeepCopy();
-        tnt.AccelerateEntity(motionSampler);
-        Vector2D motion2D = (Vector2D)motionSampler.Motion;
+        Vector2D motion2D = (Vector2D)EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(tnt , enderPearl.Position);
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
 
         /* return null if the angle between motion and destination direction is larger than 30 degrees */
@@ -52,15 +50,14 @@ public static class SingleTntReturnFtl
 
         ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl().WithMotion(1 , 0 , 1);
         List<SingleTntReturnFtlTntConfigResult> results = new List<SingleTntReturnFtlTntConfigResult>(maxTravellingTickCount * 3);
-        double theoreticalSingleTickTntCountForXAlignedLanding = distance.X / motion2D.X;
-        double theoreticalSingleTickTntCountForZAlignedLanding = distance.Z / motion2D.Z;
-        double theoreticalSingleTickTntCountForClosestLanding = distance.Length * distance.Length / distance.ComputeDotProductWith(motion2D);
         for (int i = 1; i <= maxTravellingTickCount; i++)
         {
             tntCountDivisorSampler.Tick();
             double divisor = tntCountDivisorSampler.Position.X;
+            Vector2D targetMotion = distance * (1 / divisor) - (Vector2D)enderPearl.Motion;
 
-            int tntCountForXAligned = (int)Math.Round(theoreticalSingleTickTntCountForXAlignedLanding / divisor);
+
+            int tntCountForXAligned = (int)Math.Round(targetMotion.X / motion2D.X);
             ThrownEnderpearl enderPearlTesterForXAligned = enderPearl.DeepCopy();
             tnt.AccelerateEntity(enderPearlTesterForXAligned , tntCount: tntCountForXAligned);
             for (int j = 0; j < i; j++)
@@ -71,7 +68,7 @@ public static class SingleTntReturnFtl
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForXAligned , Error = errorForXAligned }
                     );
 
-            int tntCountForZAligned = (int)Math.Round(theoreticalSingleTickTntCountForZAlignedLanding / divisor);
+            int tntCountForZAligned = (int)Math.Round(targetMotion.Z / motion2D.Z);
             ThrownEnderpearl enderPearlTesterForZAligned = enderPearl.DeepCopy();
             tnt.AccelerateEntity(enderPearlTesterForZAligned , tntCount: tntCountForZAligned);
             for (int j = 0; j < i; j++)
@@ -82,7 +79,7 @@ public static class SingleTntReturnFtl
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForZAligned , Error = errorForZAligned }
                     );
 
-            int tntCountForClosestLanding = (int)Math.Round(theoreticalSingleTickTntCountForClosestLanding / divisor);
+            int tntCountForClosestLanding = (int)Math.Round(targetMotion.Length * targetMotion.Length / targetMotion.ComputeDotProductWith(motion2D));
             ThrownEnderpearl enderPearlTesterForClosestLanding = enderPearl.DeepCopy();
             tnt.AccelerateEntity(enderPearlTesterForClosestLanding , tntCount: tntCountForClosestLanding);
             for (int j = 0; j < i; j++)
