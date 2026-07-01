@@ -8,6 +8,6 @@ public record SingleTntReturnFtlTntConfigResult
 {
     public PrimedTnt Tnt;
     public int TntCount;
-    public int Tick;
+    public int TravellingTicks;
     public Vector2D Error;
 }
