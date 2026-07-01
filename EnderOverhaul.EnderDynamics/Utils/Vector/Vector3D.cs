@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics;
+using System.Numerics;
 using System.Reflection;
 using Vector2DImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector2D;
 using Vector2IImpl = EnderOverhaul.EnderDynamics.Impl.Utils.Vector.Vector2I;
@@ -111,24 +112,16 @@ public class Vector3D : IVector<Vector3D , double> ,
         s_FieldInfoY = s_ImplType.GetField("Y") ?? throw new TypeLoadException();
         s_FieldInfoZ = s_ImplType.GetField("Z") ?? throw new TypeLoadException();
 
-        s_OperatorAdditionMethod       = s_ImplType.GetMethod("op_Addition"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_OperatorSubtractionMethod    = s_ImplType.GetMethod("op_Subtraction"   , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_OperatorMultiplicationMethod = s_ImplType.GetMethod("op_Multiply"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_OperatorUnaryNegationMethod  = s_ImplType.GetMethod("op_UnaryNegation" , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_OperatorEqualityMethod       = s_ImplType.GetMethod("op_Equality"      , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_OperatorInequalityMethod     = s_ImplType.GetMethod("op_Inequality"    , BindingFlags.Public | BindingFlags.Static) ?? throw new TypeLoadException();
-        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
-                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
-                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
-            ) ?? throw new TypeLoadException();
-        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
-                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
-                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
-            ) ?? throw new TypeLoadException();
-        s_ExplicitCastToVector2D = s_ImplType.GetMethod(
-                "op_Explicit" , BindingFlags.Public | BindingFlags.Static ,
-                null , [newAssembly.GetType(typeof(Vector2DImpl).ToString()) ?? throw new TypeLoadException()] , null
-            ) ?? throw new TypeLoadException();
+        MethodInfo[] publicStaticMethods = s_ImplType.GetMethods(BindingFlags.Public | BindingFlags.Static);
+        s_OperatorAdditionMethod       = publicStaticMethods.First(method => method.Name == "op_Addition"     );
+        s_OperatorSubtractionMethod    = publicStaticMethods.First(method => method.Name == "op_Subtraction"  );
+        s_OperatorMultiplicationMethod = publicStaticMethods.First(method => method.Name == "op_Multiply"     );
+        s_OperatorUnaryNegationMethod  = publicStaticMethods.First(method => method.Name == "op_UnaryNegation");
+        s_OperatorEqualityMethod       = publicStaticMethods.First(method => method.Name == "op_Equality"     );
+        s_OperatorInequalityMethod     = publicStaticMethods.First(method => method.Name == "op_Inequality"   );
+        s_ExplicitCastToVector2D = publicStaticMethods.First(method => method.Name == "op_Explicit" && method.ReturnType.FullName == typeof(Vector2DImpl).ToString());
+        s_ExplicitCastToVector2I = publicStaticMethods.First(method => method.Name == "op_Explicit" && method.ReturnType.FullName == typeof(Vector2IImpl).ToString());
+        s_ExplicitCastToVector3I = publicStaticMethods.First(method => method.Name == "op_Explicit" && method.ReturnType.FullName == typeof(Vector3IImpl).ToString());
         
         s_GetDominantEntryMethod = s_ImplType.GetMethod("GetDominantEntry" , BindingFlags.Public | BindingFlags.Instance) ?? throw new TypeLoadException();
         s_ComputeDotProductWithMethod = s_ImplType.GetMethod("ComputeDotProductWith" , BindingFlags.Public | BindingFlags.Instance , null , [s_ImplType] , null)
