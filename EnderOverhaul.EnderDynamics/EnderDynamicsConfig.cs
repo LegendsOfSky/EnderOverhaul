@@ -43,6 +43,8 @@ public static class EnderDynamicsConfig
             }
         }
 #pragma warning restore S3877
+
+        TrySetMinecraftVersion("Latest");
     }
 
     
