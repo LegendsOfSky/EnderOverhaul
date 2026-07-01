@@ -27,7 +27,7 @@ public static class StandardVectorFtl
 
     /// <param name="maxTickCount"> This parameter should be less than or equal to the distance. Otherwise, unnecessary performance overhead will be created. </param>
     /// <returns> Returns a set of distinct TNT config. Ideally, for each tick, 4 result will be created each at different quadrant relative to the landing spot. </returns>
-    public static List<StandardVectorFtlTntConfigResult> CalculateTntConfig(StandardVectorFtlArgs args , int maxTickCount = 128)
+    public static List<StandardVectorFtlTntConfigResult> CalculateTntConfig(StandardVectorFtlArgs args , int maxErrorPerAxis = 256 , int maxTickCount = 128)
     {
         Vector2D distance = args.Destination - (Vector2D)args.EnderPearl.Position;
 
@@ -86,7 +86,7 @@ public static class StandardVectorFtl
          */
         List<StandardVectorFtlTntConfigResult> results = new List<StandardVectorFtlTntConfigResult>(maxTickCount * 4);
         ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl(new Vector3D() , new Vector3D(1D , 0D , 1D));
-        for (int i = 0; i < maxTickCount; i++)
+        for (int i = 1; i <= maxTickCount; i++)
         {
             tntCountDivisorSampler.Tick();
             double tntCountDivisor = tntCountDivisorSampler.Position.X;
@@ -104,11 +104,28 @@ public static class StandardVectorFtl
                 BSideTntCount = 0 ,
                 TravellingTicks = i ,
             };
-            results.Add(template with { ASideTntCount = aCeiling , BSideTntCount = bCeiling });
-            results.Add(template with { ASideTntCount = aCeiling , BSideTntCount = bFloor   });
-            results.Add(template with { ASideTntCount = aFloor   , BSideTntCount = bCeiling });
-            results.Add(template with { ASideTntCount = aFloor   , BSideTntCount = bFloor   });
+            AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aCeiling , bCeiling , i , maxErrorPerAxis , results);
+            AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aCeiling , bFloor   , i , maxErrorPerAxis , results);
+            AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aFloor   , bCeiling , i , maxErrorPerAxis , results);
+            AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aFloor   , bFloor   , i , maxErrorPerAxis , results);
         }
         return results.Distinct().ToList();
+    }
+
+    private static void AppendTntConfigIfValid(
+        ThrownEnderpearl enderPearl , Vector2D destination ,
+        StandardVectorFtlTntConfigResult template ,
+        int aSideTntCount , int bSideTntCount ,
+        int tick , int maxErrorPerAxis ,
+        List<StandardVectorFtlTntConfigResult> results)
+    {
+        ThrownEnderpearl tester = enderPearl.DeepCopy();
+        template.ASideTnt.AccelerateEntity(tester , aSideTntCount);
+        template.BSideTnt.AccelerateEntity(tester , bSideTntCount);
+        for (int i = 0; i < tick; i++)
+            tester.Tick();
+        Vector2D error = (Vector2D)tester.Position - destination;
+        if (Math.Abs(error.GetDominantEntry()) <= maxErrorPerAxis)
+            results.Add(template with { ASideTntCount = aSideTntCount , BSideTntCount = bSideTntCount , Error = error });
     }
 }
