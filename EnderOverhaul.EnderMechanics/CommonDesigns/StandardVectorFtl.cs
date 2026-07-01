@@ -29,6 +29,7 @@ public static class StandardVectorFtl
     /// <returns> Returns a set of distinct TNT config. Ideally, for each tick, 4 result will be created each at different quadrant relative to the landing spot. </returns>
     public static List<StandardVectorFtlTntConfigResult> CalculateTntConfig(StandardVectorFtlArgs args , int maxErrorPerAxis = 256 , int maxTickCount = 128)
     {
+        List<StandardVectorFtlTntConfigResult> results;
         Vector2D distance = args.Destination - (Vector2D)args.EnderPearl.Position;
 
         /* compute which Tnt to use */
@@ -63,7 +64,40 @@ public static class StandardVectorFtl
             if (tnt1Side == ABSide.NotAssigned)
                 throw new ArgumentException();
 
-            throw new NotImplementedException("Pass to single TNT return cannon to calculate this.");
+            results = new List<StandardVectorFtlTntConfigResult>();
+            List<SingleTntReturnFtlTntConfigResult>? resultFromTnt1 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
+                    args.EnderPearl , propellingTnt1 , args.Destination , args.MaxTntForOneSide , maxTick: maxTickCount , maxErrorPerAxis: maxErrorPerAxis
+                );
+            if (resultFromTnt1 is not null)
+            {
+                results.AddRange(
+                        resultFromTnt1.Select(result => new StandardVectorFtlTntConfigResult
+                                {
+                                    ASideTnt = propellingTnt1 , ASideTntLocation = tnt1Location , ASideTntCount = result.TntCount ,
+                                    BSideTnt = propellingTnt2 , BSideTntLocation = tnt2Location , BSideTntCount = 0 ,
+                                    Error = result.Error ,
+                                    TravellingTicks = result.Tick ,
+                                }
+                            )
+                    );
+            }
+            List<SingleTntReturnFtlTntConfigResult>? resultFromTnt2 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
+                    args.EnderPearl , propellingTnt2 , args.Destination , args.MaxTntForOneSide , maxTick: maxTickCount , maxErrorPerAxis: maxErrorPerAxis
+                );
+            if (resultFromTnt2 is not null)
+            {
+                results.AddRange(
+                        resultFromTnt2.Select(result => new StandardVectorFtlTntConfigResult
+                                {
+                                    ASideTnt = propellingTnt1 , ASideTntLocation = tnt1Location , ASideTntCount = result.TntCount ,
+                                    BSideTnt = propellingTnt2 , BSideTntLocation = tnt2Location , BSideTntCount = 0 ,
+                                    Error = result.Error ,
+                                    TravellingTicks = result.Tick ,
+                                }
+                            )
+                    );
+            }
+            return results;
         }
         (PrimedTnt aSideTnt , PrimedTnt bSideTnt , CompassDirections aSideLocation , CompassDirections bSideLocation) = (tnt1Side , tnt2Side) switch
         {
@@ -84,7 +118,7 @@ public static class StandardVectorFtl
          *  1. generate multi-tick traverse by using single tick version;
          *  2. convert theoretical result into practical result;
          */
-        List<StandardVectorFtlTntConfigResult> results = new List<StandardVectorFtlTntConfigResult>(maxTickCount * 4);
+        results = new List<StandardVectorFtlTntConfigResult>(maxTickCount * 4);
         ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl(new Vector3D() , new Vector3D(1D , 0D , 1D));
         for (int i = 1; i <= maxTickCount; i++)
         {
