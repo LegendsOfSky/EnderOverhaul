@@ -7,9 +7,6 @@ namespace EnderOverhaul.EnderMechanics.CommonDesigns;
 
 public static class SingleTntReturnFtl
 {
-    private static readonly double s_cosOf30Degree = Math.Cos(MathHelper.DegreeToRadiant(30D));
-
-
     /// <remarks>
     ///     <b>REMARKS:</b> The method will not terminate when the Y coordinate of the ender pearl is below any value. It only terminates when the parameter
     ///         <see cref="travellingTickCount"/> is reached.
@@ -39,13 +36,15 @@ public static class SingleTntReturnFtl
     ///     </list>
     /// </returns>
     public static List<SingleTntReturnFtlTntConfigResult>? CalculateTntAmountWithFixTntLocation(
-        ThrownEnderpearl enderPearl , PrimedTnt tnt , Vector2D destination , int maxTnt , int maxErrorPerAxis = 256 , int maxTravellingTickCount = 128)
+        ThrownEnderpearl enderPearl , PrimedTnt tnt , Vector2D destination ,
+        int maxTnt = int.MaxValue, int maxErrorPerAxis = 256 , int maxTravellingTickCount = 128 , double maxAngleErrorOnAccelerateDirection = 30D)
     {
         Vector2D motion2D = (Vector2D)EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(tnt , enderPearl.Position);
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
 
         /* return null if the angle between motion and destination direction is larger than 30 degrees */
-        if (motion2D.ComputeDotProductWith(distance) < s_cosOf30Degree * motion2D.Length * distance.Length)
+        double cosOfAngles = Math.Cos(MathHelper.DegreeToRadiant(maxAngleErrorOnAccelerateDirection));
+        if (motion2D.ComputeDotProductWith(distance) < cosOfAngles * motion2D.Length * distance.Length)
             return null;
 
         ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl().WithMotion(1 , 0 , 1);
@@ -63,7 +62,7 @@ public static class SingleTntReturnFtl
             for (int j = 0; j < i; j++)
                 enderPearlTesterForXAligned.Tick();
             Vector2D errorForXAligned = (Vector2D)enderPearlTesterForXAligned.Position - destination;
-            if (Math.Abs(errorForXAligned.GetDominantEntry()) <= maxErrorPerAxis)
+            if (Math.Abs(errorForXAligned.GetDominantEntry()) <= maxErrorPerAxis && tntCountForXAligned <= maxTnt)
                 results.Add(
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForXAligned , Error = errorForXAligned }
                     );
@@ -74,7 +73,7 @@ public static class SingleTntReturnFtl
             for (int j = 0; j < i; j++)
                 enderPearlTesterForZAligned.Tick();
             Vector2D errorForZAligned = (Vector2D)enderPearlTesterForZAligned.Position - destination;
-            if (Math.Abs(errorForXAligned.GetDominantEntry()) <= maxErrorPerAxis)
+            if (Math.Abs(errorForXAligned.GetDominantEntry()) <= maxErrorPerAxis && tntCountForZAligned <= maxTnt)
                 results.Add(
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForZAligned , Error = errorForZAligned }
                     );
@@ -85,7 +84,7 @@ public static class SingleTntReturnFtl
             for (int j = 0; j < i; j++)
                 enderPearlTesterForClosestLanding.Tick();
             Vector2D errorForClosestLanding = (Vector2D)enderPearlTesterForClosestLanding.Position - destination;
-            if (Math.Abs(errorForClosestLanding.GetDominantEntry()) <= maxErrorPerAxis)
+            if (Math.Abs(errorForClosestLanding.GetDominantEntry()) <= maxErrorPerAxis && tntCountForClosestLanding <= maxTnt)
                 results.Add(
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForClosestLanding , Error = errorForClosestLanding }
                     );

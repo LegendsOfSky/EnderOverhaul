@@ -149,7 +149,10 @@ public static class StandardVectorFtl
             AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aFloor   , bCeiling , i , maxErrorPerAxis , results);
             AppendTntConfigIfValid(args.EnderPearl , args.Destination , template , aFloor   , bFloor   , i , maxErrorPerAxis , results);
         }
-        return results.Distinct().ToList();
+        return results
+            .Where(result => result.ASideTntCount <= args.MaxTntForOneSide && result.BSideTntCount <= args.MaxTntForOneSide)
+            .Distinct()
+            .ToList();
     }
 
     private static void AppendTntConfigIfValid(
