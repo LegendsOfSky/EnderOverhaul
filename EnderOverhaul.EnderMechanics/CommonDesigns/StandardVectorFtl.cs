@@ -29,17 +29,28 @@ public static class StandardVectorFtl
         return results;
     }
 
-    /// <remarks>
-    ///     <b>REMARKS:</b> When no suitable pair of TNT is found to enable vectorized FTL, the method falls back to the same logic as 
-    ///         <see cref="SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation"/>.
-    /// </remarks>
+    /// <param name="maxErrorPerAxis">
+    ///     Creates an allowed landing region by creating a square with side length equal to (2 * <paramref name="maxErrorPerAxis"/>) centered at <paramref name="args.Destination"/>.
+    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
+    /// </param>
     /// <param name="maxTravellingTickCount">
     ///     The maximum number of ticks to simulate. This value should be less than or equal to the distance; using a larger value creates unnecessary performance overhead.
     /// </param>
     /// <returns>
-    ///     Returns a set of distinct TNT configurations. Ideally, for each tick, up to 4 results are generated, each positioned in a different quadrant relative to the
-    ///         landing spot.
+    ///     A set of distinct TNT configurations. Ideally, for each tick, up to 4 results are generated, each positioned in a different quadrant relative to destination.
     /// </returns>
+    /// <remarks>
+    ///     <b>REMARKS:</b>
+    ///     <list type="bullet">
+    ///         <item>
+    ///             When no suitable pair of TNT is found to enable vectorized FTL, the method falls back to the same logic as <br/>
+    ///             <see cref="SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation"/>;
+    ///         </item>
+    ///         <item>
+    ///             Setting any constraint argument, such as MaxTntForOneSide, to 0 does not disable the corresponding feature. Instead, sets the constraint into no more than 0;
+    ///         </item>
+    ///     </list>
+    /// </remarks>
     public static List<StandardVectorFtlTntConfigResult> CalculateTntConfig(StandardVectorFtlArgs args , int maxErrorPerAxis = 256 , int maxTravellingTickCount = 128)
     {
         List<StandardVectorFtlTntConfigResult> results;
@@ -75,7 +86,7 @@ public static class StandardVectorFtl
         if (tnt1Side == tnt2Side)
         {
             if (tnt1Side == ABSide.NotAssigned)
-                throw new ArgumentException();
+                throw new ArgumentException("Both side of TNT are not assigned, expected two to be assigned.");
 
             results = [];
             List<SingleTntReturnFtlTntConfigResult>? resultFromTnt1 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
@@ -117,7 +128,7 @@ public static class StandardVectorFtl
             (ABSide.ASide , ABSide.BSide) => (propellingTnt1 , propellingTnt2 , tnt1Location , tnt2Location) ,
             (ABSide.BSide , ABSide.ASide) => (propellingTnt2 , propellingTnt1 , tnt2Location , tnt1Location) ,
 
-            _ => throw new ArgumentException() ,
+            _ => throw new UnreachableException() ,
         };
 
         results = new List<StandardVectorFtlTntConfigResult>(maxTravellingTickCount * 4);

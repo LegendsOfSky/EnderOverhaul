@@ -24,15 +24,28 @@ public static class SingleTntReturnFtl
         return results;
     }
 
+    /// <param name="maxTnt">
+    ///     Maximum number of TNT entities to consider.
+    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
+    /// </param>
+    /// <param name="maxErrorPerAxis">
+    ///     Creates an allowed landing region by creating a square with side length equal to (2 * <paramref name="maxErrorPerAxis"/>) centered at <paramref name="destination"/>.
+    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
+    /// </param>
     /// <param name="maxTravellingTickCount">
-    ///     The maximum number of ticks to simulate. This value should be less than or equal to the distance; using a larger value creates unnecessary performance overhead.
+    ///     Maximum simulation ticks. Should be less than or equal to the approximate distance from source to destination. Larger values add unnecessary performance overhead.
+    /// </param>
+    /// <param name="maxAngleErrorOnAccelerateDirection">
+    ///     Maximum allowed angle (in degrees) between the ideal travel direction and the actual TNT acceleration direction.
+    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
     /// </param>
     /// <returns>
-    ///     Returns a set of distinct TNT configurations. Ideally, for each tick, up to 3 results are generated. Each of them are:
+    ///     A set of distinct TNT configurations, or <see langword="null"/> if no valid solution is found. Ideally, for each tick, up to 3 results are generated.
+    ///     Each of them are:
     ///     <list type="number">
-    ///         <item> a landing location that has almost the exact X coordinate compare to destination; </item>
-    ///         <item> a landing location that has almost the exact Z coordinate compare to destination; </item>
-    ///         <item> a landing location that has the smallest error distance from ender pearl to destination. </item>
+    ///         <item> Best match for X coordinate (minimal X error). </item>
+    ///         <item> Best match for Z coordinate (minimal Z error). </item>
+    ///         <item> Overall smallest Euclidean distance error to destination. </item>
     ///     </list>
     /// </returns>
     public static List<SingleTntReturnFtlTntConfigResult>? CalculateTntAmountWithFixTntLocation(
