@@ -83,45 +83,68 @@ public static class StandardVectorFtl
 
                 _ => throw new UnreachableException() ,
             };
-        if (tnt1Side == tnt2Side)
+        switch (tnt1Side , tnt2Side)
         {
-            if (tnt1Side == ABSide.NotAssigned)
+            case (ABSide.ASide | ABSide.BSide , ABSide.ASide | ABSide.BSide):
+                (tnt1Side , tnt2Side) = (ABSide.ASide , ABSide.BSide);
+                break;
+
+            case (ABSide.ASide | ABSide.BSide , _):
+                tnt1Side = tnt2Side == ABSide.ASide ? ABSide.BSide : ABSide.ASide;
+                break;
+
+            case (_ , ABSide.ASide | ABSide.BSide):
+                tnt2Side = tnt1Side == ABSide.ASide ? ABSide.BSide : ABSide.ASide;
+                break;
+
+            case (ABSide.NotAssigned , ABSide.NotAssigned):
                 throw new ArgumentException("Both side of TNT are not assigned, expected two to be assigned.");
 
-            results = [];
-            List<SingleTntReturnFtlTntConfigResult>? resultFromTnt1 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
-                    args.EnderPearl , propellingTnt1 , args.Destination , args.MaxTntForOneSide , maxTravellingTickCount: maxTravellingTickCount , maxErrorPerAxis: maxErrorPerAxis
-                );
-            if (resultFromTnt1 is not null)
+            case (_ , _) when tnt1Side == tnt2Side:
             {
-                results.AddRange(
-                        resultFromTnt1.Select(result => new StandardVectorFtlTntConfigResult
-                                {
-                                    ASideTnt = propellingTnt1 , ASideTntLocation = tnt1Location , ASideTntCount = result.TntCount ,
-                                    BSideTnt = propellingTnt2 , BSideTntLocation = tnt2Location , BSideTntCount = 0 ,
-                                    Error = result.Error ,
-                                    TravellingTicks = result.TravellingTicks ,
-                                }
-                            )
+                results = [];
+                List<SingleTntReturnFtlTntConfigResult>? resultFromTnt1 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
+                        args.EnderPearl , propellingTnt1 , args.Destination , args.MaxTntForOneSide , maxTravellingTickCount: maxTravellingTickCount , maxErrorPerAxis: maxErrorPerAxis
                     );
-            }
-            List<SingleTntReturnFtlTntConfigResult>? resultFromTnt2 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
-                    args.EnderPearl , propellingTnt2 , args.Destination , args.MaxTntForOneSide , maxTravellingTickCount: maxTravellingTickCount , maxErrorPerAxis: maxErrorPerAxis
-                );
-            if (resultFromTnt2 is not null)
-            {
-                results.AddRange(
-                        resultFromTnt2.Select(result => new StandardVectorFtlTntConfigResult
-                                {
-                                    ASideTnt = propellingTnt1 , ASideTntLocation = tnt1Location , ASideTntCount = result.TntCount ,
-                                    BSideTnt = propellingTnt2 , BSideTntLocation = tnt2Location , BSideTntCount = 0 ,
-                                    Error = result.Error ,
-                                    TravellingTicks = result.TravellingTicks ,
-                                }
-                            )
+                if (resultFromTnt1 is not null)
+                {
+                    results.AddRange(
+                            resultFromTnt1.Select(result => new StandardVectorFtlTntConfigResult
+                                    {
+                                        ASideTnt = propellingTnt1 ,
+                                        ASideTntLocation = tnt1Location ,
+                                        ASideTntCount = result.TntCount ,
+                                        BSideTnt = propellingTnt2 ,
+                                        BSideTntLocation = tnt2Location ,
+                                        BSideTntCount = 0 ,
+                                        Error = result.Error ,
+                                        TravellingTicks = result.TravellingTicks ,
+                                    }
+                                )
+                        );
+                }
+                List<SingleTntReturnFtlTntConfigResult>? resultFromTnt2 = SingleTntReturnFtl.CalculateTntAmountWithFixTntLocation(
+                        args.EnderPearl , propellingTnt2 , args.Destination , args.MaxTntForOneSide , maxTravellingTickCount: maxTravellingTickCount , maxErrorPerAxis: maxErrorPerAxis
                     );
+                if (resultFromTnt2 is not null)
+                {
+                    results.AddRange(
+                            resultFromTnt2.Select(result => new StandardVectorFtlTntConfigResult
+                                    {
+                                        ASideTnt = propellingTnt1 ,
+                                        ASideTntLocation = tnt1Location ,
+                                        ASideTntCount = result.TntCount ,
+                                        BSideTnt = propellingTnt2 ,
+                                        BSideTntLocation = tnt2Location ,
+                                        BSideTntCount = 0 ,
+                                        Error = result.Error ,
+                                        TravellingTicks = result.TravellingTicks ,
+                                    }
+                                )
+                        );
+                }
+                return results;
             }
-            return results;
         }
         (PrimedTnt aSideTnt , PrimedTnt bSideTnt , CompassDirections aSideLocation , CompassDirections bSideLocation) = (tnt1Side , tnt2Side) switch
         {
