@@ -9,6 +9,20 @@ namespace EnderOverhaul.EnderMechanics.CommonDesigns;
 
 public static class StandardVectorFtl
 {
+    /// <param name="args">
+    ///     Required field:
+    ///     <list type="bullet">
+    ///         <item><paramref name="args.EnderPearl"/>;</item>
+    ///         <item><paramref name="args.NorthWestTnt"/>;</item>
+    ///         <item><paramref name="args.NorthEastTnt"/>;</item>
+    ///         <item><paramref name="args.SouthWestTnt"/>;</item>
+    ///         <item><paramref name="args.SouthEastTnt"/>;</item>
+    ///         <item><paramref name="args.NorthWestTntCount"/>;</item>
+    ///         <item><paramref name="args.NorthEastTntCount"/>;</item>
+    ///         <item><paramref name="args.SouthWestTntCount"/>;</item>
+    ///         <item><paramref name="args.SouthEastTntCount"/>;</item>
+    ///     </list>
+    /// </param>
     /// <remarks>
     ///     <b>REMARKS:</b> The method will not terminate when the Y coordinate of the ender pearl is below any value. It only terminates when the parameter
     ///         <see cref="travellingTickCount"/> is reached.
@@ -29,6 +43,22 @@ public static class StandardVectorFtl
         return results;
     }
 
+    /// <param name="args">
+    ///     Required field:
+    ///     <list type="bullet">
+    ///         <item><paramref name="args.EnderPearl"/>;</item>
+    ///         <item><paramref name="args.Destination"/>;</item>
+    ///         <item><paramref name="args.NorthWestTnt"/>;</item>
+    ///         <item><paramref name="args.NorthEastTnt"/>;</item>
+    ///         <item><paramref name="args.SouthWestTnt"/>;</item>
+    ///         <item><paramref name="args.SouthEastTnt"/>;</item>
+    ///         <item><paramref name="args.NorthWestTntSide"/>;</item>
+    ///         <item><paramref name="args.NorthEastTntSide"/>;</item>
+    ///         <item><paramref name="args.SouthWestTntSide"/>;</item>
+    ///         <item><paramref name="args.SouthEastTntSide"/>;</item>
+    ///         <item><paramref name="args.MaxTntForOneSide"/>;</item>
+    ///     </list>
+    /// </param>
     /// <param name="maxErrorPerAxis">
     ///     Creates an allowed landing region by creating a square with side length equal to (2 * <paramref name="maxErrorPerAxis"/>) centered at <paramref name="args.Destination"/>.
     ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
