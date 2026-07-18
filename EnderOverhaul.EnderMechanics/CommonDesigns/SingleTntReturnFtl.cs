@@ -37,7 +37,12 @@ public static class SingleTntReturnFtl
     /// </param>
     /// <param name="maxAngleErrorOnAccelerateDirection">
     ///     Maximum allowed angle (in degrees) between the ideal travel direction and the actual TNT acceleration direction.
-    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
+    ///     <para>
+    ///         <b>REMARKS:</b><list type="number">
+    ///             <item> Setting to zero does not disable this feature. </item>
+    ///             <item> Values larger than 90 will be treated as 90. </item>
+    ///         </list>
+    ///     </para>
     /// </param>
     /// <returns>
     ///     A set of distinct TNT configurations, or <see langword="null"/> if no valid solution is found. Ideally, for each tick, up to 3 results are generated.
@@ -47,15 +52,18 @@ public static class SingleTntReturnFtl
     ///         <item> Best match for Z coordinate (minimal Z error). </item>
     ///         <item> Overall smallest Euclidean distance error to destination. </item>
     ///     </list>
+    ///     <b>REMARKS:</b> Return null if angle between travel direction and acceleration direction is larger than <paramref name="maxAngleErrorOnAccelerateDirection"/>,
+    ///     or return empty list if no configuration found.
     /// </returns>
     public static List<SingleTntReturnFtlTntConfigResult>? CalculateTntAmountWithFixTntLocation(
         ThrownEnderpearl enderPearl , PrimedTnt tnt , Vector2D destination ,
-        int maxTnt = int.MaxValue, int maxErrorPerAxis = 256 , int maxTravellingTickCount = 128 , double maxAngleErrorOnAccelerateDirection = 30D)
+        int maxTnt = int.MaxValue, double maxErrorPerAxis = 256D , int maxTravellingTickCount = 128 , double maxAngleErrorOnAccelerateDirection = 30D)
     {
         Vector2D motion2D = (Vector2D)EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(tnt , enderPearl.Position);
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
 
         /* return null if the angle between motion and destination direction is larger than 30 degrees */
+        maxAngleErrorOnAccelerateDirection = Math.Clamp(maxAngleErrorOnAccelerateDirection , 0 , 90);
         double cosOfAngles = Math.Cos(MathHelper.DegreeToRadiant(maxAngleErrorOnAccelerateDirection));
         if (motion2D.ComputeDotProductWith(distance) < cosOfAngles * motion2D.Length * distance.Length)
             return null;
@@ -86,7 +94,7 @@ public static class SingleTntReturnFtl
             for (int j = 0; j < i; j++)
                 enderPearlTesterForZAligned.Tick();
             Vector2D errorForZAligned = (Vector2D)enderPearlTesterForZAligned.Position - destination;
-            if (Math.Abs(errorForXAligned.GetDominantEntry()) <= maxErrorPerAxis && tntCountForZAligned <= maxTnt)
+            if (Math.Abs(errorForZAligned.GetDominantEntry()) <= maxErrorPerAxis && tntCountForZAligned <= maxTnt)
                 results.Add(
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForZAligned , Error = errorForZAligned }
                     );
@@ -102,6 +110,6 @@ public static class SingleTntReturnFtl
                         new SingleTntReturnFtlTntConfigResult { TravellingTicks = i , Tnt = tnt , TntCount = tntCountForClosestLanding , Error = errorForClosestLanding }
                     );
         }
-        return results.Distinct().ToList();
+        return results.Where(result => result.TntCount > 0).Distinct().ToList();
     }
 }
