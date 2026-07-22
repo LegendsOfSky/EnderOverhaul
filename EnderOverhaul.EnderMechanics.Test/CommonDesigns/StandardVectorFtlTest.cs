@@ -54,6 +54,7 @@ public class StandardVectorFtlTest
     [InlineData(96.592583 , -25.881905)]
     public void CalculateTntConfig_TypicalConfig_ReturnNonEmptyList(double destinationX , double destinationZ)
     {
+        _testOutputHelper.WriteLine($"Destination = ({destinationX}, {destinationZ})");
         EnderDynamicsConfig.TrySetMinecraftVersion("1.12.2");
         IterateDifferentSideConfigForTestCode();
         EnderDynamicsConfig.TrySetMinecraftVersion("1.20.2");
@@ -64,6 +65,13 @@ public class StandardVectorFtlTest
 
         void IterateDifferentSideConfigForTestCode()
         {
+            ThrownEnderpearl enderPearl = new ThrownEnderpearl().WithPosition(0 , 170.347226 , 0);
+            Vector2D destination = new Vector2D(destinationX , destinationZ);
+            PrimedTnt northWestTnt = new PrimedTnt().WithPosition(-0.885 , 170.5 , -0.885);
+            PrimedTnt northEastTnt = new PrimedTnt().WithPosition(+0.885 , 170.5 , -0.885);
+            PrimedTnt southWestTnt = new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.885);
+            PrimedTnt southEastTnt = new PrimedTnt().WithPosition(+0.885 , 170.5 , +0.885);
+
             TestCodeForEachSideConfig(ABSide.ASide , ABSide.ASide | ABSide.BSide , ABSide.ASide | ABSide.BSide , ABSide.BSide);
             TestCodeForEachSideConfig(ABSide.BSide , ABSide.ASide | ABSide.BSide , ABSide.ASide | ABSide.BSide , ABSide.ASide);
             TestCodeForEachSideConfig(ABSide.ASide , ABSide.ASide | ABSide.BSide , ABSide.BSide , ABSide.ASide | ABSide.BSide);
@@ -76,26 +84,23 @@ public class StandardVectorFtlTest
             TestCodeForEachSideConfig(ABSide.ASide | ABSide.BSide , ABSide.BSide , ABSide.ASide , ABSide.ASide | ABSide.BSide);
             TestCodeForEachSideConfig(ABSide.ASide | ABSide.BSide , ABSide.ASide | ABSide.BSide , ABSide.ASide , ABSide.BSide);
             TestCodeForEachSideConfig(ABSide.ASide | ABSide.BSide , ABSide.ASide | ABSide.BSide , ABSide.BSide , ABSide.ASide);
-        }
+            return;
 
-        void TestCodeForEachSideConfig(ABSide northWestSide , ABSide northEastSide , ABSide southWestSide , ABSide southEastSide)
-        {
-            StandardVectorFtlArgs args = new StandardVectorFtlArgs
+            void TestCodeForEachSideConfig(ABSide northWestSide , ABSide northEastSide , ABSide southWestSide , ABSide southEastSide)
             {
-                EnderPearl = new ThrownEnderpearl().WithPosition(0 , 170.347226 , 0) ,
-                Destination = new Vector2D(destinationX , destinationZ) ,
-                NorthWestTnt = new PrimedTnt().WithPosition(-0.885 , 170.5 , -0.885) ,
-                NorthEastTnt = new PrimedTnt().WithPosition(+0.885 , 170.5 , -0.885) ,
-                SouthWestTnt = new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.885) ,
-                SouthEastTnt = new PrimedTnt().WithPosition(+0.885 , 170.5 , +0.885) ,
-                NorthWestTntSide = northWestSide ,
-                NorthEastTntSide = northEastSide ,
-                SouthWestTntSide = southWestSide ,
-                SouthEastTntSide = southEastSide ,
-                MaxTntForOneSide = int.MaxValue ,
-            };
-            List<StandardVectorFtlTntConfigResult> results = StandardVectorFtl.CalculateTntConfig(args);
-            Assert.True(results.Count > 0);
+                StandardVectorFtlArgs args = new StandardVectorFtlArgs
+                {
+                    EnderPearl = enderPearl ,
+                    Destination = destination ,
+                    NorthWestTnt = northWestTnt , NorthWestTntSide = northWestSide ,
+                    NorthEastTnt = northEastTnt , NorthEastTntSide = northEastSide ,
+                    SouthWestTnt = southWestTnt , SouthWestTntSide = southWestSide ,
+                    SouthEastTnt = southEastTnt , SouthEastTntSide = southEastSide ,
+                    MaxTntForOneSide = int.MaxValue ,
+                };
+                List<StandardVectorFtlTntConfigResult> results = StandardVectorFtl.CalculateTntConfig(args);
+                Assert.True(results.Count > 0);
+            }
         }
     }
 
@@ -219,7 +224,7 @@ public class StandardVectorFtlTest
     [InlineData(70.710678 , -70.710678)]
     [InlineData(86.602540 , -50)]
     [InlineData(96.592583 , -25.881905)]
-    public void CalculateTntConfig_TNTOnSameSide_ReturnValidResult(double destinationX , double destinationZ)
+    public void CalculateTntConfig_TntOnSameSide_ReturnValidResult(double destinationX , double destinationZ)
     {
         const int MaxTick = 4;
         const double MaxErrorPerAxis = 256D;
@@ -366,43 +371,64 @@ public class StandardVectorFtlTest
 
 
     [Theory , MemberData(nameof(CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestData))]
-    public void CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick(
+    public void CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_Version1_12(
+        Vector3D enderPearlPos ,
+        Vector3D northWestTntPos , Vector3D northEastTntPos , Vector3D southWestTntPos , Vector3D southEastTntPos ,
+        Vector2D destination)
+    {
+        EnderDynamicsConfig.TrySetMinecraftVersion("1.12.2");
+        CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestCode(
+                enderPearlPos , northWestTntPos , northEastTntPos , southWestTntPos , southEastTntPos , destination
+            );
+    }
+    [Theory , MemberData(nameof(CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestData))]
+    public void CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_Version1_20_2(
+        Vector3D enderPearlPos ,
+        Vector3D northWestTntPos , Vector3D northEastTntPos , Vector3D southWestTntPos , Vector3D southEastTntPos ,
+        Vector2D destination)
+    {
+        EnderDynamicsConfig.TrySetMinecraftVersion("1.20.2");
+        CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestCode(
+                enderPearlPos , northWestTntPos , northEastTntPos , southWestTntPos , southEastTntPos , destination
+            );
+    }
+    [Theory , MemberData(nameof(CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestData))]
+    public void CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_VersionLatest(
+        Vector3D enderPearlPos ,
+        Vector3D northWestTntPos , Vector3D northEastTntPos , Vector3D southWestTntPos , Vector3D southEastTntPos ,
+        Vector2D destination)
+    {
+        EnderDynamicsConfig.TrySetMinecraftVersion("Latest");
+        CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestCode(
+                enderPearlPos , northWestTntPos , northEastTntPos , southWestTntPos , southEastTntPos , destination
+            );
+    }
+    void CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestCode(
         Vector3D enderPearlPos ,
         Vector3D northWestTntPos , Vector3D northEastTntPos , Vector3D southWestTntPos , Vector3D southEastTntPos ,
         Vector2D destination)
     {
         const int MaxTick = 4;
         const double MaxErrorPerAxis = 256D;
-        EnderDynamicsConfig.TrySetMinecraftVersion("1.12.2");
-        TestCode();
-        EnderDynamicsConfig.TrySetMinecraftVersion("1.20.2");
-        TestCode();
-        EnderDynamicsConfig.TrySetMinecraftVersion("Latest");
-        TestCode();
-        return;
-
-        void TestCode()
+        ThrownEnderpearl enderPearl = new ThrownEnderpearl().WithPosition(enderPearlPos);
+        StandardVectorFtlArgs args = new StandardVectorFtlArgs
         {
-            ThrownEnderpearl enderPearl = new ThrownEnderpearl().WithPosition(enderPearlPos);
-            StandardVectorFtlArgs args = new StandardVectorFtlArgs
-            {
-                EnderPearl = enderPearl ,
-                Destination = destination ,
-                NorthWestTnt = new PrimedTnt().WithPosition(northWestTntPos) ,
-                NorthEastTnt = new PrimedTnt().WithPosition(northEastTntPos) ,
-                SouthWestTnt = new PrimedTnt().WithPosition(southWestTntPos) ,
-                SouthEastTnt = new PrimedTnt().WithPosition(southEastTntPos) ,
-                NorthWestTntSide = ABSide.ASide ,
-                NorthEastTntSide = ABSide.ASide | ABSide.BSide ,
-                SouthWestTntSide = ABSide.ASide | ABSide.BSide ,
-                SouthEastTntSide = ABSide.BSide ,
-                MaxTntForOneSide = int.MaxValue ,
-            };
-            List<StandardVectorFtlTntConfigResult> results = StandardVectorFtl.CalculateTntConfig(
-                    args , maxTravellingTickCount: MaxTick , maxErrorPerAxis: MaxErrorPerAxis
-                );
-            Assert.NotEmpty(results);
-        }
+            EnderPearl = enderPearl ,
+            Destination = destination ,
+            NorthWestTnt = new PrimedTnt().WithPosition(northWestTntPos) ,
+            NorthEastTnt = new PrimedTnt().WithPosition(northEastTntPos) ,
+            SouthWestTnt = new PrimedTnt().WithPosition(southWestTntPos) ,
+            SouthEastTnt = new PrimedTnt().WithPosition(southEastTntPos) ,
+            NorthWestTntSide = ABSide.ASide ,
+            NorthEastTntSide = ABSide.ASide | ABSide.BSide ,
+            SouthWestTntSide = ABSide.ASide | ABSide.BSide ,
+            SouthEastTntSide = ABSide.BSide ,
+            MaxTntForOneSide = int.MaxValue ,
+        };
+        List<StandardVectorFtlTntConfigResult> results = StandardVectorFtl.CalculateTntConfig(
+                args , maxTravellingTickCount: MaxTick , maxErrorPerAxis: MaxErrorPerAxis
+            );
+        Assert.NotEmpty(results);
     }
     public static TheoryData<Vector3D , Vector3D , Vector3D , Vector3D , Vector3D , Vector2D>
         CalculateTntConfig_NonSquareTntLocationAndTntValid_Return4ResultPerTick_TestData()
@@ -681,7 +707,7 @@ public class StandardVectorFtlTest
         TestCode();
         return;
 
-        static void TestCode()
+        void TestCode()
         {
             ThrownEnderpearl enderPearl = new ThrownEnderpearl().WithPosition(0 , 170.347226 , 0);
             StandardVectorFtlArgs args = new StandardVectorFtlArgs
@@ -715,6 +741,8 @@ public class StandardVectorFtlTest
                         args , maxTravellingTickCount: 16 , maxErrorPerAxis: (maxError + nextMaxError) / 2
                     );
                 int newResultsCount = results.Count;
+
+                _testOutputHelper.WriteLine($"result count = {oldResultsCount} -> {newResultsCount}");
                 Assert.True(oldResultsCount > newResultsCount);
             }
         }
