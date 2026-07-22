@@ -7,6 +7,11 @@ namespace EnderOverhaul.EnderMechanics.CommonDesigns;
 
 public static class MultiTntFtl
 {
+    /// <param name="tntConfigs"> A TNT config stored as TNT (key) and TNT count (value) dictionary. </param>
+    /// <remarks>
+    ///     <b>REMARKS:</b> The method will not terminate when the Y coordinate of the ender pearl is below any value. It only terminates when the parameter
+    ///         <see cref="travellingTickCount"/> is reached.
+    /// </remarks>
     public static List<ThrownEnderpearl> CalculateEnderPearlTrace(ThrownEnderpearl enderPearl , Dictionary<PrimedTnt , int> tntConfigs , int travellingTickCount = 128)
     {
         ThrownEnderpearl enderPearlTraceSampler = enderPearl.DeepCopy();
@@ -21,36 +26,95 @@ public static class MultiTntFtl
         return result;
     }
 
-    public static List<Dictionary<PrimedTnt , int>> CalculateTntAmount(
-        ThrownEnderpearl enderPearl , Vector2D destination , List<PrimedTnt> tnts , int maxTntCount , int maxTicks = 256)
+    /// <param name="maxTntCount">
+    ///     Maximum number of TNT entities to consider.
+    ///     <para> <b>REMARKS:</b> Setting to zero does not disable this feature. </para>
+    /// </param>
+    /// <param name="maxTravellingTickCount">
+    ///     Maximum simulation ticks. Should be less than or equal to the approximate distance from source to destination. Larger values add unnecessary performance overhead.
+    /// </param>
+    /// <param name="maxSearchTimeForEachTick"> Maximum time for searching solution in each tick (in seconds). </param>
+    /// <summary> Calculate TNT amount while optimizing the error between final location and destination. </summary>
+    /// <returns>
+    ///     A list of results ideally one for each tick.
+    ///     <para> <b>REMARKS:</b> Does not guarantee to find a solution for each tick. </para>
+    /// </returns>
+    /// <remarks>
+    ///     <b>REMARKS:</b>
+    ///     <list type="bullet">
+    ///         <item> The algorithm does not filter out results with error larger than any value; </item>
+    ///         <item> It may take a long to search for results. Consider creating new thread to run it when needed; </item>
+    ///     </list>
+    /// </remarks>
+    public static List<MultiTntFtlTntConfigResult> CalculateTntAmount(
+        ThrownEnderpearl enderPearl , Vector2D destination , List<PrimedTnt> tnts , int maxTntCount ,
+        int maxTravellingTickCount = 256 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0)
     {
         List<TntConfig> tntConfigs = [];
         tntConfigs.AddRange(
                 tnts.Select((t , i) => new TntConfig { GroupID = i , MaxTntCount = maxTntCount , Tnt = t })
             );
-        return CalculateTntAmount(enderPearl , destination , tntConfigs , maxTicks);
+        return CalculateTntAmount(enderPearl , destination , tntConfigs , maxTravellingTickCount , maxSearchTimeForEachTick , numberOfSearchWorkers);
     }
 
-    public static List<Dictionary<PrimedTnt , int>> CalculateTntAmount(
-        ThrownEnderpearl enderPearl , Vector2D destination , List<TntConfig> tntConfigs , int maxTicks = 256)
+    /// <param name="maxTravellingTickCount">
+    ///     Maximum simulation ticks. Should be less than or equal to the approximate distance from source to destination. Larger values add unnecessary performance overhead.
+    /// </param>
+    /// <param name="maxSearchTimeForEachTick"> Maximum time for searching solution in each tick (in seconds). </param>
+    /// <summary> Calculate TNT amount while optimizing the error between final location and destination. </summary>
+    /// <returns>
+    ///     A list of results ideally one for each tick.
+    ///     <para> <b>REMARKS:</b> Does not guarantee to find a solution for each tick. </para>
+    /// </returns>
+    /// <remarks>
+    ///     <b>REMARKS:</b>
+    ///     <list type="bullet">
+    ///         <item> The algorithm does not filter out results with error larger than any value; </item>
+    ///         <item> It may take a long to search for results. Consider creating new thread to run it when needed; </item>
+    ///     </list>
+    /// </remarks>
+    public static List<MultiTntFtlTntConfigResult> CalculateTntAmount(
+        ThrownEnderpearl enderPearl , Vector2D destination , List<TntConfig> tntConfigs ,
+        int maxTravellingTickCount = 256 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0)
     {
-        List<Dictionary<PrimedTnt , int>> results = [];
+        List<MultiTntFtlTntConfigResult> results = [];
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
         ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl().WithMotion(1 , 0 , 1);
-        for (int i = 0; i < maxTicks; i++)
+        for (int tick = 1; tick <= maxTravellingTickCount; tick++)
         {
             tntCountDivisorSampler.Tick();
             double divisor = tntCountDivisorSampler.Position.X;
             
             Vector2D targetMotion = distance * (1 / divisor) - (Vector2D)enderPearl.Motion;
-            Dictionary<TntConfig , int>? orToolSolution = CalculateOptimalAmountForSpecificMotion(enderPearl.Position , targetMotion - (Vector2D)enderPearl.Motion , tntConfigs);
-            if (orToolSolution is not null)
-                results.Add(orToolSolution.ToDictionary(solution => solution.Key.Tnt , solution => solution.Value));
+            Dictionary<TntConfig , int>? orToolSolution = CalculateOptimalAmountForSpecificMotion(
+                    enderPearl.Position , targetMotion - (Vector2D)enderPearl.Motion , tntConfigs ,
+                    maxSearchTimeForEachTick , numberOfSearchWorkers
+                );
+            if (orToolSolution is null)
+                continue;
+
+            ThrownEnderpearl testEnderPearl = enderPearl.DeepCopy();
+            foreach ((TntConfig tntConfig , int tntCount) in orToolSolution)
+                tntConfig.Tnt.AccelerateEntity(testEnderPearl , tntCount: tntCount);
+            for (int j = 0; j < tick; j++)
+                testEnderPearl.Tick();
+            results.Add(
+                    new MultiTntFtlTntConfigResult
+                    {
+                        Error           = (Vector2D)testEnderPearl.Position - destination ,
+                        TntConfig       = orToolSolution.ToDictionary(solution => solution.Key.Tnt , solution => solution.Value) ,
+                        TravellingTicks = tick ,
+                    }
+                );
         }
-        return results;
+        return results
+            .Where(result => result.TntConfig.Max(config => config.Value) > 0)
+            .Distinct()
+            .ToList();
     }
 
-    private static Dictionary<TntConfig , int>? CalculateOptimalAmountForSpecificMotion(Vector3D enderPearlPos , Vector2D targetMotion , List<TntConfig> tntConfigsIn)
+    private static Dictionary<TntConfig , int>? CalculateOptimalAmountForSpecificMotion(
+        Vector3D enderPearlPos , Vector2D targetMotion , List<TntConfig> tntConfigsIn , double maxSearchTimeForEachTick = 30D , int numberOfSearchWorkers = 0)
     {
         List<TntConfig> tntConfigs = tntConfigsIn.Where(config => config.MaxTntCount >= 1).ToList();
         int maxOfMaxTntCount = tntConfigs.Max(config => config.MaxTntCount);
@@ -59,11 +123,11 @@ public static class MultiTntFtl
                     nameof(tntConfigsIn) , "All MaxTntCount in tntConfigs are less than or equal to 0. Expected to have at least some configs with MaxTntCount >= 1."
                 );
 
-        const long scale = 1L << 26;  // the scaling factor is determined by having 12 digits storing integer part of the 64bit fixed point decimal, then cut into half
+        const long Scale = 1L << 26;  // the scaling factor is determined by having 12 digits storing integer part of the 64bit fixed point decimal, then cut into half
                                       //     because when two 26bits fixed point decimal multiplied together, it left 12 digits for integer part of a final 64bit fixed
                                       //     point decimal.
 
-        double[,] tntMotions = new double[2 , tntConfigs.Count];
+        double[,] tntMotions = new double[tntConfigs.Count , 2];
         for (int i = 0; i < tntConfigs.Count; i++)
         {
             ThrownEnderpearl motionSampler = new ThrownEnderpearl().WithPosition(enderPearlPos);
@@ -93,15 +157,15 @@ public static class MultiTntFtl
             model.Add(constraint <= 1);
 
         /* Construct the objective function to be minimized */
-        LinearExpr summedMotionX = tntAmounts[0] * (long)Math.Round(tntMotions[0 , 0] * scale) , summedMotionZ = tntAmounts[0] * (long)Math.Round(tntMotions[0 , 1] * scale);
+        LinearExpr summedMotionX = tntAmounts[0] * (long)Math.Round(tntMotions[0 , 0] * Scale) , summedMotionZ = tntAmounts[0] * (long)Math.Round(tntMotions[0 , 1] * Scale);
         for (int i = 1; i < tntConfigs.Count; i++)
         {
-            summedMotionX += tntAmounts[i] * (long)Math.Round(tntMotions[i , 0] * scale);
-            summedMotionZ += tntAmounts[i] * (long)Math.Round(tntMotions[i , 1] * scale);
+            summedMotionX += tntAmounts[i] * (long)Math.Round(tntMotions[i , 0] * Scale);
+            summedMotionZ += tntAmounts[i] * (long)Math.Round(tntMotions[i , 1] * Scale);
         }
         IntVar errorX = model.NewIntVar(int.MinValue / 4 , int.MaxValue / 4 , "error_x") , errorZ = model.NewIntVar(int.MinValue / 4 , int.MaxValue / 4 , "error_z");
-        model.Add(errorX == summedMotionX - (long)Math.Round(targetMotion.X * scale));
-        model.Add(errorZ == summedMotionZ - (long)Math.Round(targetMotion.Z * scale));
+        model.Add(errorX == summedMotionX - (long)Math.Round(targetMotion.X * Scale));
+        model.Add(errorZ == summedMotionZ - (long)Math.Round(targetMotion.Z * Scale));
         IntVar squaredErrorX = model.NewIntVar(0 , long.MaxValue / 4 , "sqErr_x") , squaredErrorZ = model.NewIntVar(0 , long.MaxValue / 4 , "sqErr_z");
         model.AddMultiplicationEquality(squaredErrorX , [errorX , errorX]);
         model.AddMultiplicationEquality(squaredErrorZ , [errorZ , errorZ]);
@@ -113,7 +177,7 @@ public static class MultiTntFtl
 
         /* Solve the quadratic programming problem and extract the result */
         CpSolver solver = new CpSolver();
-        solver.StringParameters = "max_time_in_seconds:60";
+        solver.StringParameters = $"max_time_in_seconds:{maxSearchTimeForEachTick},num_search_workers:{numberOfSearchWorkers}";
         CpSolverStatus status = solver.Solve(model);
         switch (status)
         {
@@ -128,7 +192,7 @@ public static class MultiTntFtl
                 return null;
 
             default:
-                throw new Exception();
+                throw new Exception("Unknow or Invalid model.");
         }
     }
 }
