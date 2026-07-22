@@ -515,4 +515,67 @@ public class MultiTntFtlTest
             }
         }
     }
+
+
+    [Fact]
+    [Trait("Category" , "LongRunning")]
+    public void CalculateTntAmount_MultiThreading_ShouldSeeASpeedIncrease()
+    {
+        const int MaxTickCount = 4;
+        EnderDynamicsConfig.TrySetMinecraftVersion("1.12.2");
+        TestCode();
+        EnderDynamicsConfig.TrySetMinecraftVersion("1.20.2");
+        TestCode();
+        EnderDynamicsConfig.TrySetMinecraftVersion("Latest");
+        TestCode();
+        return;
+
+        void TestCode()
+        {
+            ThrownEnderpearl enderPearl = new ThrownEnderpearl().WithPosition(0 , 170.347226 , 0);
+            Vector2D destination = new Vector2D(100 , 0);
+
+            Stopwatch singleThreadStopwatch = Stopwatch.StartNew();
+            List<MultiTntFtlTntConfigResult> results = MultiTntFtl.CalculateTntAmount(
+                    enderPearl , destination ,
+                    [
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.335 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.775 , 170.5 , -0.665) ,
+                        new PrimedTnt().WithPosition(0 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.755) ,
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.825) ,
+                        new PrimedTnt().WithPosition(-0.775 , 170.5 , +0.825) ,
+                        new PrimedTnt().WithPosition(0 , 170.5 , +0.825) ,
+                    ] ,
+                    int.MaxValue ,
+                    maxTravellingTickCount: MaxTickCount , maxSearchTimeForEachTick: 5 , numberOfSearchWorkers: 1 , allowMultiThread: false
+                );
+            singleThreadStopwatch.Start();
+            Assert.Equal(MaxTickCount , results.Count);
+            _testOutputHelper.WriteLine($"Time elapsed for single thread = {singleThreadStopwatch.Elapsed.Milliseconds}");
+
+            Stopwatch multiThreadStopwatch = Stopwatch.StartNew();
+            results = MultiTntFtl.CalculateTntAmount(
+                    enderPearl , destination ,
+                    [
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.335 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.775 , 170.5 , -0.665) ,
+                        new PrimedTnt().WithPosition(0 , 170.5 , -0.885) ,
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.755) ,
+                        new PrimedTnt().WithPosition(-0.885 , 170.5 , +0.825) ,
+                        new PrimedTnt().WithPosition(-0.775 , 170.5 , +0.825) ,
+                        new PrimedTnt().WithPosition(0 , 170.5 , +0.825) ,
+                    ] ,
+                    int.MaxValue ,
+                    maxTravellingTickCount: MaxTickCount , maxSearchTimeForEachTick: 5 , numberOfSearchWorkers: 1 , allowMultiThread: true
+                );
+            multiThreadStopwatch.Start();
+            Assert.Equal(MaxTickCount , results.Count);
+            _testOutputHelper.WriteLine($"Time elapsed for multi thread = {multiThreadStopwatch.Elapsed.Milliseconds}");
+
+            Assert.True(singleThreadStopwatch.Elapsed.Milliseconds > multiThreadStopwatch.Elapsed.Milliseconds);
+        }
+    }
 }

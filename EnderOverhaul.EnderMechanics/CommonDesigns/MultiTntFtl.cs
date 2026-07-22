@@ -1,4 +1,5 @@
-﻿using EnderOverhaul.EnderDynamics.Minecraft.Entities;
+﻿using System.Collections.Concurrent;
+using EnderOverhaul.EnderDynamics.Minecraft.Entities;
 using EnderOverhaul.EnderDynamics.Utils.Vector;
 using Google.OrTools.Sat;
 
@@ -34,6 +35,10 @@ public static class MultiTntFtl
     ///     Maximum simulation ticks. Should be less than or equal to the approximate distance from source to destination. Larger values add unnecessary performance overhead.
     /// </param>
     /// <param name="maxSearchTimeForEachTick"> Maximum time for searching solution in each tick (in seconds). </param>
+    /// <param name="numberOfSearchWorkers">
+    ///     Number of workers will or-tools creates. Set to 0 for or-tools to decide.
+    ///     <b>REMARKS:</b> Only change this value if you know how "num_search_workers" parameter works in or-tools.
+    /// </param>
     /// <summary> Calculate TNT amount while optimizing the error between final location and destination. </summary>
     /// <returns>
     ///     A list of results ideally one for each tick.
@@ -48,19 +53,25 @@ public static class MultiTntFtl
     /// </remarks>
     public static List<MultiTntFtlTntConfigResult> CalculateTntAmount(
         ThrownEnderpearl enderPearl , Vector2D destination , List<PrimedTnt> tnts , int maxTntCount ,
-        int maxTravellingTickCount = 256 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0)
+        int maxTravellingTickCount = 64 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0 , bool allowMultiThread = false)
     {
         List<TntConfig> tntConfigs = [];
         tntConfigs.AddRange(
                 tnts.Select((t , i) => new TntConfig { GroupID = i , MaxTntCount = maxTntCount , Tnt = t })
             );
-        return CalculateTntAmount(enderPearl , destination , tntConfigs , maxTravellingTickCount , maxSearchTimeForEachTick , numberOfSearchWorkers);
+        return CalculateTntAmount(
+                enderPearl , destination , tntConfigs , maxTravellingTickCount , maxSearchTimeForEachTick , numberOfSearchWorkers , allowMultiThread
+            );
     }
 
     /// <param name="maxTravellingTickCount">
     ///     Maximum simulation ticks. Should be less than or equal to the approximate distance from source to destination. Larger values add unnecessary performance overhead.
     /// </param>
     /// <param name="maxSearchTimeForEachTick"> Maximum time for searching solution in each tick (in seconds). </param>
+    /// <param name="numberOfSearchWorkers">
+    ///     Number of workers will or-tools creates. Set to 0 for or-tools to decide.
+    ///     <b>REMARKS:</b> Only change this value if you know how "num_search_workers" parameter works in or-tools.
+    /// </param>
     /// <summary> Calculate TNT amount while optimizing the error between final location and destination. </summary>
     /// <returns>
     ///     A list of results ideally one for each tick.
@@ -75,23 +86,31 @@ public static class MultiTntFtl
     /// </remarks>
     public static List<MultiTntFtlTntConfigResult> CalculateTntAmount(
         ThrownEnderpearl enderPearl , Vector2D destination , List<TntConfig> tntConfigs ,
-        int maxTravellingTickCount = 256 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0)
+        int maxTravellingTickCount = 64 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0 , bool allowMultiThread = false)
     {
-        List<MultiTntFtlTntConfigResult> results = [];
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
-        ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl().WithMotion(1 , 0 , 1);
-        for (int tick = 1; tick <= maxTravellingTickCount; tick++)
+
+        ConcurrentBag<MultiTntFtlTntConfigResult> results = [];
+        int degreeOfParallelism = allowMultiThread
+            ? numberOfSearchWorkers > 1
+                ? Math.Max(1 , Environment.ProcessorCount / numberOfSearchWorkers)
+                : Environment.ProcessorCount
+            : 1;
+        ParallelOptions parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = degreeOfParallelism };
+        ParallelLoopResult parallelResult = Parallel.For(1 , maxTravellingTickCount + 1 , parallelOptions , (tick) =>
         {
-            tntCountDivisorSampler.Tick();
+            ThrownEnderpearl tntCountDivisorSampler = new ThrownEnderpearl().WithMotion(1 , 0 , 1);
+            for (int i = 0; i < tick; i++)
+                tntCountDivisorSampler.Tick();
             double divisor = tntCountDivisorSampler.Position.X;
-            
+
             Vector2D targetMotion = distance * (1 / divisor) - (Vector2D)enderPearl.Motion;
             Dictionary<TntConfig , int>? orToolSolution = CalculateOptimalAmountForSpecificMotion(
                     enderPearl.Position , targetMotion - (Vector2D)enderPearl.Motion , tntConfigs ,
                     maxSearchTimeForEachTick , numberOfSearchWorkers
                 );
             if (orToolSolution is null)
-                continue;
+                return;
 
             ThrownEnderpearl testEnderPearl = enderPearl.DeepCopy();
             foreach ((TntConfig tntConfig , int tntCount) in orToolSolution)
@@ -106,7 +125,7 @@ public static class MultiTntFtl
                         TravellingTicks = tick ,
                     }
                 );
-        }
+        });
         return results
             .Where(result => result.TntConfig.Max(config => config.Value) > 0)
             .Distinct()
