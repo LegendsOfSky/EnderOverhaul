@@ -17,7 +17,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
     public PrimedTnt(Vector3D position , Vector3D motion) : base(position , motion) { }
 
 
-    public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
+    public void AccelerateEntity(Entity entity , float explosionPower = 4.0F , int tntCount = 1)
     {
 #if VERSION_1_12_ABOVE || VERSION_1_20_2_ABOVE
         Vector3D centerOfExplosion = new Vector3D(Position.X , Position.Y + 0.98F * 0.0625D , Position.Z);
@@ -51,7 +51,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
             : knockbackIntermediateMultiplier;
 
         Vector3D motion = distance * knockbackEffectiveMultiplier;
-        entity.Motion += motion;
+        entity.Motion += motion * tntCount;
 #else
         throw new NotSupportedException();
 #endif
@@ -78,6 +78,8 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 
 
     #region Implements Entity
+    public override PrimedTnt DeepCopy() => new(Position.DeepCopy() , Motion.DeepCopy());
+
     /// <param name="args">
     ///     You must exactly provide all required arguments.
     ///     <list type="table">

@@ -62,6 +62,8 @@ public abstract class Entity : IEntityBuilder<Entity>
     }
 
 
+    public abstract Entity DeepCopy();
+
     public abstract void Tick(params object[]? args);
 
     public abstract Vector3D GetEyePos();

@@ -4,7 +4,7 @@
 namespace EnderOverhaul.EnderDynamics.Impl.Utils.Vector;
 
 
-public struct Vector3D : IVector<Vector3D , double> ,
+public class Vector3D : IVector<Vector3D , double> ,
                          IAdditionOperators<Vector3D , Vector3D , Vector3D> ,
                          ISubtractionOperators<Vector3D , Vector3D , Vector3D> ,
                          IMultiplyOperators<Vector3D , double , Vector3D> ,
@@ -15,6 +15,8 @@ public struct Vector3D : IVector<Vector3D , double> ,
     public double Y;
     public double Z;
 
+
+    public Vector3D() { }
 
     public Vector3D(double x , double y , double z)
     {
@@ -27,6 +29,8 @@ public struct Vector3D : IVector<Vector3D , double> ,
     public static explicit operator Vector2D(Vector3D vec) => new Vector2D(vec.X , vec.Z);
     public static explicit operator Vector2I(Vector3D vec) => new Vector2I((int)Math.Round(vec.X) , (int)Math.Round(vec.Z));
     public static explicit operator Vector3I(Vector3D vec) => new Vector3I((int)Math.Round(vec.X) , (int)Math.Round(vec.Y) , (int)Math.Round(vec.Z));
+
+    public Vector3D DeepCopy() => new Vector3D(X , Y , Z);
 
     public Vector3D CrossProduct(Vector3D other) => new Vector3D(
             this.Y * other.Z - this.Z * other.Y ,

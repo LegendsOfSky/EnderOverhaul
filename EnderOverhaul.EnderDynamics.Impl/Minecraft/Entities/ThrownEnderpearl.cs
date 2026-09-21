@@ -15,6 +15,9 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 
 
     #region Implements Entity
+    public override ThrownEnderpearl DeepCopy() => new(Position.DeepCopy() , Motion.DeepCopy());
+
+
     /// <remarks> No argument is needed. </remarks>
     public override void Tick(params object[]? args)
     {

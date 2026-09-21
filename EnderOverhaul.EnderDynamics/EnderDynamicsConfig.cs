@@ -43,6 +43,8 @@ public static class EnderDynamicsConfig
             }
         }
 #pragma warning restore S3877
+
+        TrySetMinecraftVersion("Latest");
     }
 
     
@@ -50,6 +52,9 @@ public static class EnderDynamicsConfig
     {
         if (!s_minecraftVersionToLibVersion.TryGetValue(minecraftVersion , out string? libVersion))
             return false;
+
+        if (MinecraftVersion == minecraftVersion)
+            return true;
 
         OnImplementationChangedEvent?.Invoke(null , new ImplementationChangedEventArgs(S_ImplementationLibrary , s_implementations[libVersion]));
         S_ImplementationLibrary = s_implementations[libVersion];

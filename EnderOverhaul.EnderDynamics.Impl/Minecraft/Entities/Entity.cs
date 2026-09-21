@@ -10,15 +10,9 @@ public abstract class Entity : IEntityBuilder<Entity>
     public Vector3D Motion;
 
 
-    protected Entity()
-    {
+    protected Entity() : this(new Vector3D() , new Vector3D()) { }
 
-    }
-
-    protected Entity(Vector3D position)
-    {
-        Position = position;
-    }
+    protected Entity(Vector3D position) : this(position , new Vector3D()) { }
 
     protected Entity(Vector3D position , Vector3D motion)
     {
@@ -26,6 +20,8 @@ public abstract class Entity : IEntityBuilder<Entity>
         Motion = motion;
     }
 
+
+    public abstract Entity DeepCopy();
 
     public abstract void Tick(params object[]? args);
 

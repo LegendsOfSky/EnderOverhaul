@@ -9,6 +9,7 @@ namespace EnderOverhaul.EnderDynamics.Minecraft.Entities;
 public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 {
     private static Type s_ImplType;
+    private static MethodInfo s_DeepCopyMethod;
 
 
     static ThrownEnderpearl()
@@ -28,6 +29,7 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
     public ThrownEnderpearl(Vector3D position) : this()
     {
         Position = position;
+        Motion = new Vector3D();
     }
 
     public ThrownEnderpearl(Vector3D position , Vector3D motion) : this()
@@ -36,10 +38,7 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
         Motion = motion;
     }
 
-    internal ThrownEnderpearl(object implObj) : base(implObj)
-    {
-
-    }
+    internal ThrownEnderpearl(object implObj) : base(implObj) { }
 
 
     private static void TypeImplementationVersionChangedEventHandler(object? sender , ImplementationChangedEventArgs args)
@@ -49,6 +48,7 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
     {
         s_ImplType = newAssembly.GetType(typeof(ThrownEnderpearlImpl).ToString())
             ?? throw new TypeLoadException("Cannot load ThrownEnderpearl implementation type.");
+        s_DeepCopyMethod = s_ImplType.GetMethod("DeepCopy" , BindingFlags.Public | BindingFlags.Instance) ?? throw new TypeLoadException();
     }
 
     private void ObjectImplementationVersionChangedEventHandler(object? sender , ImplementationChangedEventArgs args)
@@ -84,6 +84,11 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
 
 
     #region Implements Entity
+    public override ThrownEnderpearl DeepCopy()
+    {
+        return new ThrownEnderpearl(s_DeepCopyMethod.Invoke(ImplObj , null)!);
+    }
+
     public override void Tick(params object[]? args) => s_TickMethod.Invoke(ImplObj , [args]);
 
     public override Vector3D GetEyePos()

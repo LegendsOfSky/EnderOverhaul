@@ -12,6 +12,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
     private static Type s_ImplType;
     private static MethodInfo s_AccelerateEntityMethod;
     private static MethodInfo s_ApplyRandomPrimeMovementMethod;
+    private static MethodInfo s_DeepCopyMethod;
 
 
     static PrimedTnt()
@@ -30,6 +31,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
     public PrimedTnt(Vector3D position) : this()
     {
         Position = position;
+        Motion = new Vector3D();
     }
 
     public PrimedTnt(Vector3D position , Vector3D motion) : this()
@@ -38,16 +40,13 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
         Motion = motion;
     }
 
-    internal PrimedTnt(object implObj) : base(implObj)
-    {
-
-    }
+    internal PrimedTnt(object implObj) : base(implObj) { }
 
 
-    public void AccelerateEntity(Entity entity , float explosionPower = 4.0F)
+    public void AccelerateEntity(Entity entity , float explosionPower = 4.0F , int tntCount = 1)
     {
         object? targetImpl = entity?.ImplObj;
-        s_AccelerateEntityMethod.Invoke(ImplObj , [targetImpl , explosionPower]);
+        s_AccelerateEntityMethod.Invoke(ImplObj , [targetImpl , explosionPower , tntCount]);
     }
 
     public PrimedTnt ApplyRandomPrimeMovement()
@@ -66,12 +65,13 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 
         s_AccelerateEntityMethod = s_ImplType.GetMethod(  // Find the accelerate method. Signature: void AccelerateEntity(Entity, float)
                     "AccelerateEntity" , BindingFlags.Public | BindingFlags.Instance , null ,
-                    [typeof(EntityImpl) , typeof(float)] , null
+                    [typeof(EntityImpl) , typeof(float) , typeof(int)] , null
                 )
             ?? s_ImplType.GetMethod("AccelerateEntity" , BindingFlags.Public | BindingFlags.Instance)
             ?? throw new TypeLoadException();
         s_ApplyRandomPrimeMovementMethod = s_ImplType.GetMethod("ApplyRandomPrimeMovement" , BindingFlags.Public | BindingFlags.Instance)
             ?? throw new TypeLoadException();
+        s_DeepCopyMethod = s_ImplType.GetMethod("DeepCopy" , BindingFlags.Public | BindingFlags.Instance) ?? throw new TypeLoadException();
     }
 
     private void ObjectImplementationVersionChangedEventHandler(object? sender , ImplementationChangedEventArgs args)
@@ -107,6 +107,11 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
 
 
     #region Implements Entity
+    public override PrimedTnt DeepCopy()
+    {
+        return new PrimedTnt(s_DeepCopyMethod.Invoke(ImplObj , null)!);
+    }
+
     public override void Tick(params object[]? args) => s_TickMethod.Invoke(ImplObj , [args]);
 
     public override Vector3D GetEyePos()
