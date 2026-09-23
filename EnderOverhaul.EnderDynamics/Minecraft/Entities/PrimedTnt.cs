@@ -112,6 +112,7 @@ public class PrimedTnt : Entity , IEntityBuilder<PrimedTnt>
         return new PrimedTnt(s_DeepCopyMethod.Invoke(ImplObj , null)!);
     }
 
+    /// <inheritdoc cref="PrimedTntImpl.Tick"/>
     public override void Tick(params object[]? args) => s_TickMethod.Invoke(ImplObj , [args]);
 
     public override Vector3D GetEyePos()

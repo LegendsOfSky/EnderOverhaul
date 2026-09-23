@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Reflection;
 using EnderOverhaul.EnderDynamics.Utils.Vector;
 using PlayerImpl = EnderOverhaul.EnderDynamics.Impl.Minecraft.Entities.Player;

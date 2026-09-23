@@ -89,6 +89,7 @@ public class ThrownEnderpearl : Entity , IEntityBuilder<ThrownEnderpearl>
         return new ThrownEnderpearl(s_DeepCopyMethod.Invoke(ImplObj , null)!);
     }
 
+    /// <inheritdoc cref="ThrownEnderpearlImpl.Tick"/>
     public override void Tick(params object[]? args) => s_TickMethod.Invoke(ImplObj , [args]);
 
     public override Vector3D GetEyePos()
