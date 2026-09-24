@@ -55,10 +55,7 @@ public static class MultiTntFtl
         ThrownEnderpearl enderPearl , Vector2D destination , List<PrimedTnt> tnts , int maxTntCount ,
         int maxTravellingTickCount = 64 , double maxSearchTimeForEachTick = 5D , int numberOfSearchWorkers = 0 , bool allowMultiThread = false)
     {
-        List<TntConfig> tntConfigs = [];
-        tntConfigs.AddRange(
-                tnts.Select((t , i) => new TntConfig { GroupID = i , MaxTntCount = maxTntCount , Tnt = t })
-            );
+        List<TntConfig> tntConfigs = [.. tnts.Select((t , i) => new TntConfig { GroupID = i , MaxTntCount = maxTntCount , Tnt = t })];
         return CalculateTntAmount(
                 enderPearl , destination , tntConfigs , maxTravellingTickCount , maxSearchTimeForEachTick , numberOfSearchWorkers , allowMultiThread
             );

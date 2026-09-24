@@ -57,7 +57,7 @@ public static class SingleTntReturnFtl
     /// </returns>
     public static List<SingleTntReturnFtlTntConfigResult>? CalculateTntAmountWithFixTntLocation(
         ThrownEnderpearl enderPearl , PrimedTnt tnt , Vector2D destination ,
-        int maxTnt = int.MaxValue, double maxErrorPerAxis = 256D , int maxTravellingTickCount = 128 , double maxAngleErrorOnAccelerateDirection = 30D)
+        int maxTnt = int.MaxValue , double maxErrorPerAxis = 256D , int maxTravellingTickCount = 128 , double maxAngleErrorOnAccelerateDirection = 30D)
     {
         Vector2D motion2D = (Vector2D)EnderMechanicsUtils.CalculateMotionOfEnderPearlAcceleratedTnt(tnt , enderPearl.Position);
         Vector2D distance = destination - (Vector2D)enderPearl.Position;
